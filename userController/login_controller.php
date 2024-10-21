@@ -4,7 +4,7 @@ include_once("../includes/model.php");
 if (isset($_POST["login"])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
-
+    $post = $_POST['post']; 
     // Check if the user exists by email
     $check_email = [
         'query' => 'SELECT * FROM users WHERE user_email = ?',
