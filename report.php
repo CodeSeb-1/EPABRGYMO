@@ -22,7 +22,22 @@
                 <div class="form-content">
                     <form action="userController/report_controller.php" method="POST">
                         <div class="form-group">
-                            <label>Report</label>
+                            <div class="form-group">
+                                <label>Purok:</label>
+                                <div class="radio-group">
+                                    <label>
+                                        <input type="radio" name="purokOption" value="sameAsMe" checked
+                                            onchange="toggleAddressInput()"> Same as mine
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="purokOption" value="manual"
+                                            onchange="toggleAddressInput()"> Enter manually
+                                    </label>
+                                </div>
+                                <div class="form-group" id="manualPurokInput" style="display: none;">
+                                    <input type="text" id="otherPurok" name="otherPurok" placeholder="Enter purok">
+                                </div>
+                            </div>
                             <div class="form-group" id="manualPurokInput" style="display: none;">
                                 <input type="text" id="otherPurok" name="otherPurok" placeholder="Enter purok">
                             </div>
@@ -56,22 +71,7 @@
                             <label for="report">Person you want to report:</label>
                             <input type="text" name="person" required placeholder="Name">
                         </div>
-                        <div class="form-group">
-                            <label>Purok:</label>
-                            <div class="radio-group">
-                                <label>
-                                    <input type="radio" name="purokOption" value="sameAsMe" checked
-                                        onchange="toggleAddressInput()"> Same as mine
-                                </label>
-                                <label>
-                                    <input type="radio" name="purokOption" value="manual"
-                                        onchange="toggleAddressInput()"> Enter manually
-                                </label>
-                            </div>
-                            <div class="form-group" id="manualPurokInput" style="display: none;">
-                                <input type="text" id="otherPurok" name="otherPurok" placeholder="Enter purok">
-                            </div>
-                        </div>
+
 
 
                         <input type="submit" name="report" value="Submit Request">
