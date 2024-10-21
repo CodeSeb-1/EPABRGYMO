@@ -7,7 +7,7 @@
     <title>EPABRGYMO</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_circle_right" />
-    <link rel="stylesheet" href="assets/style1.css">
+    <link rel="stylesheet" href="assets/style1.css?">
 </head>
 
 <body>
@@ -21,28 +21,6 @@
                 <h1>Report</h1>
                 <div class="form-content">
                     <form action="userController/report_controller.php" method="POST">
-                        <div class="form-group">
-                            <label>Report</label>
-                            <div class="form-group">
-                                <label>Purok:</label>
-                                <div class="radio-group">
-                                    <label>
-                                        <input type="radio" name="purokOption" value="sameAsMe" checked
-                                            onchange="toggleAddressInput()"> Same as mine
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="purokOption" value="manual"
-                                            onchange="toggleAddressInput()"> Enter manually
-                                    </label>
-                                </div>
-                                <div class="form-group" id="manualPurokInput" style="display: none;">
-                                    <input type="text" id="otherPurok" name="otherPurok" placeholder="Enter purok">
-                                </div>
-                            </div>
-                            <div class="form-group" id="manualPurokInput" style="display: none;">
-                                <input type="text" id="otherPurok" name="otherPurok" placeholder="Enter purok">
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <label for="report">Type of report:</label>
@@ -73,7 +51,24 @@
                             <input type="text" name="person" required placeholder="Name">
                         </div>
 
-
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label>Purok:</label>
+                                <div class="radio-group">
+                                    <label>
+                                        <input type="radio" name="purokOption" value="sameAsMe" checked
+                                            onchange="toggleAddressInput()"> Same as mine
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="purokOption" value="manual"
+                                            onchange="toggleAddressInput()"> Enter manually
+                                    </label>
+                                </div>
+                                <div class="form-group" id="manualPurokInput" style="display: none;">
+                                    <input type="number" id="otherPurok" name="otherPurok" min="1" max="7" placeholder="Enter purok">
+                                </div>
+                            </div>
+                        </div>
 
                         <input type="submit" name="report" value="Submit Request">
                     </form>
