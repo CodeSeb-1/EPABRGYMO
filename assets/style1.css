@@ -416,6 +416,15 @@ main p {
     background-color: #c62828;
 }
 
+.btn-edit {
+    background: rgb(134, 152, 241);
+    color: #fff;
+}
+
+.btn-edit:hover{
+    background: rgb(91, 102, 161);
+}
+
 .content {
     margin-top: 20px;
 }

@@ -4,28 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <link rel="stylesheet" href="assets/style1.css">
+    <link rel="stylesheet" href="assets/style1.css?">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <img src="assets/LOGO.png" alt="Logo">
-                </div>
-                <ul class="menu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="request.html">Request</a></li>
-                    <li><a href="chat.html">Chat</a></li>
-                    <li><a href="report.html">Reports</a></li>
-                </ul>
-                <div class="user-info">
-                    <img src="assets/image.png" alt="">
-                    <a href="profile.html" class="active"><span>Mark Jolo Tadeo</span></a>
-                </div>
-            </nav>
-        </div>
-    </header>
+    <?php
+        include_once("header.php");
+        nav("profile");
+    ?>
     <div class="container">
         <div class="profile">
             <div class="line"></div>
@@ -34,21 +19,24 @@
                     <img src="assets/image.png" alt="Jeremy Rose" class="profile-picture">
                 </div>
                 <h1>Mark Jolo Tadeo</h1><br>
-                <button class="btn btn-primary">Edit Profile</button>
+                <form action="userController/profile_controller.php" method="POST">
+                    <button type="submit" name="logout" class="btn btn-primary">Logout</button>
+                    <button class="btn btn-edit">Edit Profile</button>
+                </form>
             </div><hr>
             <div class="content">
                 <h3>BASIC INFORMATION</h3>
                 <div class="info-item">
-                    <strong>Phone:</strong> <span>+1 123 456 7890</span> 
+                    <strong>Phone:</strong> <span><?php echo $_SESSION['user_contact']; ?></span> 
                 </div>
                 <div class="info-item">
-                    <strong>Address:</strong> <span>525 E 68th Street, New York, NY 10651</span> 
+                    <strong>Address:</strong> <span><?php echo $_SESSION['user_address']; ?></span> 
                 </div>
                 <div class="info-item">
-                    <strong>E-mail:</strong> <span>hello@jeremyrose.com</span> 
+                    <strong>E-mail:</strong> <span><?php echo $_SESSION['user_email']; ?></span> 
                 </div>
                 <div class="info-item">
-                    <strong>Birthday:</strong> <span>June 5, 1992</span> 
+                    <strong>Birthday:</strong> <span><?php echo $_SESSION['user_birthdate']; ?></span> 
                 </div>
             </div>
         </div>

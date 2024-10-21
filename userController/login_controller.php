@@ -27,7 +27,9 @@ if (isset($_POST["login"])) {
         $_SESSION['user_address'] = $user['user_address'];
         $_SESSION['user_fullname'] = "{$user['user_firstname']}" . " {$user['user_middlename']}" . " {$user['user_lastname']}";
         $_SESSION['user_age'] = calculateAge($user['user_birthdate']);
-
+        $_SESSION['user_birthdate'] = $user['user_birthdate'];
+        $_SESSION['user_contact'] = $user['user_phoneNo'];
+        $_SESSION['user_email'] = $user['user_email'];
 
         if ($user['user_verification'] == "Not Verified") {
 
