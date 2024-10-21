@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EPABRGYMO</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_circle_right" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_circle_right" />
     <link rel="stylesheet" href="assets/style1.css">
 </head>
+
 <body>
-    <?php include_once("header.php"); nav("home") ?>
+    <?php include_once("header.php");
+    nav("home") ?>
     <main>
         <div class="container">
             <section class="hero">
                 <div class="hero-content">
                     <h1><span>Request Documents</span> from your Barangay <span>Online</span></h1>
-                    <p>Easily request official documents from your barangay. Our online system provides a convenient way to access Barangay Clearance, Certificates of Residency, Business Permits, and more.</p>
+                    <p>Easily request official documents from your barangay. Our online system provides a convenient way
+                        to access Barangay Clearance, Certificates of Residency, Business Permits, and more.</p>
                     <div class="cta-buttons">
-                        <a href="#" class="cta-button preview">Request Now</a>
+                        <a href="request.php" class="cta-button preview">Request Now</a>
                         <a href="#" class="cta-button download">Learn More</a>
                     </div>
                 </div>
@@ -25,7 +30,7 @@
                 </div>
             </section>
         </div>
-        
+
         <section class="news-section">
             <div class="container">
                 <h2>Latest News</h2>
@@ -79,7 +84,8 @@
                                 <h3>Community Meeting</h3>
                                 <p class="location">Location: Barangay Hall</p>
                                 <p class="time">Time: June 15, 2023 - 2:00 PM</p>
-                                <p class="description">Monthly community meeting to discuss local issues and upcoming projects.</p>
+                                <p class="description">Monthly community meeting to discuss local issues and upcoming
+                                    projects.</p>
                             </div>
                             <img src="assets/brgy.png" alt="Picture">
                         </div>
@@ -88,7 +94,8 @@
                                 <h3>Community Meeting</h3>
                                 <p class="location">Location: Barangay Hall</p>
                                 <p class="time">Time: June 15, 2023 - 2:00 PM</p>
-                                <p class="description">Monthly community meeting to discuss local issues and upcoming projects.</p>
+                                <p class="description">Monthly community meeting to discuss local issues and upcoming
+                                    projects.</p>
                             </div>
                             <img src="assets/brgy.png" alt="Picture">
                         </div>
@@ -97,7 +104,8 @@
                                 <h3>Community Meeting</h3>
                                 <p class="location">Location: Barangay Hall</p>
                                 <p class="time">Time: June 15, 2023 - 2:00 PM</p>
-                                <p class="description">Monthly community meeting to discuss local issues and upcoming projects.</p>
+                                <p class="description">Monthly community meeting to discuss local issues and upcoming
+                                    projects.</p>
                             </div>
                             <img src="assets/brgy.png" alt="Picture">
                         </div>
@@ -106,7 +114,8 @@
                                 <h3>Community Meeting</h3>
                                 <p class="location">Location: Barangay Hall</p>
                                 <p class="time">Time: June 15, 2023 - 2:00 PM</p>
-                                <p class="description">Monthly community meeting to discuss local issues and upcoming projects.</p>
+                                <p class="description">Monthly community meeting to discuss local issues and upcoming
+                                    projects.</p>
                             </div>
                             <img src="assets/brgy.png" alt="Picture">
                         </div>
@@ -115,7 +124,8 @@
                                 <h3>Community Meeting</h3>
                                 <p class="location">Location: Barangay Hall</p>
                                 <p class="time">Time: June 15, 2023 - 2:00 PM</p>
-                                <p class="description">Monthly community meeting to discuss local issues and upcoming projects.</p>
+                                <p class="description">Monthly community meeting to discuss local issues and upcoming
+                                    projects.</p>
                             </div>
                             <img src="assets/brgy.png" alt="Picture">
                         </div>
@@ -127,4 +137,5 @@
     <?php include_once("footer.php") ?>
     <script src="javascript/navbar.js"></script>
 </body>
+
 </html>
