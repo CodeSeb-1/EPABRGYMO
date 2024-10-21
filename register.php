@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="assets/style.css????????????">
     <link rel="icon" href="assets/SECONDARYLOGO.png" type="image/png" sizes="32x32">
 </head>
+
 <body>
     <main>
         <div class="form-container">
@@ -17,8 +18,8 @@
                     <h2>SIGN UP</h2>
                     <p>To sign up please fill out the required information</p>
                     <form method="POST" action="userController/register_controller.php" enctype="multipart/form-data">
-                       <div class="forms">
-                        <div class="field-information">
+                        <div class="forms">
+                            <div class="field-information">
                                 <div class="field">
                                     <input type="text" id="firstname" name="firstname" placeholder="" required>
                                     <label for="firstname">First name</label>
@@ -47,7 +48,11 @@
                                 </div>
                                 <div class="field">
                                     <input type="text" id="purok" name="purok" placeholder="" required>
-                                    <label for="purok">Enter Purok</label>
+                                    <label for="purok">Purok</label>
+                                </div>
+                                <div class="field">
+                                    <input type="text" id="street" name="street" placeholder="" required>
+                                    <label for="street">House no., Street</label>
                                 </div>
                                 <div class="field">
                                     <input type="date" id="birthday" name="birthday" placeholder="" required>
@@ -55,15 +60,16 @@
                                 </div>
                             </div>
                             <div class="button">
-                                <input type="submit" value="SIGN UP" name="register"> 
+                                <input type="submit" value="SIGN UP" name="register">
                             </div>
-                       </div>
+                        </div>
                         <div class="profile-picture">
                             <h2>PROFILE PICTURE</h2><br>
                             <div class="profile-con">
-                            <img src="assets/USER.png" id="userpicture" alt="user profile picture"> 
+                                <img src="assets/USER.png" id="userpicture" alt="user profile picture">
                                 <div class="custom-file-input">
-                                    <input type="file" id="fileUpload" name="image" onchange="previewImage(this); required">
+                                    <input type="file" id="fileUpload" name="image"
+                                        onchange="previewImage(this); required">
                                     <label for="fileUpload">Choose File</label>
                                 </div><br>
                             </div>
@@ -76,6 +82,7 @@
     </main>
     <script src="image.js"></script>
 </body>
+
 </html>
 
 <!-- 
