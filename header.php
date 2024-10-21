@@ -17,7 +17,7 @@ function nav($active)
                 </ul>
                 <div class="user-info">
                     <img src="assets/image.png" alt="">
-                    <a href="profile.html"><span>' . $_SESSION["user_fullname"] . '</span></a>
+                    <a href="profile.php"><span>' . $_SESSION["user_fullname"] . '</span></a>
                 </div>
             </nav>
         </div>
