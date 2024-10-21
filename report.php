@@ -25,6 +25,7 @@
                             <label>Report</label>
                             <div class="form-group" id="manualPurokInput" style="display: none;">
                                 <input type="text" id="otherPurok" name="otherPurok" placeholder="Enter purok">
+                                <p>tae</p>
                             </div>
                         </div>
 
