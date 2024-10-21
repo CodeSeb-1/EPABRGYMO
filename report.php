@@ -23,11 +23,6 @@
                     <form action="userController/report_controller.php" method="POST">
                         <div class="form-group">
                             <label>Report</label>
-                            <select name="" id="">
-                                <option value="">1</option>
-                                <option value="">1</option>
-                                <option value="">1</option>
-                            </select>
                             <div class="form-group" id="manualPurokInput" style="display: none;">
                                 <input type="text" id="otherPurok" name="otherPurok" placeholder="Enter purok">
                             </div>
