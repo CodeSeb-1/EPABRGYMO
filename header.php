@@ -12,7 +12,7 @@ function nav($active)
                 <ul class="menu">
                     <li><a href="index.php" class="' . ($active == "home" ? "active" : "") . '">Home</a></li>
                     <li><a href="request.php" class="' . ($active == "request" ? "active" : "") . '">Request</a></li>
-                    <li><a href="chat.html" class="' . ($active == "chat" ? "active" : "") . '">Chat</a></li>
+                    <li><a href="chat.php" class="' . ($active == "chat" ? "active" : "") . '">Chat</a></li>
                     <li><a href="report.php" class="' . ($active == "reports" ? "active" : "") . '">Reports</a></li>
                 </ul>
                 <div class="user-info">
