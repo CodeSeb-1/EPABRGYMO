@@ -22,6 +22,7 @@
                 <div class="form-content">
                     <form action="userController/report_controller.php" method="POST">
                         <div class="form-group">
+                            <label>Report</label>
                             <div class="form-group">
                                 <label>Purok:</label>
                                 <div class="radio-group">
