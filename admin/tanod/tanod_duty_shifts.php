@@ -36,9 +36,9 @@ include_once("../adminController/tanod_calendar_controller.php");
         </nav>
         <main class="content">
             <div class="content home">
+            <h1>Duty Shifts</h1>
 
             <section class="events">
-                <h2>Duty Shifts</h2>
                 <table>
                     <thead>
                         <tr>

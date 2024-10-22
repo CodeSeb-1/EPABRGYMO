@@ -36,9 +36,8 @@ include_once("../adminController/tanod_calendar_controller.php");
         </nav>
         <main class="content">
             <div class="content home">
-
+            <h1>Incident Reports</h1>
             <section class="events">
-                <h2>Incident Reports</h2>
                 <table>
                     <thead>
                         <tr>
