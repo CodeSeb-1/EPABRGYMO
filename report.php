@@ -7,7 +7,7 @@
     <title>EPABRGYMO</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_circle_right" />
-    <link rel="stylesheet" href="assets/style1.css?">
+    <link rel="stylesheet" href="assets/style1.css??">
 </head>
 
 <body>
@@ -23,7 +23,7 @@
                     <form action="userController/report_controller.php" method="POST">
 
                         <div class="form-group">
-                            <label for="report">Type of report:</label>
+                            <label for="report">Type of report <span id="asterisk">*</span> </label>
                             <select name="report_type" id="report_type" required>
                                 <option value="">Select report</option>
                                 <option value="personal_dispute">Personal Dispute</option>
@@ -34,26 +34,27 @@
                                 <option value="trespassing">Trespassing</option>
                                 <option value="disturbance">Disturbance of Peace</option>
                                 <option value="harassment">Harassment</option>
+                                <option value="PublicSafety/Hazard">Public Safety/Hazard</option>
                                 <option value="others">Others</option>
                             </select>
                         </div>
 
 
                         <div class="form-group">
-                            <label for="documentType">Description of the report:</label>
+                            <label for="documentType">Description of the report <span id="asterisk">*</span> </label>
                             <textarea name="description" required placeholder="Description"
                                 class="fixed-height"></textarea>
                         </div>
 
 
                         <div class="form-group">
-                            <label for="report">Person you want to report:</label>
+                            <label for="report">If there are people involved:</label>
                             <input type="text" name="person" required placeholder="Name">
                         </div>
 
                         <div class="form-group">
                             <div class="form-group">
-                                <label>Purok:</label>
+                                <label>Purok<span id="asterisk"> *</span> </label>
                                 <div class="radio-group">
                                     <label>
                                         <input type="radio" name="purokOption" value="sameAsMe" checked

@@ -344,6 +344,10 @@ main p {
     display: none;
 }
 
+#asterisk {
+    color: #FF0000;
+}
+
 /* USER PROFILE STYLE */
 .profile {
     max-width: 1000px;
