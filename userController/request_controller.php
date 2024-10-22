@@ -75,4 +75,49 @@ function display_document()
     }
 }
 
+$start = 0;
+$rows_per_page = 4;
+
+// total numbers para sa page-info
+$records = $con->query("SELECT dr.*, dt.doc_name 
+               FROM document_request dr
+               JOIN document_type dt ON dr.doc_type_id = dt.doc_type_id
+               WHERE dr.user_id = {$_SESSION['user_id']}");
+$nr_of_rows = $records->num_rows;
+
+//total num pages
+$pages = ceil($nr_of_rows / $rows_per_page);
+
+// Get the current page number, ensuring it's valid
+$page = isset($_GET['page-nr']) ? (int)$_GET['page-nr'] : 1; 
+$page = max(1, min($page, $pages)); // Ensure page is within the valid range
+
+$start = ($page - 1) * $rows_per_page;
+
+$display_request = [
+    'query'=> "SELECT dr.*, dt.doc_name 
+               FROM document_request dr
+               JOIN document_type dt ON dr.doc_type_id = dt.doc_type_id
+               WHERE dr.user_id = ? LIMIT ?, ?",
+    'bind'=> 'sii',
+    'value'=> [$_SESSION['user_id'], $start, $rows_per_page]
+];
+
+function display_request() {
+    global $display_request;
+
+    displayAll($display_request, null, function ($row, $id) {
+        echo "
+            <tr>
+                <td>{$row['request_name']}</td>
+                <td>{$row['request_age']}</td>
+                <td>{$row['request_address']}</td>
+                <td>{$row['doc_name']}</td>
+                <td>{$row['request_purpose']}</td>
+                <td>Cancel</td>
+            </tr>
+        ";
+    });
+}
+
 

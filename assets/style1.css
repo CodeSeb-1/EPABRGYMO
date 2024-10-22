@@ -5,7 +5,7 @@
     font-family: 'Arial', sans-serif;
 }
 body {
-    background-image: url('BACKGROUND\ \(11\).png');
+    background-image: url('Group\ 214\ \(1\).png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -14,7 +14,7 @@ body {
 }
 
 .container {
-    max-width: 1250px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -274,6 +274,93 @@ main p {
 .form .form-content {
     padding:50px;
 }
+
+.view-request {
+    margin: 0 auto;
+    margin-bottom: 60px;
+    border-radius: 8px;
+    max-width: 1300px;
+    overflow: hidden;
+}
+
+.view-request h1 {
+    color: #FF0000;
+    font-size: 24px;
+    text-align: center;
+}
+
+.view-request .table {
+    padding-top: 20px;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    justify-content: center;
+    position: relative;
+}
+
+.pagination span {
+    position: absolute;
+    left: 2%;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #333;
+    padding: 8px 12px;
+    margin: 0 4px;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #f0f0f0;
+}
+
+.page-numbers {
+    display: flex;
+}
+
+.page-numbers a {
+    font-weight: bold;
+}
+
+.page-numbers a:hover,
+.page-numbers a.active {
+    background-color: #ff0000;
+    color: white;
+}
+
+
+.view-request table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+th {
+    background-color: #FF0000;
+    color: #fff;
+    font-weight: 400;
+}
+th, td {
+    padding: 7px 30px;
+    font-size: 15px;
+    text-align: left;
+    border: 1px solid #cfd0d8;
+}
+
+td {
+    background-color: #fff;
+}
+
 
 .fixed-height {
     height: 130px;

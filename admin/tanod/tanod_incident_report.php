@@ -18,7 +18,7 @@ include_once("../adminController/tanod_calendar_controller.php");
             <a href="tanod_calendar.php">
                 <div class="menu-item">
                     <span class="material-symbols-outlined">calendar_month</span>                
-                    <span>Calendar</span>
+                    <span>Events</span>
                 </div>
             </a>
             <a href="tanod_duty_shifts.php">

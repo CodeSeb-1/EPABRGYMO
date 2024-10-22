@@ -10,7 +10,7 @@ include_once("userController/request_controller.php");
     <title>EPABRGYMO</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_circle_right" />
-    <link rel="stylesheet" href="assets/style1.css">
+    <link rel="stylesheet" href="assets/style1.css????">
 </head>
 
 <body>
@@ -99,6 +99,44 @@ include_once("userController/request_controller.php");
                 </div>
             </section>
         </div>
+
+            <section class="view-request">
+                <div class="table">
+                    <h1>Request</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fullname</th>
+                                <th>Age</th>
+                                <th>Address</th>
+                                <th>Document</th>
+                                <th>Purpose</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                include_once('userController/request_controller.php');
+                                display_request();
+                            ?>
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+                    <span>Showing <?php echo$page ?> of <?php echo $pages;?></span>
+                        <a href="?page-nr=1">First</a>
+                        <a href="?page-nr=<?= max(1, $page - 1) ?>">Previous</a>
+
+                        <div class="page-numbers">
+                            <?php for ($i = 1; $i <= $pages; $i++): ?>
+                                <a href="?page-nr=<?= $i ?>" <?= ($i == $page) ? 'class="active"' : '' ?>><?= $i ?></a>
+                            <?php endfor; ?>
+                        </div>
+
+                        <a href="?page-nr=<?= min($pages, $page + 1) ?>">Next</a>
+                        <a href="?page-nr=<?= $pages ?>">Last</a>
+                    </div>
+                </div> 
+            </section>
     </main>
     <?php include_once("footer.php"); ?>
     <script src="javascript/navbar.js"></script>
