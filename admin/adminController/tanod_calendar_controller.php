@@ -2,13 +2,13 @@
 include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/includes/model.php');
 
 if (isset($_POST["add_event"])) {
-    $user = $_POST["user"];
+    $user = $_POST["users"];
+    $_SESSION['event_user_position'] = $user;
     
     $event_name = $_POST["event_name"];
     $event_description = $_POST["event_description"];
     $event_address = $_POST["event_address"];
     $event_start = $_POST["event_start"];
-    $event_end = $_POST["event_end"];
 
     $event_duration = $_POST["event_duration"];
 
@@ -46,10 +46,10 @@ if (isset($_POST["add_event"])) {
             echo "<script>alert('inang yan mas malaki a ung event start e'); window.location.href='../tanod_calendar.php';</script>";
         } else {
             $data = [
-                "query" => "INSERT INTO events (event_name, event_description, event_address, event_start, event_end)
-                            VALUES (?,?,?,?,?)",
-                "bind" => "sssss",
-                "value" => [$event_name, $event_description, $event_address, $event_start, $event_end]
+                "query" => "INSERT INTO events (event_user_position, event_name, event_description, event_address, event_start, event_end)
+                            VALUES (?,?,?,?,?,?)",
+                "bind" => "ssssss",
+                "value" => [$_SESSION['event_user_position'], $event_name, $event_description, $event_address, $event_start, $event_end]
             ];
 
             $result = insertData($data, "Events");
@@ -91,10 +91,15 @@ $data = [
 
 
 $results = select($data); 
+$colors = [
+    "Tanod" => "red",
+    "Health Workers" => "green",
+    "Kagawad" => "blue",
+    "BrgyCaptain" => "purple"
+];
 
+$currentColor = $colors[$_SESSION['event_user_position']] ?? "black";
 
-$colors = ['red', 'green', 'blue', 'purple'];
-$colorCount = count($colors);
 
 $currentColorIndex = 0;
 
@@ -104,18 +109,14 @@ if ($results && is_array($results)) {
         $endDate = new DateTime($result['event_end']);
         $duration = $endDate->diff($startDate)->days + 1;
 
-        $color = $colors[$currentColorIndex];
-
         $calendar->add_event(
             $result['event_name'],
             $result['event_start'], 
             $duration,
-            $color, // Use the current color
+            $currentColor, // Use the current color
             $result['event_description'], 
             $result['event_address'] 
         );
-
-        $currentColorIndex = ($currentColorIndex + 1) % $colorCount;
     }
 } else {
     error_log("No events found or an error occurred: " . print_r($results, true));

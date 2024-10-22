@@ -54,7 +54,7 @@ include_once("../adminController/tanod_calendar_controller.php");
                                 <option value="Tanod">Tanod</option>
                                 <option value="Health Workers">Health Workers</option>
                                 <option value="Kagawad">Kagawad</option>
-                                <option value="Brgy Captain">Brgy Captain</option>
+                                <option value="BrgyCaptain">Brgy Captain</option>
                             </select> 
                         </div>
                         <div class="field">
@@ -75,7 +75,7 @@ include_once("../adminController/tanod_calendar_controller.php");
                         </div>
                         <div class="field">
                             <label>Start Date:</label>
-                            <input type="datetime-local" name="event_start" min="2024-10-22T12:00" placeholder="Event Start" required>
+                            <input type="datetime-local" name="event_start" placeholder="Event Start" required>
                         </div>
                         <div class="field">
                             <label>Duration</label>
