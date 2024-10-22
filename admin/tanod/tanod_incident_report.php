@@ -22,13 +22,13 @@ include_once("../adminController/tanod_calendar_controller.php");
                 </div>
             </a>
             <a href="tanod_duty_shifts.php">
-                <div class="menu-item active">
+                <div class="menu-item">
                     <span class="material-symbols-outlined">today</span>
                     <span>Duty Shifts</span>
                 </div>    
             </a>
             <a href="tanod_incident_report.php">
-                <div class="menu-item">
+                <div class="menu-item active">
                     <span class="material-symbols-outlined">report</span>
                     <span>Incident Report</span>
                 </div> 
@@ -38,36 +38,24 @@ include_once("../adminController/tanod_calendar_controller.php");
             <div class="content home">
 
             <section class="events">
-                <h2>Duty Shifts</h2>
+                <h2>Incident Reports</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Profile</th>
-                            <th>Fullname</th>
-                            <th>Scheduled</th>
+                            <th>Reporters</th>
+                            <th>Purok</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>
-                                <img src="../../assets/image.png" alt="profile picture" style="width: 50px; height: 50px;">
-                            </td>
-                            <td>Mark Jolo L. Tadeo</td>
-                            <td>June 200,1666</td>
-                        </tr>
-                        <tr>
-                            <td>
-                            <img src="../../assets/image.png" alt="profile picture" style="width: 50px; height: 50px;">
-                            </td>
-                            <td>Mark Jolo L. Tadeo</td>
-                            <td>June 200,1666</td>
-                        </tr>
-                        <tr>
-                            <td>
-                            <img src="../../assets/image.png" alt="profile picture" style="width: 50px; height: 50px;">
-                            </td>
-                            <td>Mark Jolo L. Tadeo</td>
-                            <td>June 200,1666</td>
+                            <td>Ian</td>
+                            <td>6</td>
+                            <td>Kanton</td>
+                            <td>binombaya ung kabayo</td>
+                            <td>Octobor 9,2000</td>
                         </tr>
                     </tbody>
                 </table>

@@ -1,9 +1,10 @@
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/includes/model.php');
 
+$color_event = '';
 if (isset($_POST["add_event"])) {
     $user = $_POST["users"];
-    $_SESSION['event_user_position'] = $user;
+    $color_event= $user;
     
     $event_name = $_POST["event_name"];
     $event_description = $_POST["event_description"];
@@ -70,7 +71,7 @@ $calendar = new Calendar($selectedYear . '-' . $selectedMonth . '-01', false);
 
 $data = [
     'query' => "
-        SELECT event_name, event_start, event_end, event_description, event_address 
+        SELECT event_name, event_user_position, event_start, event_end, event_description, event_address 
         FROM events 
         WHERE (
             MONTH(event_start) = ? 
@@ -98,16 +99,15 @@ $colors = [
     "BrgyCaptain" => "purple"
 ];
 
-$currentColor = $colors[$_SESSION['event_user_position']] ?? "black";
-
-
-$currentColorIndex = 0;
 
 if ($results && is_array($results)) {
     foreach ($results as $result) {
         $startDate = new DateTime($result['event_start']);
         $endDate = new DateTime($result['event_end']);
         $duration = $endDate->diff($startDate)->days + 1;
+
+        $userPosition = $result['event_user_position'];
+        $currentColor = $colors[$userPosition] ?? "black";
 
         $calendar->add_event(
             $result['event_name'],

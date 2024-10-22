@@ -95,6 +95,10 @@ header img {
     position: relative;
 }
 
+.content h1 {
+    color: #ff0000;
+}
+
 .content .add-event form {
     max-width: 600px;
     width: 100%;
@@ -237,6 +241,7 @@ th {
 .calendar .days .day_num .event.red {
     background-color: #ce5151;
 }
+
 .calendar .days .day_num:nth-child(7n+1) {
     border-left: 1px solid #e6e9ea;
 }

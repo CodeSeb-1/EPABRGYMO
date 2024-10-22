@@ -9,18 +9,12 @@ include_once("../adminController/tanod_calendar_controller.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-PaBrgyMo Calendar</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
-    <link rel="stylesheet" href="../../assets/event-calendar.css?????">
+    <link rel="stylesheet" href="../../assets/event-calendar.css????">
 </head>
 <body>
-    <header>
-        <img src="../../assets/LOGO.png" alt="logo">
-        <div class="user-info">
-            <div>TAMOD</div> |
-            <img src="../../assets/image.png" alt="User profile">
-            <span>Mark Jelo Teofro</span>
-            <button class="logout-btn">Logout</button>
-        </div>
-    </header>
+    <?php
+        include_once("../header.php");
+    ?>
     <div class="main-container">
         <nav class="sidebar">
             <a href="tanod_calendar.php">
@@ -35,7 +29,7 @@ include_once("../adminController/tanod_calendar_controller.php");
                     <span>Duty Shifts</span>
                 </div>    
             </a>
-            <a href="">
+            <a href="tanod_incident_report.php">
                 <div class="menu-item">
                     <span class="material-symbols-outlined">report</span>
                     <span>Incident Report</span>

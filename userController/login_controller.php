@@ -22,7 +22,7 @@ if (isset($_POST["login"])) {
     $user = select($check_email, true);
 
     if ($user && password_verify($password, $user['user_password'])) {
-        $_SESSION['user_id'] = $user['user_id'];//eto para sa user id
+        $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['user_purok'] = $user['user_purok'];
         $_SESSION['user_address'] = $user['user_address'];
         $_SESSION['user_fullname'] = "{$user['user_firstname']}" . " {$user['user_middlename']}" . " {$user['user_lastname']}";
@@ -30,6 +30,7 @@ if (isset($_POST["login"])) {
         $_SESSION['user_birthdate'] = $user['user_birthdate'];
         $_SESSION['user_contact'] = $user['user_phoneNo'];
         $_SESSION['user_email'] = $user['user_email'];
+        $_SESSION['user_type'] = $user['user_type'];
 
         if ($user['user_verification'] == "Not Verified") {
 
@@ -45,6 +46,8 @@ if (isset($_POST["login"])) {
 
             if ($user['user_type'] === "Resident") {
                 location("../index.php");
+            } else if ($user['user_type'] === "Tanod") {
+                location("../admin/tanod/tanod_calendar.php");
             }
 
         }
