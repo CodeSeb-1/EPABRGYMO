@@ -3,13 +3,19 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/includes/model.php');
 
 if (isset($_POST["add_event"])) {
     $user = $_POST["user"];
+    
     $event_name = $_POST["event_name"];
     $event_description = $_POST["event_description"];
     $event_address = $_POST["event_address"];
     $event_start = $_POST["event_start"];
     $event_end = $_POST["event_end"];
 
-    // Check for overlapping events with the same address
+    $event_duration = $_POST["event_duration"];
+
+    $startDate = new DateTime($event_start);
+    $startDate->modify('+' . $event_duration . ' days');
+    $event_end = $startDate->format('Y-m-d H:i:s');
+
     $checkQuery = [
         'query' => "SELECT COUNT(*) FROM events
                     WHERE event_address = ?
@@ -35,20 +41,25 @@ if (isset($_POST["add_event"])) {
     if ($check_results && $check_results[0]['COUNT(*)'] > 0) {
         echo "<script>alert('There is an event at the same location on the same date.'); window.location.href='../tanod_calendar.php';</script>";
     } else {
-        $data = [
-            "query" => "INSERT INTO events (event_name, event_description, event_address, event_start, event_end)
-                        VALUES (?,?,?,?,?)",
-            "bind" => "sssss",
-            "value" => [$event_name, $event_description, $event_address, $event_start, $event_end]
-        ];
 
-        $result = insertData($data);
-        if ($result) {
-            echo "<script>alert('Event added successfully.');</script>";
+        if($event_start > $event_end) {
+            echo "<script>alert('inang yan mas malaki a ung event start e'); window.location.href='../tanod_calendar.php';</script>";
         } else {
-            echo "<script>alert('Failed to add event.');</script>";
+            $data = [
+                "query" => "INSERT INTO events (event_name, event_description, event_address, event_start, event_end)
+                            VALUES (?,?,?,?,?)",
+                "bind" => "sssss",
+                "value" => [$event_name, $event_description, $event_address, $event_start, $event_end]
+            ];
+
+            $result = insertData($data, "Events");
+            if ($result) {
+                echo "<script>alert('Event added successfully.');</script>";
+            } else {
+                echo "<script>alert('Failed to add event.');</script>";
+            }
+            location("../tanod/tanod_calendar.php");
         }
-        location("../tanod/tanod_calendar.php");
     }
 }
 
@@ -58,15 +69,31 @@ $selectedYear = isset($_GET['year']) ? $_GET['year'] : date('Y');
 $calendar = new Calendar($selectedYear . '-' . $selectedMonth . '-01', false);
 
 $data = [
-    'query' => "SELECT event_name, event_start, event_end, event_description, event_address FROM events WHERE MONTH(event_start) = ? AND YEAR(event_start) = ?",
-    'bind' => 'ii',
-    'value'=> [$selectedMonth, $selectedYear]
+    'query' => "
+        SELECT event_name, event_start, event_end, event_description, event_address 
+        FROM events 
+        WHERE (
+            MONTH(event_start) = ? 
+            OR MONTH(event_end) = ?
+            OR (
+                event_start <= LAST_DAY(?) AND event_end >= ?
+            )
+        ) AND YEAR(event_start) = ?",
+    'bind' => 'iiiis',
+    'value' => [
+        $selectedMonth, 
+        $selectedMonth, 
+        $selectedYear . '-' . $selectedMonth . '-01',
+        $selectedYear . '-' . $selectedMonth . '-01',
+        $selectedYear
+    ]
 ];
+
 
 $results = select($data); 
 
 
-$colors = ['red', 'green', 'blue', 'orange', 'purple', 'pink'];
+$colors = ['red', 'green', 'blue', 'purple'];
 $colorCount = count($colors);
 
 $currentColorIndex = 0;

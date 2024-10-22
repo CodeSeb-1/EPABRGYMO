@@ -96,20 +96,22 @@ header img {
 }
 
 .content .add-event form {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
     max-width: 600px;
     width: 100%;
 }
 
 .content .add-event .event-form {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+}
+
+.image-container {
+    overflow: hidden;
 }
 
 .content .add-event .event-form img {
     height: 390px;
+    object-fit: cover;
 }
 
 .content .add-event .field {
@@ -127,6 +129,11 @@ header img {
     outline: none;
 }
 
+.content .add-event .field {
+    display: flex;
+    align-items: center;
+}
+
 .content .add-event .field input[type="submit"] {
     background: linear-gradient(to right,#FF0000, #FF3C00);
     color: #fff;
@@ -134,8 +141,8 @@ header img {
 
 .content .add-event .field label {
     width: 120px;
-    display: inline-block;
     color: #000;
+    float: left;
 }
 
 hr {
@@ -165,6 +172,7 @@ th, td {
 th {
     background-color: #f0f0f0;
 }
+
 .calendar {
     display: flex;
     flex-flow: column;
