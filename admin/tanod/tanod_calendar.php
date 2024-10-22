@@ -9,7 +9,7 @@ include_once("../adminController/tanod_calendar_controller.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-PaBrgyMo Calendar</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
-    <link rel="stylesheet" href="../../assets/event-calendar.css?">
+    <link rel="stylesheet" href="../../assets/event-calendar.css??">
 </head>
 <body>
     <header>
@@ -44,19 +44,52 @@ include_once("../adminController/tanod_calendar_controller.php");
         </nav>
         <main class="content">
             <div class="content home">
+            <h1>Add Event</h1>
             <section class="add-event">
-                <h1>Add Event</h1>
-                <form action="../adminController/tanod_calendar_controller.php" method="POST">
-                    <input type="text" name="user" placeholder="User type">
-                    <input type="text" name="event_name" placeholder="Event Name" required>
-                    <input type="text" name="event_description" placeholder="Event Description" required>
-                    <input type="text" name="event_address" placeholder="Event Address" required>
-                    <label>Start Date  <input type="datetime-local" name="event_start" placeholder="Event Start" required></label>
-                    <label>End Date <input type="datetime-local" name="event_end" placeholder="Event End" required></label>
-                    <input type="submit" name="add_event" value="Add Event">
-                </form>
-            </section>
-
+                <div class="event-form">
+                    <form action="../adminController/tanod_calendar_controller.php" method="POST">
+                        <div class="field">
+                            <label>User:</label>
+                            <select name="users">
+                                <option value="Tanod">Tanod</option>
+                                <option value="Mother Leade">Mother Leader</option>
+                                <option value="Health Workers">Health Workers</option>
+                                <option value="Kagawad">Kagawad</option>
+                                <option value="Brgy Captain">Brgy Captain</option>
+                            </select> 
+                        </div>
+                        <div class="field">
+                            <label>Event:</label>
+                            <input type="text" name="event_name" placeholder="Event Name" required>
+                        </div>
+                        <div class="field">
+                            <label>Photo:</label>
+                            <input type="file" id="userpicture" name="image" onchange="previewImage(this);" required>
+                        </div>                        
+                        <div class="field">
+                            <label>Description:</label>
+                            <input type="text" name="event_description" placeholder="Event Description" required>
+                        </div>
+                        <div class="field">
+                            <label>Address:</label>
+                            <input type="text" name="event_address" placeholder="Event Address" required>
+                        </div>
+                        <div class="field">
+                            <label>Start Date:</label>
+                            <input type="datetime-local" name="event_start" placeholder="Event Start" required>
+                        </div>
+                        <div class="field">
+                            <label>End Date</label>
+                            <input type="datetime-local" name="event_end" placeholder="Event End" required>
+                        </div>
+                        <div class="field">
+                            <label></label>
+                            <input type="submit" name="add_event" value="Add Event">
+                        </div>
+                    </form>
+                    <img src="../../assets/brgy.png" alt="">
+                </div>
+            </section><hr>
 
 
             <h1>Calendar</h1>
@@ -91,5 +124,6 @@ include_once("../adminController/tanod_calendar_controller.php");
             </div>
         </main>
     </div>
+    <script src="../../javascript/image.js"></script>
 </body>
 </html>

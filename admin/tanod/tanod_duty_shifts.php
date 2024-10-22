@@ -9,7 +9,7 @@ include_once("../adminController/tanod_calendar_controller.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-PaBrgyMo Calendar</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
-    <link rel="stylesheet" href="../../assets/event-calendar.css?">
+    <link rel="stylesheet" href="../../assets/event-calendar.css??">
 </head>
 <body>
     <header>
@@ -50,43 +50,32 @@ include_once("../adminController/tanod_calendar_controller.php");
                 <table>
                     <thead>
                         <tr>
-                            <th>Product</th>
-                            <th>Inventory</th>
-                            <th>Color</th>
-                            <th>Price</th>
-                            <th>Rating</th>
+                            <th>Profile</th>
+                            <th>Fullname</th>
+                            <th>Scheduled</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>
-                                <img src="/placeholder.svg?height=50&width=50" alt="Men Gray Hoodie" style="width: 50px; height: 50px; margin-right: 10px;">
-                                Men Gray Hoodie
+                                <img src="../../assets/image.png" alt="profile picture" style="width: 50px; height: 50px;">
                             </td>
-                            <td>86 in stock</td>
-                            <td>Black</td>
-                            <td>$49.90</td>
-                            <td>5.0 (12 Votes)</td>
+                            <td>Mark Jolo L. Tadeo</td>
+                            <td>June 200,1666</td>
                         </tr>
                         <tr>
                             <td>
-                                <img src="/placeholder.svg?height=50&width=50" alt="Women Striped T-Shirt" style="width: 50px; height: 50px; margin-right: 10px;">
-                                Women Striped T-Shirt
+                            <img src="../../assets/image.png" alt="profile picture" style="width: 50px; height: 50px;">
                             </td>
-                            <td>56 in stock</td>
-                            <td>White</td>
-                            <td>$34.90</td>
-                            <td>4.8 (24 Votes)</td>
+                            <td>Mark Jolo L. Tadeo</td>
+                            <td>June 200,1666</td>
                         </tr>
                         <tr>
                             <td>
-                                <img src="/placeholder.svg?height=50&width=50" alt="Women White T-Shirt" style="width: 50px; height: 50px; margin-right: 10px;">
-                                Women White T-Shirt
+                            <img src="../../assets/image.png" alt="profile picture" style="width: 50px; height: 50px;">
                             </td>
-                            <td>0 in stock</td>
-                            <td>White</td>
-                            <td>$29.90</td>
-                            <td>4.9 (31 Votes)</td>
+                            <td>Mark Jolo L. Tadeo</td>
+                            <td>June 200,1666</td>
                         </tr>
                     </tbody>
                 </table>
