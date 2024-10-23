@@ -1,6 +1,7 @@
 <?php
 include '../calendar.php';
 include_once("../adminController/tanod_calendar_controller.php");
+include_once("../adminController/secretaryController/secretary_calendar_controller.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,39 +10,18 @@ include_once("../adminController/tanod_calendar_controller.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-PaBrgyMo Calendar</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
-    <link rel="stylesheet" href="../../assets/event-calendar.css?????">
+    <link rel="stylesheet" href="../../assets/event-calendar.css???">
+    <link rel="stylesheet" href="../../assets/modal.css?">
 </head>
 <body>
     <?php
         include_once("../header.php");
     ?>
     <div class="main-container">
-        <nav class="sidebar">
-            <a href="secretary_calendar.php">
-                <div class="menu-item active">
-                    <span class="material-symbols-outlined">calendar_month</span>                
-                    <span>Events</span>
-                </div>
-            </a>
-            <a href="secretary_document_request.php">
-                <div class="menu-item">
-                    <span class="material-symbols-outlined">description</span>                    
-                    <span>Document Request</span>
-                </div>    
-            </a>
-            <a href="secretary_resident_database.php">
-                <div class="menu-item">
-                    <span class="material-symbols-outlined">groups</span>                    
-                    <span>Master List</span>
-                </div> 
-            </a>
-            <a href="secretary_ordinance_shifting.php">
-                <div class="menu-item">
-                    <span class="material-symbols-outlined">task</span>                    
-                    <span>Ordinance Shifting</span>
-                </div> 
-            </a>
-        </nav>
+        <?php
+            include_once("sidebar.php");
+            sidebar("calendar");
+        ?>
         <main class="content">
             <div class="content home">
             <h1>Add Event</h1>
@@ -92,7 +72,7 @@ include_once("../adminController/tanod_calendar_controller.php");
                 </div>
             </section><hr>
 
-            <h1>Calendar</h1>
+            <h1>Calendar</h1><br>
                 <form method="GET" action="">
                     <label for="month">Select Month:</label>
                     <select name="month" id="month" onchange="this.form.submit()">
@@ -122,8 +102,85 @@ include_once("../adminController/tanod_calendar_controller.php");
                 <!-- Display the calendar -->
                 <?=$calendar?>
             </div>
+            <div class="content">
+                <h1>Events</h1>
+                <div class="color-abt">
+                    <form method="POST"><br>
+                    <p class="event-word">Here are the barangay events showcasing our officers' dedication to community engagement and well-being.</p><br>
+                        <select name="users">
+                            <option value="Tanod">Tanod</option>
+                            <option value="Health Workers">Health Workers</option>
+                            <option value="Kagawad">Kagawad</option>
+                            <option value="Brgy Captain">Brgy Captain</option>
+                        </select>
+                    </form>
+                    <div class="coloring-about">
+                        <div class="color-item">
+                            <div class="color-swatch" style="background-color: #ce5151;"></div>
+                            <span class="color-label">Tanod</span>
+                        </div>
+                        <div class="color-item">
+                            <div class="color-swatch" style="background-color: #51ce57;"></div>
+                            <span class="color-label">Health Workers</span>
+                        </div>
+                        <div class="color-item">
+                            <div class="color-swatch" style="background-color: #518fce;"></div>
+                            <span class="color-label">Kagawad</span>
+                        </div>
+                        <div class="color-item">
+                            <div class="color-swatch" style="background-color: #a45eb4;"></div>
+                            <span class="color-label">Brgy Captain</span>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <section class="view-events">
+                    <?php
+                        display_events();
+                    ?>
+                </section>    
+            </div>
+            <div id="eventModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="modalEventName"></h3>
+                        <span class="close">&times;</span>
+                    </div>
+                    <img id="modalEventImage" alt="Event Image"><br>
+                    <div class="form-content">
+                        <div class="form-column">
+                            <div class="form-group">
+                                <label>User Position:</label>
+                                <span id="modalEventPosition"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Location:</label>
+                                <span id="modalEventLocation"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Start:</label>
+                                <span id="modalEventStart"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>End:</label>
+                                <span id="modalEventEnd"></span>
+                            </div>
+                        </div>
+                        <div class="form-column">
+                            <div class="form-group">
+                                <label>Description:</label>
+                                <span id="modalEventDescription"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-sec" onclick="closeModal()">Close</button>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
+    <script src="../../javascript/modal-event.js"></script>
     <script src="../../javascript/image.js"></script>
 </body>
 </html>

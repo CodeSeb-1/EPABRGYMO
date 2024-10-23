@@ -36,7 +36,7 @@
                     <strong>E-mail:</strong> <span><?php echo $_SESSION['user_email']; ?></span> 
                 </div>
                 <div class="info-item">
-                    <strong>Birthday:</strong> <span><?php echo $_SESSION['user_birthdate']; ?></span> 
+                    <strong>Birthday:</strong> <span><?php echo  $formattedDate = date('F j, Y', strtotime($_SESSION['user_birthdate'])); ?></span> 
                 </div>
             </div>
         </div>

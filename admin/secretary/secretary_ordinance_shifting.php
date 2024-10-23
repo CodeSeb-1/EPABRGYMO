@@ -16,32 +16,10 @@ include_once("../adminController/tanod_calendar_controller.php");
         include_once("../header.php");
     ?>
     <div class="main-container">
-        <nav class="sidebar">
-            <a href="secretary_calendar.php">
-                <div class="menu-item">
-                    <span class="material-symbols-outlined">calendar_month</span>                
-                    <span>Events</span>
-                </div>
-            </a>
-            <a href="secretary_document_request.php">
-                <div class="menu-item">
-                    <span class="material-symbols-outlined">description</span>                    
-                    <span>Document Request</span>
-                </div>    
-            </a>
-            <a href="secretary_resident_database.php">
-                <div class="menu-item">
-                    <span class="material-symbols-outlined">groups</span>                    
-                    <span>Master List</span>
-                </div> 
-            </a>
-            <a href="secretary_ordinance_shifting.php">
-                <div class="menu-item active">
-                    <span class="material-symbols-outlined">task</span>                    
-                    <span>Ordinance Shifting</span>
-                </div> 
-            </a>
-        </nav>
+        <?php
+            include_once("sidebar.php");
+            sidebar("ordinance");
+        ?>
         <main class="content">
             <div class="content home">
             <h1>Add Event</h1>
