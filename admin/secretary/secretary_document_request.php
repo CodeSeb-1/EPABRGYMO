@@ -1,6 +1,6 @@
 <?php
 include '../calendar.php';
-include_once("../adminController/tanod_calendar_controller.php");
+include_once("../adminController/secretaryController/secretary_document_request_controller.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,14 +65,9 @@ include_once("../adminController/tanod_calendar_controller.php");
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Oloj</td>
-                            <td>Document</td>
-                            <td>Sceret</td>
-                            <td>1111-11-11-11</td>
-                            <td>Pending</td>
-                            <td><a href="" id="view">View</a></td>
-                        </tr>
+                       <?php
+                        display_request();
+                       ?>
                     </tbody>
                 </table>
             </section>

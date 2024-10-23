@@ -4,6 +4,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/includes/model.php');
 $color_event = '';
 if (isset($_POST["add_event"])) {
     $user = $_POST["users"];
+    $_SESSION['event_user_position'] = $user;
     $color_event= $user;
     
     $event_name = $_POST["event_name"];

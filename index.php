@@ -78,15 +78,15 @@ include_once("userController/index_controller.php");
         </section>
 
        <section class="events-section">
-    <div class="container">
-        <h2>Events</h2>
-        <div class="event-container">
-            <div class="events">
-                <?php display_events(); ?>
+            <div class="container">
+                <h2>Events</h2>
+                <div class="event-container">
+                    <div class="events">
+                        <?php display_events(); ?>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
     </main>
     <?php include_once("footer.php") ?>
