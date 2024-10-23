@@ -172,9 +172,17 @@ tr:nth-child(even) {
     background: #f2f2f2;
 }
 
+td > a#view {
+    background: #518fce;
+    border-radius: 5px;
+    padding: 5px 13px;
+    text-decoration: none;
+    color: #fff;
+}
+
 th, td {
-    padding: 7px;
-    text-align: start;
+    padding: 10px 7px;
+    text-align: center;
     font-weight: 300;
     font-size: 14px;
 }

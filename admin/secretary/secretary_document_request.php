@@ -59,8 +59,8 @@ include_once("../adminController/tanod_calendar_controller.php");
                             <th>Fullname</th>
                             <th>Document Type</th>
                             <th>Purpose</th>
-                            <th>Status</th>
                             <th>Request Date</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -69,33 +69,9 @@ include_once("../adminController/tanod_calendar_controller.php");
                             <td>Oloj</td>
                             <td>Document</td>
                             <td>Sceret</td>
-                            <td>Pending</td>
                             <td>1111-11-11-11</td>
-                            <td>View Details</td>
-                        </tr>
-                        <tr>
-                            <td>Oloj</td>
-                            <td>Document</td>
-                            <td>Sceret</td>
                             <td>Pending</td>
-                            <td>1111-11-11-11</td>
-                            <td>View Details</td>
-                        </tr>
-                        <tr>
-                            <td>Oloj</td>
-                            <td>Document</td>
-                            <td>Sceret</td>
-                            <td>Pending</td>
-                            <td>1111-11-11-11</td>
-                            <td>View Details</td>
-                        </tr>
-                        <tr>
-                            <td>Oloj</td>
-                            <td>Document</td>
-                            <td>Sceret</td>
-                            <td>Pending</td>
-                            <td>1111-11-11-11</td>
-                            <td>View Details</td>
+                            <td><a href="" id="view">View</a></td>
                         </tr>
                     </tbody>
                 </table>
