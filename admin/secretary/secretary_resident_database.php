@@ -74,7 +74,7 @@ include_once("../adminController/secretaryController/secretary_resident_controll
                         </div>
                         <div class="field">
                             <label>Address:</label>
-                            <input type="text" name="address" placeholder="Address" required>
+                            <input type="text" name="address" placeholder="House no., Street" required>
                         </div>
                         <div class="field">
                             <label></label>
