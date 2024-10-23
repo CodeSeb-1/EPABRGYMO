@@ -100,7 +100,7 @@ include_once("userController/request_controller.php");
             </section>
         </div>
 
-            <section class="view-request">
+            <section class="view-request" id="request">
                 <div class="table">
                     <h1>Request</h1>
                     <table>
@@ -123,17 +123,17 @@ include_once("userController/request_controller.php");
                     </table>
                     <div class="pagination">
                     <span>Showing <?php echo$page ?> of <?php echo $pages;?></span>
-                        <a href="?page-nr=1">First</a>
-                        <a href="?page-nr=<?= max(1, $page - 1) ?>">Previous</a>
+                        <a href="?page=1#request">First</a>
+                        <a href="?page=<?= max(1, $page - 1) ?>#request">Previous</a>
 
                         <div class="page-numbers">
                             <?php for ($i = 1; $i <= $pages; $i++): ?>
-                                <a href="?page-nr=<?= $i ?>" <?= ($i == $page) ? 'class="active"' : '' ?>><?= $i ?></a>
+                                <a href="?page=<?= $i ?>#request" <?= ($i == $page) ? 'class="active"' : '' ?>><?= $i ?></a>
                             <?php endfor; ?>
                         </div>
 
-                        <a href="?page-nr=<?= min($pages, $page + 1) ?>">Next</a>
-                        <a href="?page-nr=<?= $pages ?>">Last</a>
+                        <a href="?page=<?= min($pages, $page + 1) ?>#request">Next</a>
+                        <a href="?page=<?= $pages ?>#request">Last</a>
                     </div>
                 </div> 
             </section>

@@ -89,7 +89,7 @@ $nr_of_rows = $records->num_rows;
 $pages = ceil($nr_of_rows / $rows_per_page);
 
 // Get the current page number, ensuring it's valid
-$page = isset($_GET['page-nr']) ? (int)$_GET['page-nr'] : 1; 
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
 $page = max(1, min($page, $pages)); // Ensure page is within the valid range
 
 $start = ($page - 1) * $rows_per_page;
