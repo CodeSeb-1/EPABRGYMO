@@ -1,6 +1,6 @@
 <?php
 include '../calendar.php';
-include_once("../adminController/tanod_calendar_controller.php");
+include_once("../adminController/secretaryController/secretary_resident_controller.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +44,51 @@ include_once("../adminController/tanod_calendar_controller.php");
         </nav>
         <main class="content">
             <div class="content home">
-            <h1>Master List</h1>
+            <h1>Add Resident</h1><br>
+            <section class="add-event">
+                <div class="event-form">
+                    <form action="../adminController/secretaryController/secretary_resident_controller.php" method="POST" enctype="multipart/form-data">
+                        <div class="field">
+                            <label>First name:</label>
+                            <input type="text" name="firstname" placeholder="First name" required>
+                        </div>
+                        <div class="field">
+                            <label>Middle name:</label>
+                            <input type="text" name="middlename" placeholder="Middle name" required>
+                        </div>                        
+                        <div class="field">
+                            <label>Last name:</label>
+                            <input type="text" name="lastname" placeholder="Last name" required>
+                        </div>
+                        <div class="field">
+                            <label>Contact No.:</label>
+                            <input type="text" name="contact" placeholder="Contact No." required>
+                        </div>
+                        <div class="field">
+                            <label>Birthdate:</label>
+                            <input type="date" name="birthdate" required>
+                        </div>
+                        <div class="field">
+                            <label>Email: </label>
+                            <input type="text" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="field">
+                            <label>Address:</label>
+                            <input type="text" name="address" placeholder="Address" required>
+                        </div>
+                        <div class="field">
+                            <label></label>
+                            <input type="submit" name="add_resident" value="Add Resident">
+                        </div>
+                    </form>
+                    <div class="image-container">
+                        <img src="../../assets/brgy.png" id="userpicture" alt="">
+                    </div>
+                </div>
+            </section><hr>
+
+
+            <h1>Master List</h1><br>
             <section class="events">
                 <table>
                     <thead>
@@ -58,14 +102,9 @@ include_once("../adminController/tanod_calendar_controller.php");
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Marcos Revillieza</td>
-                            <td>69</td>
-                            <td>September 69, 1990</td>
-                            <td>09696969696</td>
-                            <td>Marcos@gmail.com</td>
-                            <td>123, Bulacan, Manila</td>
-                        </tr>
+                        <?php
+                         display_resident();
+                        ?>
                     </tbody>
                 </table>
             </section>
