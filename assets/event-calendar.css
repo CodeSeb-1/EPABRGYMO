@@ -153,28 +153,34 @@ hr {
     margin: 20px 0;
 }
 
-h1 {
-    margin-bottom: 20px;
-}
 .events {
     background-color: #fff;
-    padding: 20px;
     border-radius: 4px;
 }
 .events h2 {
     margin-bottom: 10px;
 }
+
 table {
     width: 100%;
     border-collapse: collapse;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    color: #636e73;
 }
+
+tr:nth-child(even) {
+    background: #f2f2f2;
+}
+
 th, td {
     padding: 7px;
-    text-align: center;
-    border: 1px solid #ddd;
+    text-align: start;
+    font-weight: 300;
+    font-size: 14px;
 }
 th {
-    background-color: #f0f0f0;
+    background-color: #FF0000;
+    color: #fff;
 }
 
 .calendar {

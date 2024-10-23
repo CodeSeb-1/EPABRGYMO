@@ -48,6 +48,8 @@ if (isset($_POST["login"])) {
                 location("../index.php");
             } else if ($user['user_type'] === "Tanod") {
                 location("../admin/tanod/tanod_calendar.php");
+            } else if ($user['user_type'] === "Secretary") {
+                location("../admin/secretary/secretary_calendar.php");
             }
 
         }

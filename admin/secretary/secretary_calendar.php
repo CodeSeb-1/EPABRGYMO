@@ -9,7 +9,7 @@ include_once("../adminController/tanod_calendar_controller.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-PaBrgyMo Calendar</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
-    <link rel="stylesheet" href="../../assets/event-calendar.css???">
+    <link rel="stylesheet" href="../../assets/event-calendar.css?????">
 </head>
 <body>
     <?php
@@ -17,22 +17,28 @@ include_once("../adminController/tanod_calendar_controller.php");
     ?>
     <div class="main-container">
         <nav class="sidebar">
-            <a href="tanod_calendar.php">
+            <a href="secretary_calendar.php">
                 <div class="menu-item active">
                     <span class="material-symbols-outlined">calendar_month</span>                
                     <span>Events</span>
                 </div>
             </a>
-            <a href="tanod_duty_shifts.php">
+            <a href="secretary_document_request.php">
                 <div class="menu-item">
-                    <span class="material-symbols-outlined">today</span>
-                    <span>Duty Shifts</span>
+                    <span class="material-symbols-outlined">description</span>                    
+                    <span>Document Request</span>
                 </div>    
             </a>
-            <a href="tanod_incident_report.php">
+            <a href="secretary_resident_database.php">
                 <div class="menu-item">
-                    <span class="material-symbols-outlined">report</span>
-                    <span>Incident Report</span>
+                    <span class="material-symbols-outlined">groups</span>                    
+                    <span>Master List</span>
+                </div> 
+            </a>
+            <a href="secretary_ordinance_shifting.php">
+                <div class="menu-item">
+                    <span class="material-symbols-outlined">task</span>                    
+                    <span>Ordinance Shifting</span>
                 </div> 
             </a>
         </nav>
@@ -85,7 +91,6 @@ include_once("../adminController/tanod_calendar_controller.php");
                     </div>
                 </div>
             </section><hr>
-
 
             <h1>Calendar</h1>
                 <form method="GET" action="">

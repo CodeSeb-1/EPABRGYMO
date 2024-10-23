@@ -83,9 +83,9 @@ include_once("userController/request_controller.php");
                             <label for="purpose">Purpose:</label>
                             <select name="purpose" id="purpose" required onchange="toggleOtherpurpose(this.value)">
                                 <option value="">Select purpose</option>
-                                <option value="scholarship">Scholarship</option>
-                                <option value="financialAssistance">Financial Assistance</option>
-                                <option value="workRelated">Work Related</option>
+                                <option value="Scholarship">Scholarship</option>
+                                <option value="Financial Assistance">Financial Assistance</option>
+                                <option value="Work Related">Work Related</option>
                                 <option value="others">Others</option>
                             </select>
                         </div>
@@ -111,6 +111,7 @@ include_once("userController/request_controller.php");
                                 <th>Address</th>
                                 <th>Document</th>
                                 <th>Purpose</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
