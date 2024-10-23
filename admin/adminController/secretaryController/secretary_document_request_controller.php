@@ -57,7 +57,7 @@ function display_request($filterStatus = null)
 
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_POST['decline']) )) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_POST['decline']) || isset($_POST['claim']) )) {
     $doc_req_id = $_POST['doc_req_id'];
 
     if (isset($_POST['accept'])) {
@@ -77,7 +77,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_
             'value' => ["Declined", $doc_req_id]
         ];
       
-    }
+    } else if (isset($_POST["claim"])) { 
+        $update = [
+            'query' => "UPDATE document_request SET request_status = ?
+                        WHERE doc_req_id = ?",
+            'bind' => 'si',
+            'value' => ["Ready To Claim", $doc_req_id]
+        ];
+    }   
     updateData($update);
     location("../../secretary/secretary_document_request.php");
 }

@@ -106,7 +106,7 @@ include_once("../adminController/secretaryController/secretary_document_request_
             <?php
                 if ($requestDetails) {
                     if ($requestDetails['request_status'] === 'Approved') {
-                        echo '<button type="submit" name="accept" class="btn btn-primary">Ready To Claim</button>';
+                        echo '<button type="submit" name="claim" class="btn btn-primary">Ready To Claim</button>';
                     } else if ($requestDetails['request_status'] === 'Pending') {
                         echo '<button type="submit" name="decline" class="btn btn-sec">Decline</button> ';
                         echo '<button type="submit" name="accept" class="btn btn-primary">Accept</button>';
