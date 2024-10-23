@@ -1,3 +1,6 @@
+<?php
+include_once("userController/index_controller.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -74,65 +77,17 @@
             </div>
         </section>
 
-        <section class="events-section">
-            <div class="container">
-                <h2>Events</h2>
-                <div class="event-container">
-                    <div class="events">
-                        <div class="event-card">
-                            <div class="event-info">
-                                <h3>Community Meeting</h3>
-                                <p class="location">Location: Barangay Hall</p>
-                                <p class="time">Time: June 15, 2023 - 2:00 PM</p>
-                                <p class="description">Monthly community meeting to discuss local issues and upcoming
-                                    projects.</p>
-                            </div>
-                            <img src="assets/brgy.png" alt="Picture">
-                        </div>
-                        <div class="event-card">
-                            <div class="event-info">
-                                <h3>Community Meeting</h3>
-                                <p class="location">Location: Barangay Hall</p>
-                                <p class="time">Time: June 15, 2023 - 2:00 PM</p>
-                                <p class="description">Monthly community meeting to discuss local issues and upcoming
-                                    projects.</p>
-                            </div>
-                            <img src="assets/brgy.png" alt="Picture">
-                        </div>
-                        <div class="event-card">
-                            <div class="event-info">
-                                <h3>Community Meeting</h3>
-                                <p class="location">Location: Barangay Hall</p>
-                                <p class="time">Time: June 15, 2023 - 2:00 PM</p>
-                                <p class="description">Monthly community meeting to discuss local issues and upcoming
-                                    projects.</p>
-                            </div>
-                            <img src="assets/brgy.png" alt="Picture">
-                        </div>
-                        <div class="event-card">
-                            <div class="event-info">
-                                <h3>Community Meeting</h3>
-                                <p class="location">Location: Barangay Hall</p>
-                                <p class="time">Time: June 15, 2023 - 2:00 PM</p>
-                                <p class="description">Monthly community meeting to discuss local issues and upcoming
-                                    projects.</p>
-                            </div>
-                            <img src="assets/brgy.png" alt="Picture">
-                        </div>
-                        <div class="event-card">
-                            <div class="event-info">
-                                <h3>Community Meeting</h3>
-                                <p class="location">Location: Barangay Hall</p>
-                                <p class="time">Time: June 15, 2023 - 2:00 PM</p>
-                                <p class="description">Monthly community meeting to discuss local issues and upcoming
-                                    projects.</p>
-                            </div>
-                            <img src="assets/brgy.png" alt="Picture">
-                        </div>
-                    </div>
-                </div>
+       <section class="events-section">
+    <div class="container">
+        <h2>Events</h2>
+        <div class="event-container">
+            <div class="events">
+                <?php display_events(); ?>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
+
     </main>
     <?php include_once("footer.php") ?>
     <script src="javascript/navbar.js"></script>
