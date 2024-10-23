@@ -82,7 +82,8 @@ $rows_per_page = 4;
 $records = $con->query("SELECT dr.*, dt.doc_name 
                FROM document_request dr
                JOIN document_type dt ON dr.doc_type_id = dt.doc_type_id
-               WHERE dr.user_id = {$_SESSION['user_id']}");
+               WHERE dr.user_id = {$_SESSION['user_id']}
+               AND dr.request_status != 'Canceled'");
 $nr_of_rows = $records->num_rows;
 
 //total num pages
@@ -98,7 +99,10 @@ $display_request = [
     'query'=> "SELECT dr.*, dt.doc_name 
                FROM document_request dr
                JOIN document_type dt ON dr.doc_type_id = dt.doc_type_id
-               WHERE dr.user_id = ? LIMIT ?, ?",
+               WHERE dr.user_id = ?
+               AND dr.request_status != 'Canceled'
+               ORDER BY dr.request_status DESC 
+               LIMIT ?, ?",
     'bind'=> 'sii',
     'value'=> [$_SESSION['user_id'], $start, $rows_per_page]
 ];
@@ -114,10 +118,17 @@ function display_request() {
                 <td>{$row['request_address']}</td>
                 <td>{$row['doc_name']}</td>
                 <td>{$row['request_purpose']}</td>
-                <td>Cancel</td>
-            </tr>
-        ";
+                <td>{$row['request_status']}</td>
+                <td>";
+        
+        if ($row['request_status'] === 'Pending') {
+            echo "<a href='cancel_request.php?id={$row['doc_req_id']}' onclick='return confirm(\"Are you sure you want to delete this request?\")'>Cancel</a>";
+        }
+
+        echo "</td>
+            </tr>";
     });
 }
+
 
 
