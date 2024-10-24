@@ -81,7 +81,7 @@ function display_request()
 
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_POST['decline']) || isset($_POST['claim']) )) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_POST['decline']) || isset($_POST['claim']) || isset($_POST['claimed']))) {
     $doc_req_id = $_POST['doc_req_id'];
 
     if (isset($_POST['accept'])) {
@@ -109,6 +109,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_
                 WHERE doc_req_id = ?",
             'bind' => 'ssi',
             'value' => ["Ready To Claim", $expiration_date, $doc_req_id]
+        ];
+
+    } else if (isset($_POST['claimed'])) {
+        $update = [
+            'query' => "UPDATE document_request SET request_status = ?
+                        WHERE doc_req_id = ?",
+            'bind' => 'si',
+            'value' => ["Claimed", $doc_req_id]
         ];
 
     }   
@@ -151,6 +159,8 @@ $dateTime = new DateTime($requestDate);
 $formattedDate = $dateTime->format('F j, Y g:i A');
 $formattedIssuedDate = $issuedDate ? (new DateTime($issuedDate))->format('F j, Y') : 'N/A';
 $formattedExpirationDate = $expirationDate ? (new DateTime($expirationDate))->format('F j, Y') : 'N/A';
+
+$duration = $formattedIssuedDate." - ". $formattedExpirationDate;
 
 //para lang sa kulay
 $requestStatus = $requestDetails['request_status'] ?? '';

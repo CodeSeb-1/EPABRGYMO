@@ -31,8 +31,10 @@ include_once("../adminController/secretaryController/secretary_document_request_
                             <option value="Pending" <?= $selectedStatus === 'Pending' ? 'selected' : '' ?>>Pending</option>
                             <option value="Approved" <?= $selectedStatus === 'Approved' ? 'selected' : '' ?>>Approved</option>
                             <option value="Ready To Claim" <?= $selectedStatus === 'Ready To Claim' ? 'selected' : '' ?>>Ready to Claim</option>
+                            <option value="Claimed" <?= $selectedStatus === 'Claimed' ? 'selected' : '' ?>>Claimed</option>
                             <option value="Canceled" <?= $selectedStatus === 'Canceled' ? 'selected' : '' ?>>Canceled</option>
                             <option value="Declined" <?= $selectedStatus === 'Declined' ? 'selected' : '' ?>>Declined</option>
+                            
                         </select>
                     </form><br>
                     <table>
@@ -126,18 +128,12 @@ include_once("../adminController/secretaryController/secretary_document_request_
                         <?php
                         }
                    
-                        else if($requestDetails['request_status'] === "Ready To Claim") {
+                        else if($requestDetails['request_status'] === "Ready To Claim" || $requestDetails['request_status'] === "Claimed") {
                             ?>
                             <div class="form-group">
-                                <label for="issued_date">Issued Date:</label>
-                                <span id="issued_date"><?= $formattedIssuedDate ?></span>
+                                <label for="issued_date">Duration:</label>
+                                <span id="issued_date"><?= $duration?></span>
                             </div>
-                            
-                            <div class="form-group">
-                                <label for="expiration_date">Expiration Date:</label>
-                                <span id="expiration_date"><?= $formattedExpirationDate ?></span>
-                            </div>
-                        
                         <?php
                         }
                     ?>
@@ -151,7 +147,9 @@ include_once("../adminController/secretaryController/secretary_document_request_
                     } else if ($requestDetails['request_status'] === 'Pending') {
                         echo '<button type="submit" name="decline" class="btn btn-sec">Decline</button> ';
                         echo '<button type="submit" name="accept" class="btn btn-primary">Accept</button>';
-                    }
+                    }else if ($requestDetails['request_status'] === 'Ready To Claim') {
+                    echo '<button type="submit" name="claimed" class="btn btn-primary">Claimed</button>';
+                }
                 }
                 ?>
             </div>
