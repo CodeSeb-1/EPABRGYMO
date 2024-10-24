@@ -119,8 +119,23 @@ include_once("../adminController/secretaryController/secretary_document_request_
                         if($requestDetails['request_status'] === "Approved") {
                             ?>
                             <div class="form-group">
-                                <label for="request_status">Expiration Date:</label>
-                                <span><input type="datetime-local" name="" id=""></span>
+                                <label for="expire_date">Expiration Date:</label>
+                                <span><input type="date" name="expire_date" id="expire_date" required></span>
+                            </div>
+                        
+                        <?php
+                        }
+                   
+                        else if($requestDetails['request_status'] === "Ready To Claim") {
+                            ?>
+                            <div class="form-group">
+                                <label for="issued_date">Issued Date:</label>
+                                <span id="issued_date"><?= $formattedIssuedDate ?></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="expiration_date">Expiration Date:</label>
+                                <span id="expiration_date"><?= $formattedExpirationDate ?></span>
                             </div>
                         
                         <?php

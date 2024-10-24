@@ -102,12 +102,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_
         ];
       
     } else if (isset($_POST["claim"])) { 
+        $expiration_date = $_POST['expire_date'];
         $update = [
-            'query' => "UPDATE document_request SET request_status = ?
-                        WHERE doc_req_id = ?",
-            'bind' => 'si',
-            'value' => ["Ready To Claim", $doc_req_id]
+            'query' => "UPDATE document_request 
+                SET request_status = ?, issued_date = NOW(), expiration_date = ? 
+                WHERE doc_req_id = ?",
+            'bind' => 'ssi',
+            'value' => ["Ready To Claim", $expiration_date, $doc_req_id]
         ];
+
     }   
     updateData($update);
     location("../../secretary/secretary_document_request.php");
@@ -141,9 +144,13 @@ if (isset($_GET['doc_req_id'])) {
 }
 
 //pang format lang
+$issuedDate = $requestDetails['issued_date'] ?? '';
+$expirationDate = $requestDetails['expiration_date'] ?? '';
 $requestDate = $requestDetails['request_date'] ?? '';
 $dateTime = new DateTime($requestDate);
 $formattedDate = $dateTime->format('F j, Y g:i A');
+$formattedIssuedDate = $issuedDate ? (new DateTime($issuedDate))->format('F j, Y') : 'N/A';
+$formattedExpirationDate = $expirationDate ? (new DateTime($expirationDate))->format('F j, Y') : 'N/A';
 
 //para lang sa kulay
 $requestStatus = $requestDetails['request_status'] ?? '';
