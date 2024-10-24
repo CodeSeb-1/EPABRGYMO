@@ -14,7 +14,7 @@ include_once("../adminController/tanod_calendar_controller.php");
 <body>
     <?php include_once("../header.php");?>
     <div class="main-container">
-        <nav class="sidebar">
+        <nav class="sidebars">
             <a href="tanod_calendar.php">
                 <div class="menu-item">
                     <span class="material-symbols-outlined">calendar_month</span>                

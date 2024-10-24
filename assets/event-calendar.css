@@ -54,7 +54,8 @@ header img {
     display: flex;
     flex: 1;
 }
-.sidebar {
+
+nav.sidebars {
     position: sticky;  
     top: 0;            
     width: 220px;     
@@ -67,7 +68,7 @@ header img {
 }
 
 
-.sidebar a {
+nav.sidebars a {
     text-decoration: none;
     color: #7a7a7a;
     font-size: 13px;

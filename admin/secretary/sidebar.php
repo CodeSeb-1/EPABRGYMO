@@ -2,7 +2,7 @@
 
 function sidebar($current_page) {
     echo '
-        <nav class="sidebar">
+        <nav class="sidebars">
             <a href="secretary_calendar.php">
                 <div class="menu-item' . ($current_page === 'calendar' ? ' active' : '') . '">
                     <span class="material-symbols-outlined">calendar_month</span>                

@@ -9,14 +9,14 @@ include_once("../adminController/tanod_calendar_controller.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-PaBrgyMo Calendar</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
-    <link rel="stylesheet" href="../../assets/event-calendar.css???">
+    <link rel="stylesheet" href="../../assets/event-calendar.css">
 </head>
 <body>
     <?php
         include_once("../header.php");
     ?>
     <div class="main-container">
-        <nav class="sidebar">
+        <nav class="sidebars">
             <a href="tanod_calendar.php">
                 <div class="menu-item active">
                     <span class="material-symbols-outlined">calendar_month</span>                

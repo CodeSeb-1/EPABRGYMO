@@ -536,6 +536,16 @@ td {
 .conversation-item:hover {
     background-color: #f0f2f5;
 }
+
+.conversation-item .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.conversation-item .info .last-message {
+    font-size: 13px;
+}
 .conversation-item img {
     width: 40px;
     height: 40px;
