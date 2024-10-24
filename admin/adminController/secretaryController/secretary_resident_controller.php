@@ -112,12 +112,13 @@ function display_resident() {
     
     while ($row = $result->fetch_assoc()) {
         global $page;
-
+        $birthdate = new DateTime($row['masterlist_birthdate']);
+        $formattedBirthdate = $birthdate->format('F j, Y');
         echo "
             <tr>
                 <td>{$row['masterlist_first_name']} {$row['masterlist_middle_name']} {$row['masterlist_last_name']}</td>
                 <td>" . calculate_age($row['masterlist_birthdate']) . "</td>
-                <td>{$row['masterlist_birthdate']}</td>
+                <td>{$formattedBirthdate}</td>
                 <td>{$row['masterlist_contact_num']}</td>
                 <td>{$row['masterlist_email']}</td>
                 <td>{$row['masterlist_address']}</td>

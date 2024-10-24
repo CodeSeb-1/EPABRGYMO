@@ -82,7 +82,9 @@ include_once("../adminController/secretaryController/secretary_resident_controll
             <h1>Master List</h1><br>
             <section class="events" id="request">
                 <form method="GET" action="">
-                    <input type="search" name="search" placeholder="Search by name..." value="<?php echo $_GET['search'] ?? ''; ?>">
+                    <input type="search" name="search" placeholder="Search by name..." 
+                        value="<?php echo $_GET['search'] ?? ''; ?>" 
+                        oninput="this.form.submit()"> <!-- Automatically submit the form on input -->
                     <input type="hidden" name="page" value="<?= $page; ?>">
                     <input type="submit" value="Search">
                 </form><br>
@@ -122,5 +124,16 @@ include_once("../adminController/secretaryController/secretary_resident_controll
         </main>
     </div>
     <script src="../../javascript/image.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            const searchInput = document.getElementById('search');
+            if (searchInput.value) {
+                searchInput.focus(); // Focus on the search input
+                const length = searchInput.value.length; 
+                searchInput.setSelectionRange(length, length); // Move the cursor to the end of the input
+            }
+        });
+    </script>
+
 </body>
 </html>
