@@ -112,6 +112,7 @@ function display_request() {
 
     // Display the results using your existing displayAll logic
     displayAll($display_request, null, function ($row, $id) {
+        global $page, $filterStatus;
         echo "
             <tr>
                 <td>{$row['request_name']}</td>
@@ -119,16 +120,15 @@ function display_request() {
                 <td>{$row['request_address']}</td>
                 <td>{$row['doc_name']}</td>
                 <td>{$row['request_purpose']}</td>
-                <td>{$row['request_status']}</td>
-                <td>";
+                <td>{$row['request_status']}</td>";
         
         // Show the cancel link only if the status is 'Pending'
         if ($row['request_status'] === 'Pending') {
-            echo "<a href='cancel_request.php?id={$row['doc_req_id']}' onclick='return confirm(\"Are you sure you want to cancel this request?\")'>Cancel</a>";
+             echo "<td><a href='cancel_request.php?id={$row['doc_req_id']}&page={$page}&status={$filterStatus}' onclick='return confirm(\"Are you sure you want to cancel this request?\")'>Cancel</a></td>";
+        } else {
+            echo "<td><a href='request.php?page={$page}&status={$filterStatus}&doc_req_id={$row['doc_req_id']}' id='view'>View</a></td>";
         }
-
-        echo "</td>
-            </tr>";
+        echo"</tr>";
     });
 }
 
