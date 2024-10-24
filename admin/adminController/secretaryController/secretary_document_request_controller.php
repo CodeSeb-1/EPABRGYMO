@@ -54,6 +54,7 @@ function display_request()
     $request['value'][] = $rows_per_page;
 
     displayAll($request, null, function ($row, $id) {
+        global $filterStatus;
         $formatted_date = date("F j, Y, g:i A", strtotime($row['request_date']));
         $statusClass = match ($row['request_status']) {
             'Pending' => 'status-pending',
@@ -70,7 +71,7 @@ function display_request()
                 <td>{$row['request_purpose']}</td>
                 <td>{$formatted_date}</td>
                 <td><span class='$statusClass'>{$row['request_status']}</span></td>
-                <td><a href='?doc_req_id={$row['doc_req_id']}' id='view'>View</a></td>
+                <td><a href='secretary_document_request.php?status=$filterStatus&doc_req_id={$row['doc_req_id']}' id='view'>View</a></td>
             </tr>";
     });
 }
