@@ -59,8 +59,12 @@ if (isset($_POST['add_resident']) || isset($_POST['edit_resident'])) {
     }
 }
 
-
-
+function calculate_age($birthdate) {
+    $birthDate = new DateTime($birthdate);
+    $today = new DateTime();
+    $age = $today->diff($birthDate)->y;
+    return $age;
+}
 
 
 $start = 0;
@@ -68,27 +72,45 @@ $rows_per_page = 15;
 $selectedStatus = $_GET['status'] ?? 'All';
 $filterStatus = $selectedStatus !== 'All' ? $selectedStatus : null;
 
-$record_sql = "SELECT * FROM masterlist";
+$search = $_GET['search'] ?? '';
+$search = $con->real_escape_string($search); // Sanitize the input
 
-$records = $con->query($record_sql);
+$record_sql = "SELECT * FROM masterlist WHERE CONCAT(masterlist_first_name, ' ', masterlist_middle_name, ' ', masterlist_last_name) LIKE ?";
+
+$stmt = $con->prepare($record_sql);
+$searchTerm = "%$search%"; // Prepare search term for wildcard search
+$stmt->bind_param('s', $searchTerm);
+$stmt->execute();
+
+$records = $stmt->get_result();
 $nr_of_rows = $records->num_rows;
 
+// Pagination logic
 $pages = ceil($nr_of_rows / $rows_per_page);
-
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
 $page = max(1, min($page, $pages)); 
 
 $start = ($page - 1) * $rows_per_page;
 
+// Prepare resident query with pagination
 $resident = [
-    'query' => "SELECT * FROM masterlist LIMIT ?, ?",
-    'bind' => 'ii',
-    'value' => [$start, $rows_per_page],
+    'query' => "SELECT * FROM masterlist WHERE CONCAT(masterlist_first_name, ' ', masterlist_middle_name, ' ', masterlist_last_name) LIKE ? LIMIT ?, ?",
+    'bind' => 'sii',
+    'value' => [$searchTerm, $start, $rows_per_page],
 ];
 
 function display_resident() {
     global $resident;
-    displayAll($resident, null, function ($row, $id) {
+    
+    // Prepare the statement
+    $stmt = $GLOBALS['con']->prepare($resident['query']);
+    $stmt->bind_param($resident['bind'], ...$resident['value']);
+    $stmt->execute();
+    
+    // Get the results
+    $result = $stmt->get_result();
+    
+    while ($row = $result->fetch_assoc()) {
         global $page;
 
         echo "
@@ -102,12 +124,5 @@ function display_resident() {
                 <td><a href='../secretary/secretary_resident_database.php?masterlist_id={$row['masterlist_id']}&page=$page'>Edit</a></td>
             </tr>
         ";
-    });
-}
-
-function calculate_age($birthdate) {
-    $birthDate = new DateTime($birthdate);
-    $today = new DateTime();
-    $age = $today->diff($birthDate)->y;
-    return $age;
+    }
 }
