@@ -1,16 +1,21 @@
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/includes/model.php');
 $events = [
-    'query' => 'SELECT * FROM events',
-    'bind'=> '',
-    'value'=> '',
-];
-
-$news = [
-    'query' => 'SELECT * FROM news',
+    'query' => 'SELECT * FROM events WHERE event_end >= CURDATE()',
     'bind' => '',
     'value' => '',
 ];
+
+
+$news = [
+    'query' => 'SELECT * FROM news 
+                WHERE (YEAR(news_date) = YEAR(CURDATE()) AND MONTH(news_date) = MONTH(CURDATE()))
+                OR (YEAR(news_date) = YEAR(CURDATE()) AND MONTH(news_date) = MONTH(CURDATE()) - 1)
+                OR (MONTH(CURDATE()) = 1 AND YEAR(news_date) = YEAR(CURDATE()) - 1 AND MONTH(news_date) = 12)',
+    'bind' => '',
+    'value' => '',
+];
+
 
 
 function display_events() {
