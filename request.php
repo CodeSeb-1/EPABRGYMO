@@ -101,22 +101,23 @@ include_once("userController/request_controller.php");
             </section>
         </div>
 
-            <section class="view-request" id="request">
-                <div class="table">
+            <section class="view-request">
+                <div class="table" id="request">
                     <h1>Request</h1>
                     <form action="" method="GET">
-                        <select name="status" onchange="this.form.submit()">
+                        <select name="status" onchange="addRequestAnchor(); this.form.submit()">
                             <option value="All" <?= $selectedStatus === 'All' ? 'selected' : '' ?>>All</option>
                             <option value="Pending" <?= $selectedStatus === 'Pending' ? 'selected' : '' ?>>Pending</option>
                             <option value="Approved" <?= $selectedStatus === 'Approved' ? 'selected' : '' ?>>Approved</option>
-                            <option value="Ready To Claim" <?= $selectedStatus === 'Ready To Claim' ? 'selected' : '' ?>>Ready to Claim</option>
+                            <option value="Ready To Claim" <?= $selectedStatus === 'Ready To Claim' ? 'selected' : '' ?>>Ready to Claim
+                            </option>
                             <option value="Claimed" <?= $selectedStatus === 'Claimed' ? 'selected' : '' ?>>Claimed</option>
                             <option value="Canceled" <?= $selectedStatus === 'Canceled' ? 'selected' : '' ?>>Canceled</option>
                             <option value="Declined" <?= $selectedStatus === 'Declined' ? 'selected' : '' ?>>Declined</option>
-                            
                         </select>
-                    </form><br>
-                    <table>
+                    </form>
+                    <br>
+                    <table >
                         <thead>
                             <tr>
                                 <th>Fullname</th>
@@ -136,19 +137,20 @@ include_once("userController/request_controller.php");
                         </tbody>
                     </table>
                     <div class="pagination">
-                    <span>Showing <?php echo$page ?> of <?php echo $pages;?></span>
+                        <span>Showing <?php echo $page ?> of <?php echo $pages; ?></span>
                         <a href="?page=1#request">First</a>
                         <a href="?page=<?= max(1, $page - 1) ?>#request">Previous</a>
-
+                    
                         <div class="page-numbers">
                             <?php for ($i = 1; $i <= $pages; $i++): ?>
                                 <a href="?page=<?= $i ?>#request" <?= ($i == $page) ? 'class="active"' : '' ?>><?= $i ?></a>
                             <?php endfor; ?>
                         </div>
-
+                    
                         <a href="?page=<?= min($pages, $page + 1) ?>#request">Next</a>
                         <a href="?page=<?= $pages ?>#request">Last</a>
                     </div>
+
                 </div> 
             </section>
     </main>
@@ -156,6 +158,13 @@ include_once("userController/request_controller.php");
     <script src="javascript/navbar.js"></script>
     <script src="javascript/request.js"></script>
     <script src="javascript/other.js"></script>
+    <script>
+    function addRequestAnchor() {
+        if (!window.location.href.includes('#request')) {
+            window.location.href += '#request';
+        }
+    }
+</script>
 </body>
 
 </html>
