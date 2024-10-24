@@ -82,10 +82,10 @@ include_once("../adminController/secretaryController/secretary_resident_controll
 
             <h1>Master List</h1><br>
             <section class="events" id="request">
-                <form id="searchForm" method="GET" action="">
-                    <input type="search" name="search" id="search" placeholder="Search by name..." 
-                        value="<?php echo $_GET['search'] ?? ''; ?>" oninput="submitSearchForm()">
-                    <!-- Automatically submit the form on input -->
+                <form method="GET" action="">
+                    <input type="search" name="search" placeholder="Search by name..." 
+                        value="<?php echo $_GET['search'] ?? ''; ?>" 
+                        oninput="this.form.submit()"> <!-- Automatically submit the form on input -->
                     <input type="hidden" name="page" value="<?= $page; ?>">
                 </form><br>
                 <table>
