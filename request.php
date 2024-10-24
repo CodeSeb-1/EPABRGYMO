@@ -10,8 +10,8 @@ include_once("userController/request_controller.php");
     <title>EPABRGYMO</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_circle_right" />
-    <link rel="stylesheet" href="assets/style1.css????">
-    <link rel="stylesheet" href="assets/pagination.css????">
+    <link rel="stylesheet" href="assets/style1.css???">
+    <link rel="stylesheet" href="assets/pagination.css???">
 </head>
 
 <body>
@@ -104,6 +104,18 @@ include_once("userController/request_controller.php");
             <section class="view-request" id="request">
                 <div class="table">
                     <h1>Request</h1>
+                    <form action="" method="GET">
+                        <select name="status" onchange="this.form.submit()">
+                            <option value="All" <?= $selectedStatus === 'All' ? 'selected' : '' ?>>All</option>
+                            <option value="Pending" <?= $selectedStatus === 'Pending' ? 'selected' : '' ?>>Pending</option>
+                            <option value="Approved" <?= $selectedStatus === 'Approved' ? 'selected' : '' ?>>Approved</option>
+                            <option value="Ready To Claim" <?= $selectedStatus === 'Ready To Claim' ? 'selected' : '' ?>>Ready to Claim</option>
+                            <option value="Claimed" <?= $selectedStatus === 'Claimed' ? 'selected' : '' ?>>Claimed</option>
+                            <option value="Canceled" <?= $selectedStatus === 'Canceled' ? 'selected' : '' ?>>Canceled</option>
+                            <option value="Declined" <?= $selectedStatus === 'Declined' ? 'selected' : '' ?>>Declined</option>
+                            
+                        </select>
+                    </form><br>
                     <table>
                         <thead>
                             <tr>

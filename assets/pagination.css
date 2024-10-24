@@ -12,14 +12,17 @@
 .pagination span {
     position: absolute;
     left: 2%;
+    font-size: 13px;
+    color: #636e73;
 }
 
 .pagination a {
     text-decoration: none;
-    color: #333;
+    color: #636e73;
     padding: 8px 12px;
     margin: 0 4px;
     border-radius: 20px;
+    font-size: 13px;
     transition: background-color 0.3s, color 0.3s;
 }
 

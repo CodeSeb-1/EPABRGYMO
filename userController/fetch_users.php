@@ -31,6 +31,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         'user_firstname' => $row['user_firstname'],
         'user_lastname' => $row['user_lastname'],
         'last_message' => $msg,
+        'user_type' => $row['user_type'],
     );
 }
 

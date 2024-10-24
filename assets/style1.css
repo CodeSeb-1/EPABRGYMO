@@ -298,23 +298,33 @@ main p {
 .view-request table {
     width: 100%;
     border-collapse: collapse;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    color: #636e73;
 }
 
+tr:nth-child(even) {
+    background: #f2f2f2;
+}
+
+td > a#view {
+    color: #ff3737;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+td > a#view:hover {
+    text-decoration: underline;
+}
+
+th, td {
+    padding: 10px 7px;
+    text-align: left;
+    font-weight: 300;
+    font-size: 13px;
+}
 th {
     background-color: #FF0000;
     color: #fff;
-    font-weight: 400;
-}
-th, td {
-    padding: 7px 30px;
-    font-size: 15px;
-    text-align: left;
-    border: 1px solid #cfd0d8;
-}
-
-td {
-    background-color: #fff;
 }
 
 

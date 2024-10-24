@@ -24,9 +24,9 @@
 
                                 userList += `<a href="#" class="user-link" data-id="${user.user_id}" data-name="${user.user_firstname} ${user.user_lastname}">
                                                 <li class="conversation-item">
-                                                    <img src="https://via.placeholder.com/40" alt="${user.user_firstname}"/>
+                                                    <img src="/EPABRGYMO/dataImages/Events.${user.user_id}.jpg" alt="${user.user_firstname}"/>
                                                     <div class='info'>
-                                                        <span>${user.user_firstname} ${user.user_lastname}</span>
+                                                        <span>${user.user_type}</span>
                                                         <div class="last-message">${lastMessage}</div> 
                                                     </div>
                                                 </li>

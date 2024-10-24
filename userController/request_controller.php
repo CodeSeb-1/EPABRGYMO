@@ -78,38 +78,39 @@ function display_document()
 $start = 0;
 $rows_per_page = 4;
 
-// total numbers para sa page-info
-$records = $con->query("SELECT dr.*, dt.doc_name 
-               FROM document_request dr
-               JOIN document_type dt ON dr.doc_type_id = dt.doc_type_id
-               WHERE dr.user_id = {$_SESSION['user_id']}
-               AND dr.request_status != 'Canceled'");
+$selectedStatus = $_GET['status'] ?? 'All';
+$filterStatus = $selectedStatus !== 'All' ? $selectedStatus : null;
+
+$query = "SELECT dr.*, dt.doc_name 
+          FROM document_request dr
+          JOIN document_type dt ON dr.doc_type_id = dt.doc_type_id
+          WHERE dr.user_id = {$_SESSION['user_id']}";
+
+if ($filterStatus) {
+    $query .= " AND dr.request_status = '{$filterStatus}'";
+}
+
+$records = $con->query($query);
 $nr_of_rows = $records->num_rows;
 
-//total num pages
 $pages = ceil($nr_of_rows / $rows_per_page);
-
-// Get the current page number, ensuring it's valid
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
-$page = max(1, min($page, $pages)); // Ensure page is within the valid range
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = max(1, min($page, $pages));
 
 $start = ($page - 1) * $rows_per_page;
 
+$query .= " ORDER BY dr.request_status DESC LIMIT $start, $rows_per_page";
+
 $display_request = [
-    'query'=> "SELECT dr.*, dt.doc_name 
-               FROM document_request dr
-               JOIN document_type dt ON dr.doc_type_id = dt.doc_type_id
-               WHERE dr.user_id = ?
-               AND dr.request_status != 'Canceled'
-               ORDER BY dr.request_status DESC 
-               LIMIT ?, ?",
-    'bind'=> 'sii',
-    'value'=> [$_SESSION['user_id'], $start, $rows_per_page]
+    'query' => $query,
+    'bind' => '', 
+    'value' => []
 ];
 
 function display_request() {
     global $display_request;
 
+    // Display the results using your existing displayAll logic
     displayAll($display_request, null, function ($row, $id) {
         echo "
             <tr>
@@ -121,14 +122,16 @@ function display_request() {
                 <td>{$row['request_status']}</td>
                 <td>";
         
+        // Show the cancel link only if the status is 'Pending'
         if ($row['request_status'] === 'Pending') {
-            echo "<a href='cancel_request.php?id={$row['doc_req_id']}' onclick='return confirm(\"Are you sure you want to delete this request?\")'>Cancel</a>";
+            echo "<a href='cancel_request.php?id={$row['doc_req_id']}' onclick='return confirm(\"Are you sure you want to cancel this request?\")'>Cancel</a>";
         }
 
         echo "</td>
             </tr>";
     });
 }
+
 
 
 

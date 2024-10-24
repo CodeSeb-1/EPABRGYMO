@@ -121,15 +121,17 @@ nav.sidebars a {
 
 .content .add-event .event-form img {
     height: 390px;
+    width: 550px;
     object-fit: cover;
+    pointer-events: none;
 }
 
 .content .add-event .field {
     width: 100%;
     font-size: 13px;
     max-width: 600px;
-
 }
+
 .content .add-event .field input,
 .content .add-event .field select,
 .content .add-event .field textarea {
@@ -138,6 +140,11 @@ nav.sidebars a {
     margin: 5px 0;
     border: 1px solid #ddd;
     outline: none;
+    color: #636e73;
+}
+
+.content .add-event .field option {
+    color: #636e73;
 }
 
 .content .add-event .field {
@@ -152,8 +159,8 @@ nav.sidebars a {
 
 .content .add-event .field label {
     width: 120px;
-    color: #000;
-    float: left;
+    font-size: 13px;
+    color: #636e73;
 }
 
 hr {

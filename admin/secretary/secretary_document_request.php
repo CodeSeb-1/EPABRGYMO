@@ -10,9 +10,9 @@ include_once("../adminController/secretaryController/secretary_document_request_
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-PaBrgyMo Calendar</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
-    <link rel="stylesheet" href="../../assets/event-calendar.css??">
+    <link rel="stylesheet" href="../../assets/event-calendar.css???">
     <link rel="stylesheet" href="../../assets/modal.css?">
-    <link rel="stylesheet" href="../../assets/pagination.css?">
+    <link rel="stylesheet" href="../../assets/pagination.css??">
 </head>
 <body>
     <?php include_once("../header.php"); ?>
@@ -23,7 +23,7 @@ include_once("../adminController/secretaryController/secretary_document_request_
         ?>
         <main class="content">
             <div class="content home">
-                <h1>Document Request</h1>
+                <h1>Document Request</h1><br>
                 <section class="events">
                     <form action="" method="GET">
                         <select name="status" onchange="this.form.submit()">
@@ -69,8 +69,6 @@ include_once("../adminController/secretaryController/secretary_document_request_
                         <a href="?page=<?= min($pages, $page + 1) ?>&status=<?= urlencode($selectedStatus) ?>#request">Next</a>
                         <a href="?page=<?= $pages ?>&status=<?= urlencode($selectedStatus) ?>#request">Last</a>
                     </div>
-
-
                 </section>
             </div>
         </main>
@@ -148,8 +146,8 @@ include_once("../adminController/secretaryController/secretary_document_request_
                         echo '<button type="submit" name="decline" class="btn btn-sec">Decline</button> ';
                         echo '<button type="submit" name="accept" class="btn btn-primary">Accept</button>';
                     }else if ($requestDetails['request_status'] === 'Ready To Claim') {
-                    echo '<button type="submit" name="claimed" class="btn btn-primary">Claimed</button>';
-                }
+                        echo '<button type="submit" name="claimed" class="btn btn-primary">Claimed</button>';
+                    }
                 }
                 ?>
             </div>
