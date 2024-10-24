@@ -1,6 +1,9 @@
 <?php
 include '../calendar.php';
 include_once("../adminController/tanod_calendar_controller.php");
+include_once("../adminController/secretaryController/secretary_calendar_controller.php");
+include_once("../adminController/secretaryController/secretary_news_controller.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,6 +13,7 @@ include_once("../adminController/tanod_calendar_controller.php");
     <title>E-PaBrgyMo Calendar</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
     <link rel="stylesheet" href="../../assets/event-calendar.css????">
+    <link rel="stylesheet" href="../../assets/modal.css">
 </head>
 <body>
     <?php
@@ -48,8 +52,44 @@ include_once("../adminController/tanod_calendar_controller.php");
                     </div>
                 </div>
             </section><hr>
+            <section class="view-events">
+                <?php
+                    display_news();
+                ?>
+            </section>    
+            <div id="eventModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="modalEventName"></h3>
+                        <span class="close">&times;</span>
+                    </div>
+                    <img id="modalEventImage" alt="Event Image"><br>
+                    <div class="form-content">
+                        <div class="form-column">
+                            <div class="form-group">
+                                <label>News:</label>
+                                <span id="modalNews"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Description:</label>
+                                <span id="modalEventDescription"></span>
+                            </div>
+                        </div>
+                        <div class="form-column">
+                            <div class="form-group">
+                                <label>Date:</label>
+                                <span id="modalDate"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-sec" onclick="closeModal()">Close</button>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
+    <script src="../../javascript/modal-news.js"></script>
     <script src="../../javascript/image.js"></script>
 </body>
 </html>

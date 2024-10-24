@@ -27,7 +27,7 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
             <h1>Add Event</h1>
             <section class="add-event">
                 <div class="event-form">
-                    <form action="../adminController/tanod_calendar_controller.php" method="POST" enctype="multipart/form-data">
+                    <form action="../adminController/secretaryController/secretary_calendar_controller.php" method="POST" enctype="multipart/form-data">
                         <div class="field">
                             <label>User:</label>
                             <select name="users">
