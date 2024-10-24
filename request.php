@@ -10,8 +10,9 @@ include_once("userController/request_controller.php");
     <title>EPABRGYMO</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_circle_right" />
-    <link rel="stylesheet" href="assets/style1.css???">
+    <link rel="stylesheet" href="assets/style1.css?????">
     <link rel="stylesheet" href="assets/pagination.css???">
+    <link rel="stylesheet" href="assets/modal.css">
 </head>
 
 <body>
@@ -21,41 +22,45 @@ include_once("userController/request_controller.php");
         <div class="container">
             <section class="form">
                 <h1>Document Request Form</h1>
-                <div class="form-content">
+                <div class="form-contents">
                     <form action="userController/request_controller.php" method="POST">
 
-                        <div class="form-group">
+                        <div class="form-groups">
                             <label>Who is requesting the document?</label>
-                            <div class="radio-group">
-                                <label>
-                                    <input type="radio" name="requestor" value="me" checked onchange="toggleRequestor()"
-                                        required> Me
-                                </label>
-                                <label>
-                                    <input type="radio" name="requestor" value="other" onchange="toggleRequestor()"
-                                        required> Other
-                                </label>
+
+                            <div class="form-groups">
+                                <label>Address:</label><br>
+                                <div class="radio-group">
+                                    <br>
+                                    <label>
+                                            <input type="radio" name="requestor" value="me" checked onchange="toggleRequestor()"required> Me
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="requestor" value="other" onchange="toggleRequestor()"required> Other                            
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-group" id="meRequestor">
+                        <div class="form-groups" id="meRequestor">
                             <label>Requestor Name:</label>
                             <input type="text" name="originalUser" value="<?php echo $_SESSION['user_fullname']; ?>"
                                 readonly>
                         </div>
 
                         <div id="otherRequestorDetails" style="display: none;">
-                            <div class="form-group">
+                            <div class="form-groups">
                                 <label for="otherName">Requestor Name:</label>
                                 <input type="text" id="otherName" name="otherName" placeholder="Enter full name">
                             </div>
-                            <div class="form-group">
+                            <div class="form-groups">
                                 <label for="otherBirthday">Requestor Birthday:</label>
                                 <input type="date" id="otherBirthday" name="otherBirthday" placeholder="Enter birthday">
                             </div>
-                            <div class="form-group">
-                                <label>Address:</label>
+                            <div class="form-groups">
+                                <label>Address:</label><br>
                                 <div class="radio-group">
+                                    <br>
                                     <label>
                                         <input type="radio" name="addressOption" value="sameAsMe" checked
                                             onchange="toggleAddressInput()"> Same as my address
@@ -66,13 +71,13 @@ include_once("userController/request_controller.php");
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group" id="manualAddressInput" style="display: none;">
+                            <div class="form-groups" id="manualAddressInput" style="display: none;">
                                 <label for="otherAddress">Requestor Address:</label>
                                 <input type="text" id="otherAddress" name="otherAddress" placeholder="Enter address">
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-groups">
                             <label for="documentType">Select a document to request:</label>
                             <select name="documentId" id="documentId" required>
                                 <option value="">Select document type</option>
@@ -80,7 +85,7 @@ include_once("userController/request_controller.php");
                             </select>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-groups">
                             <label for="purpose">Purpose:</label>
                             <select name="purpose" id="purpose" required onchange="toggleOtherpurpose(this.value)">
                                 <option value="">Select purpose</option>
@@ -90,8 +95,8 @@ include_once("userController/request_controller.php");
                                 <option value="others">Others</option>
                             </select>
                         </div>
-                        <div class="form-group" id="otherPurpose" style="display: none;">
-                            <label for="otherPurpose">Other Purpose:</label>
+                        <div class="form-groups" id="otherPurpose" style="display: none;">
+                            <label for="otherPurpose">Other Purpose:</label><br>
                             <input type="text" id="other_Purpose" name="other_Purpose" placeholder="Enter purpose">
                         </div>
 
@@ -153,18 +158,14 @@ include_once("userController/request_controller.php");
 
                 </div> 
             </section>
+    <?php include_once("modal.php"); ?>
+    <?php include_once("show-modal.php"); ?>
     </main>
     <?php include_once("footer.php"); ?>
     <script src="javascript/navbar.js"></script>
     <script src="javascript/request.js"></script>
     <script src="javascript/other.js"></script>
-    <script>
-    function addRequestAnchor() {
-        if (!window.location.href.includes('#request')) {
-            window.location.href += '#request';
-        }
-    }
-    </script>
+    <script src="javascript/request-location.js"></script>
 </body>
 
 </html>

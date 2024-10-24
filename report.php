@@ -7,7 +7,7 @@
     <title>EPABRGYMO</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_circle_right" />
-    <link rel="stylesheet" href="assets/style1.css??">
+    <link rel="stylesheet" href="assets/style1.css???">
 </head>
 
 <body>
@@ -19,10 +19,10 @@
         <div class="container">
             <section class="form">
                 <h1>Report</h1>
-                <div class="form-content">
+                <div class="form-contents">
                     <form action="userController/report_controller.php" method="POST">
 
-                        <div class="form-group">
+                        <div class="form-groups">
                             <label for="report">Type of report <span id="asterisk">*</span> </label>
                             <select name="report_type" id="report_type" required>
                                 <option value="">Select report</option>
@@ -40,22 +40,23 @@
                         </div>
 
 
-                        <div class="form-group">
+                        <div class="form-groups">
                             <label for="documentType">Description of the report <span id="asterisk">*</span> </label>
                             <textarea name="description" required placeholder="Description"
                                 class="fixed-height"></textarea>
                         </div>
 
 
-                        <div class="form-group">
+                        <div class="form-groups">
                             <label for="report">If there are people involved:</label>
                             <input type="text" name="person" required placeholder="Name">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-groups">
                             <div class="form-group">
-                                <label>Purok<span id="asterisk"> *</span> </label>
+                                <label>Purok<span id="asterisk"> *</span> </label><br>
                                 <div class="radio-group">
+                                    <br>
                                     <label>
                                         <input type="radio" name="purokOption" value="sameAsMe" checked
                                             onchange="toggleAddressInput()"> Same as mine
@@ -65,7 +66,7 @@
                                             onchange="toggleAddressInput()"> Enter manually
                                     </label>
                                 </div>
-                                <div class="form-group" id="manualPurokInput" style="display: none;">
+                                <div class="form-groups" id="manualPurokInput" style="display: none;">
                                     <input type="number" id="otherPurok" name="otherPurok" min="1" max="7" placeholder="Enter purok">
                                 </div>
                             </div>

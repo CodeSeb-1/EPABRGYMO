@@ -271,7 +271,7 @@ main p {
     font-size: 24px;
     text-align: center;
 }
-.form .form-content {
+.form .form-contents {
     padding:50px;
 }
 
@@ -339,13 +339,9 @@ th {
 }
 .form select option {
     color: #333;
-
 }
-.form label {
-    display: block;
-    margin-bottom: 8px;
+.form-contents label {
     font-weight: 500;
-    color: #333;
 }
 .form select,
 .form input[type="text"],
@@ -356,8 +352,10 @@ th {
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 14px;
     transition: border-color 0.3s ease;
+    margin-top: 10px;
+    color: #636e73;
 }
 .form select:focus,
 .form input[type="text"]:focus,
@@ -367,17 +365,25 @@ th {
     outline: none;
     border-color: #FF0000;
 }
-.radio-group {
-    display: flex;
-    gap: 20px;
-}
-.radio-group label {
+.radio-groupss {
     display: flex;
     align-items: center;
-    cursor: pointer;
 }
+
+
+.form-groups {
+    font-weight: 400;
+    font-size: 14px;
+    margin-bottom: 15px;
+    color: #636e73;
+}
+
+.form-groups label {
+    margin-bottom: 15px;
+}
+
 .radio-group input[type="radio"] {
-    margin-right: 8px;
+    margin: 0 3px;
 }
 .form input[type="submit"] {
     background-color: #FF0000;

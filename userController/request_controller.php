@@ -134,5 +134,51 @@ function display_request() {
 }
 
 
+$requestDetails = null;
+if (isset($_GET['doc_req_id'])) {
+    $docReqId = $_GET['doc_req_id'];
 
+    $data = [
+        'query' => "SELECT 
+                        dr.*, dt.doc_name 
+                    FROM 
+                        document_request dr
+                    INNER JOIN 
+                        document_type dt 
+                    ON 
+                        dr.doc_type_id = dt.doc_type_id
+                    WHERE 
+                        dr.doc_req_id = ?;
+                    ",
+        'bind' => 'i',
+        'value' => [$docReqId]
+    ];
+
+    $requestDetails = select($data, true);
+    if (!$requestDetails) {
+        echo "<script> alert('No results found for doc_req_id: $docReqId');</script>";
+    }
+}
+
+//pang format lang
+$issuedDate = $requestDetails['issued_date'] ?? '';
+$expirationDate = $requestDetails['expiration_date'] ?? '';
+$requestDate = $requestDetails['request_date'] ?? '';
+$dateTime = new DateTime($requestDate);
+$formattedDate = $dateTime->format('F j, Y g:i A');
+$formattedIssuedDate = $issuedDate ? (new DateTime($issuedDate))->format('F j, Y') : 'N/A';
+$formattedExpirationDate = $expirationDate ? (new DateTime($expirationDate))->format('F j, Y') : 'N/A';
+
+$duration = $formattedIssuedDate." - ". $formattedExpirationDate;
+
+//para lang sa kulay
+$requestStatus = $requestDetails['request_status'] ?? '';
+$statusClass = '';
+if ($requestStatus === 'Pending') {
+    $statusClass = 'status-pending';
+} elseif ($requestStatus === 'Approved') {
+    $statusClass = 'status-approved';
+} elseif ($requestStatus === 'Declined') {
+    $statusClass = 'status-declined';
+}
 
