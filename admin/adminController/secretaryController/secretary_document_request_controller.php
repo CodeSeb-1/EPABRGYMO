@@ -3,12 +3,20 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/includes/model.php');
 
 $start = 0;
 $rows_per_page = 10;
+$selectedStatus = $_GET['status'] ?? 'All';
+$filterStatus = $selectedStatus !== 'All' ? $selectedStatus : null;
 
-// Get total number of records
-$records = $con->query("SELECT dr.*, dt.doc_name 
+$record_sql = "SELECT dr.*, dt.doc_name 
                         FROM document_request dr
                         INNER JOIN document_type dt 
-                        ON dr.doc_type_id = dt.doc_type_id");
+                        ON dr.doc_type_id = dt.doc_type_id";
+
+if ($filterStatus) {
+    $record_sql .= " WHERE dr.request_status = '$filterStatus'";
+}
+
+// Get total number of records
+$records = $con->query($record_sql);
 $nr_of_rows = $records->num_rows;
 
 $pages = ceil($nr_of_rows / $rows_per_page);
@@ -27,33 +35,32 @@ $request = [
     'value'=> []
 ];
 
-$selectedStatus = $_GET['status'] ?? 'All';
-$filterStatus = $selectedStatus !== 'All' ? $selectedStatus : null;
 
-function display_request() {
+
+function display_request()
+{
     global $request, $filterStatus, $start, $rows_per_page, $con;
 
     if ($filterStatus) {
         $request['query'] .= " WHERE dr.request_status = ?";
-        $request['bind'] .= 's';  
+        $request['bind'] .= 's';
         $request['value'][] = $filterStatus;
     }
 
+    // Add pagination to the query
     $request['query'] .= " ORDER BY dr.doc_req_id DESC LIMIT ?, ?";
-    $request['bind'] .= 'ii';  
+    $request['bind'] .= 'ii';
     $request['value'][] = $start;
     $request['value'][] = $rows_per_page;
 
-    displayAll($request, null, function($row, $id) {
+    displayAll($request, null, function ($row, $id) {
         $formatted_date = date("F j, Y, g:i A", strtotime($row['request_date']));
-        $statusClass = '';
-        if ($row['request_status'] === 'Pending') {
-            $statusClass = 'status-pending';
-        } elseif ($row['request_status'] === 'Approved') {
-            $statusClass = 'status-approved';
-        } elseif ($row['request_status'] === 'Declined') {
-            $statusClass = 'status-declined';
-        }
+        $statusClass = match ($row['request_status']) {
+            'Pending' => 'status-pending',
+            'Approved' => 'status-approved',
+            'Declined' => 'status-declined',
+            default => ''
+        };
 
         echo "
             <tr data-doc-req-id='{$row['doc_req_id']}'>
@@ -67,6 +74,7 @@ function display_request() {
             </tr>";
     });
 }
+
 
 
 
