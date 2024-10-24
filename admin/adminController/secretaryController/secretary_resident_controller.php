@@ -62,16 +62,35 @@ if (isset($_POST['add_resident']) || isset($_POST['edit_resident'])) {
 
 
 
-$resident = [
-    'query' => 'SELECT * FROM masterlist',
-    'bind'=> '',
-    'value'=> [],
-];
 
+$start = 0;
+$rows_per_page = 15;
+$selectedStatus = $_GET['status'] ?? 'All';
+$filterStatus = $selectedStatus !== 'All' ? $selectedStatus : null;
+
+$record_sql = "SELECT * FROM masterlist";
+
+$records = $con->query($record_sql);
+$nr_of_rows = $records->num_rows;
+
+$pages = ceil($nr_of_rows / $rows_per_page);
+
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
+$page = max(1, min($page, $pages)); 
+
+$start = ($page - 1) * $rows_per_page;
+
+$resident = [
+    'query' => "SELECT * FROM masterlist LIMIT ?, ?",
+    'bind' => 'ii',
+    'value' => [$start, $rows_per_page],
+];
 
 function display_resident() {
     global $resident;
     displayAll($resident, null, function ($row, $id) {
+        global $page;
+
         echo "
             <tr>
                 <td>{$row['masterlist_first_name']} {$row['masterlist_middle_name']} {$row['masterlist_last_name']}</td>
@@ -80,7 +99,7 @@ function display_resident() {
                 <td>{$row['masterlist_contact_num']}</td>
                 <td>{$row['masterlist_email']}</td>
                 <td>{$row['masterlist_address']}</td>
-                <td><a href='../secretary/secretary_resident_database.php?masterlist_id={$row['masterlist_id']}'>Edit</a></td>
+                <td><a href='../secretary/secretary_resident_database.php?masterlist_id={$row['masterlist_id']}&page=$page'>Edit</a></td>
             </tr>
         ";
     });

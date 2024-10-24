@@ -10,6 +10,7 @@ include_once("../adminController/secretaryController/secretary_resident_controll
     <title>E-PaBrgyMo Calendar</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
     <link rel="stylesheet" href="../../assets/event-calendar.css???">
+    <link rel="stylesheet" href="../../assets/pagination.css">
 </head>
 <body>
     <?php
@@ -24,9 +25,8 @@ include_once("../adminController/secretaryController/secretary_resident_controll
             <div class="content home">
             <h1><?php echo isset($result) ? 'Edit Resident' : 'Add Resident'; ?></h1><br>
             <section class="add-event">
-    <div class="event-form">
-        <form action="../adminController/secretaryController/secretary_resident_controller.php" method="POST" enctype="multipart/form-data">
-            <!-- Hidden input to store the resident ID if editing -->
+        <div class="event-form">
+            <form action="../adminController/secretaryController/secretary_resident_controller.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="resident_id" value="<?php echo $result['masterlist_id'] ?? ''; ?>">
             
                         <div class="field">
@@ -76,11 +76,16 @@ include_once("../adminController/secretaryController/secretary_resident_controll
                     </div>
                 </div>
             </section>
-<hr>
+            <hr>
 
 
             <h1>Master List</h1><br>
-            <section class="events">
+            <section class="events" id="request">
+                <form method="GET" action="">
+                    <input type="search" name="search" placeholder="Search by name..." value="<?php echo $_GET['search'] ?? ''; ?>">
+                    <input type="hidden" name="page" value="<?= $page; ?>">
+                    <input type="submit" value="Search">
+                </form><br>
                 <table>
                     <thead>
                         <tr>
@@ -99,6 +104,20 @@ include_once("../adminController/secretaryController/secretary_resident_controll
                         ?>
                     </tbody>
                 </table>
+                <div class="pagination">
+                        <span>Showing <?php echo $page; ?> of <?php echo $pages; ?></span>
+                        <a href="?page=1&status=<?= urlencode($selectedStatus) ?>#request">First</a>
+                        <a href="?page=<?= max(1, $page - 1) ?>&status=<?= urlencode($selectedStatus) ?>#request">Previous</a>
+                    
+                        <div class="page-numbers">
+                            <?php for ($i = 1; $i <= $pages; $i++): ?>
+                                <a href="?page=<?= $i ?>&status=<?= urlencode($selectedStatus) ?>#request" <?= ($i == $page) ? 'class="active"' : '' ?>><?= $i ?></a>
+                            <?php endfor; ?>
+                        </div>
+                    
+                        <a href="?page=<?= min($pages, $page + 1) ?>&status=<?= urlencode($selectedStatus) ?>#request">Next</a>
+                        <a href="?page=<?= $pages ?>&status=<?= urlencode($selectedStatus) ?>#request">Last</a>
+                    </div>
             </section>
         </main>
     </div>
