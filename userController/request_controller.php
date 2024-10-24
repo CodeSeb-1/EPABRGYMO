@@ -84,7 +84,8 @@ $filterStatus = $selectedStatus !== 'All' ? $selectedStatus : null;
 $query = "SELECT dr.*, dt.doc_name 
           FROM document_request dr
           JOIN document_type dt ON dr.doc_type_id = dt.doc_type_id
-          WHERE dr.user_id = {$_SESSION['user_id']}";
+          WHERE dr.user_id = {$_SESSION['user_id']}
+          AND (dr.expiration_date IS NULL OR CURDATE() <= dr.expiration_date)";
 
 if ($filterStatus) {
     $query .= " AND dr.request_status = '{$filterStatus}'";
