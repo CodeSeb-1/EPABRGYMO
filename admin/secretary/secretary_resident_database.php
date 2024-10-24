@@ -22,48 +22,61 @@ include_once("../adminController/secretaryController/secretary_resident_controll
         ?>
         <main class="content">
             <div class="content home">
-            <h1>Add Resident</h1><br>
+            <h1><?php echo isset($result) ? 'Edit Resident' : 'Add Resident'; ?></h1><br>
             <section class="add-event">
-                <div class="event-form">
-                    <form action="../adminController/secretaryController/secretary_resident_controller.php" method="POST" enctype="multipart/form-data">
+    <div class="event-form">
+        <form action="../adminController/secretaryController/secretary_resident_controller.php" method="POST" enctype="multipart/form-data">
+            <!-- Hidden input to store the resident ID if editing -->
+            <input type="hidden" name="resident_id" value="<?php echo $result['masterlist_id'] ?? ''; ?>">
+            
                         <div class="field">
                             <label>First name:</label>
-                            <input type="text" name="firstname" placeholder="First name" required>
+                            <input type="text" name="firstname" placeholder="First name" required
+                                value="<?php echo $result['masterlist_first_name'] ?? ''; ?>">
                         </div>
                         <div class="field">
                             <label>Middle name:</label>
-                            <input type="text" name="middlename" placeholder="Middle name" required>
-                        </div>                        
+                            <input type="text" name="middlename" placeholder="Middle name" required
+                                value="<?php echo $result['masterlist_middle_name'] ?? ''; ?>">
+                        </div>
                         <div class="field">
                             <label>Last name:</label>
-                            <input type="text" name="lastname" placeholder="Last name" required>
+                            <input type="text" name="lastname" placeholder="Last name" required
+                                value="<?php echo $result['masterlist_last_name'] ?? ''; ?>">
                         </div>
                         <div class="field">
                             <label>Contact No.:</label>
-                            <input type="text" name="contact" placeholder="Contact No." required>
+                            <input type="text" name="contact" placeholder="Contact No." required
+                                value="<?php echo $result['masterlist_contact_num'] ?? ''; ?>">
                         </div>
                         <div class="field">
                             <label>Birthdate:</label>
-                            <input type="date" name="birthdate" required>
+                            <input type="date" name="birthdate" required
+                                value="<?php echo $result['masterlist_birthdate'] ?? ''; ?>">
                         </div>
                         <div class="field">
-                            <label>Email: </label>
-                            <input type="text" name="email" placeholder="Email" required>
+                            <label>Email:</label>
+                            <input type="email" name="email" placeholder="Email" required
+                                value="<?php echo $result['masterlist_email'] ?? ''; ?>">
                         </div>
                         <div class="field">
                             <label>Address:</label>
-                            <input type="text" name="address" placeholder="House no., Street" required>
+                            <input type="text" name="address" placeholder="House no., Street" required
+                                value="<?php echo $result['masterlist_address'] ?? ''; ?>">
                         </div>
+            
                         <div class="field">
                             <label></label>
-                            <input type="submit" name="add_resident" value="Add Resident">
+                            <input type="submit" name="<?php echo isset($result) ? 'edit_resident' : 'add_resident'; ?>"
+                                value="<?php echo isset($result) ? 'Edit Resident' : 'Add Resident'; ?>">
                         </div>
                     </form>
                     <div class="image-container">
                         <img src="../../assets/brgy.png" id="userpicture" alt="">
                     </div>
                 </div>
-            </section><hr>
+            </section>
+<hr>
 
 
             <h1>Master List</h1><br>
