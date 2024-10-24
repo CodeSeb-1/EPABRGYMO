@@ -6,6 +6,12 @@ $events = [
     'value'=> '',
 ];
 
+$news = [
+    'query' => 'SELECT * FROM news',
+    'bind' => '',
+    'value' => '',
+];
+
 
 function display_events() {
     global $events;
@@ -33,5 +39,27 @@ function display_events() {
         </div>";
     });
 }
+
+function display_news() {
+    global $news; // Assuming $news contains the result set from the database
+
+    displayAll($news, null, function ($row, $id) {
+        $news_date = new DateTime($row['news_date']);
+        $formatted_date = $news_date->format('F j, Y g:i A');  
+
+        $img_path = "/EPABRGYMO/dataImages/News.{$row['news_id']}.jpg";
+
+        echo "
+        <a class='news-card'>
+            <img src='$img_path' alt='News Image'>
+            <div class='news-content'>
+                <h3>{$row['news_name']}</h3>
+                <p>{$row['news_description']}</p>
+                <p class='date'>Published on: $formatted_date</p>
+            </div>
+        </a>";
+    });
+}
+
 
 
