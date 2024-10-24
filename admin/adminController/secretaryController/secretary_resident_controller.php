@@ -48,6 +48,7 @@ function display_resident() {
                 <td>{$row['masterlist_contact_num']}</td>
                 <td>{$row['masterlist_email']}</td>
                 <td>{$row['masterlist_address']}</td>
+                <td><a href='../secretary/secretary_resident_database.php?masterlist_id={$row['masterlist_id']}'>Edit</a></td>
             </tr>
         ";
     });

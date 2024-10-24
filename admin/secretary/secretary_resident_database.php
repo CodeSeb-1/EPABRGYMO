@@ -77,6 +77,7 @@ include_once("../adminController/secretaryController/secretary_resident_controll
                             <th>Contact No.</th>
                             <th>Email</th>
                             <th>Address</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
