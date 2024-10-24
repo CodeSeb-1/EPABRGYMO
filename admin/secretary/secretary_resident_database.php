@@ -23,6 +23,7 @@ include_once("../adminController/secretaryController/secretary_resident_controll
         ?>
         <main class="content">
             <div class="content home">
+                a
             <h1><?php echo isset($result) ? 'Edit Resident' : 'Add Resident'; ?></h1><br>
             <section class="add-event">
         <div class="event-form">
