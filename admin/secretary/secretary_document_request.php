@@ -12,6 +12,7 @@ include_once("../adminController/secretaryController/secretary_document_request_
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
     <link rel="stylesheet" href="../../assets/event-calendar.css???">
     <link rel="stylesheet" href="../../assets/modal.css?">
+    <link rel="stylesheet" href="../../assets/pagination.css?">
 </head>
 <body>
     <?php include_once("../header.php"); ?>
@@ -46,10 +47,24 @@ include_once("../adminController/secretaryController/secretary_document_request_
                         </thead>
                         <tbody>
                             <?php
-                                display_request($filterStatus);     
+                                display_request();     
                                 ?>
                         </tbody>
                     </table>
+                    <div class="pagination">
+                    <span>Showing <?php echo$page ?> of <?php echo $pages;?></span>
+                        <a href="?page=1#request">First</a>
+                        <a href="?page=<?= max(1, $page - 1) ?>#request">Previous</a>
+
+                        <div class="page-numbers">
+                            <?php for ($i = 1; $i <= $pages; $i++): ?>
+                                <a href="?page=<?= $i ?>#request" <?= ($i == $page) ? 'class="active"' : '' ?>><?= $i ?></a>
+                            <?php endfor; ?>
+                        </div>
+
+                        <a href="?page=<?= min($pages, $page + 1) ?>#request">Next</a>
+                        <a href="?page=<?= $pages ?>#request">Last</a>
+                    </div>
                 </section>
             </div>
         </main>
@@ -96,10 +111,17 @@ include_once("../adminController/secretaryController/secretary_document_request_
                         <label for="request_status">Status:</label>
                         <span id="request_status"><?= $requestDetails['request_status'] ?? '' ?></span>
                     </div>
-                    <div class="form-group">
-                        <label for="request_status">Expiration Date:</label>
-                        <span><input type="datetime-local" name="" id=""></span>
-                    </div>
+                    <?php
+                        if($requestDetails['request_status'] === "Approved") {
+                            ?>
+                            <div class="form-group">
+                                <label for="request_status">Expiration Date:</label>
+                                <span><input type="datetime-local" name="" id=""></span>
+                            </div>
+                        
+                        <?php
+                        }
+                    ?>
                 </div>
             </div>
             <div class="form-actions" id="form-actions">
