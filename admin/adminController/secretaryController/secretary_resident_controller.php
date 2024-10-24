@@ -2,7 +2,22 @@
 include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/includes/model.php');
 
 
-if (isset($_POST['add_resident'])) {
+$result = null;
+
+// Check if editing is requested
+if (isset($_GET['masterlist_id'])) {
+    $id = $_GET['masterlist_id'];
+    $resident = [
+        'query' => 'SELECT * FROM masterlist WHERE masterlist_id = ?',
+        'bind' => 'i',
+        'value' => [$id]
+    ];
+    $result = select($resident,true);  // Fetch the resident data
+}
+
+// Handle Add or Update Resident
+if (isset($_POST['add_resident']) || isset($_POST['edit_resident'])) {
+    $id = $_POST['resident_id'] ?? null;
     $firstname = $_POST['firstname'];
     $middlename = $_POST['middlename'];
     $lastname = $_POST['lastname'];
@@ -11,16 +26,31 @@ if (isset($_POST['add_resident'])) {
     $email = $_POST['email'];
     $address = $_POST['address'];
 
-    $insert = [
-        'query' => "INSERT INTO 
+    if (isset($_POST['edit_resident'])) {
+        // Update existing resident
+        $update = [
+            'query' => "UPDATE masterlist 
+                        SET masterlist_first_name = ?, masterlist_middle_name = ?, 
+                            masterlist_last_name = ?, masterlist_contact_num = ?, 
+                            masterlist_email = ?, masterlist_birthdate = ?, 
+                            masterlist_address = ? 
+                        WHERE masterlist_id = ?",
+            'bind' => 'sssssssi',
+            'value' => [$firstname, $middlename, $lastname, $contact, $email, $birthdate, $address, $id]
+        ];
+        $result = updateData($update);
+    } else {
+        // Add new resident
+        $insert = [
+            'query' => "INSERT INTO 
                         masterlist (masterlist_first_name, masterlist_middle_name, masterlist_last_name, 
                                     masterlist_contact_num, masterlist_email, masterlist_birthdate, masterlist_address)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)",
-        'bind' => 'sssssss',
-        'value' => [$firstname, $middlename, $lastname, $contact, $email, $birthdate, $address]
-    ];
-
-    $result = insertData($insert);
+                        VALUES (?, ?, ?, ?, ?, ?, ?)",
+            'bind' => 'sssssss',
+            'value' => [$firstname, $middlename, $lastname, $contact, $email, $birthdate, $address]
+        ];
+        $result = insertData($insert);
+    }
 
     if ($result) {
         echo "<script>alert('Success'); window.location.href='../../secretary/secretary_resident_database.php';</script>";
@@ -28,6 +58,8 @@ if (isset($_POST['add_resident'])) {
         echo "<script>alert('Error: Request could not be processed.'); window.location.href='../../secretary/secretary_resident_database.php';</script>";
     }
 }
+
+
 
 
 $resident = [
