@@ -38,44 +38,11 @@ include_once("userController/index_controller.php");
             <div class="container">
                 <h2>Latest News</h2>
                 <div class="news-container">
-                    <a class="news-card">
-                        <img src="assets/image.png" alt="News 5">
-                        <div class="news-content">
-                            <h3>Barangay Clean-up Drive</h3>
-                            <p>Join us this Saturday for our monthly community clean-up initiative.</p>
-                        </div>
-                    </a>
-                    <a class="news-card">
-                        <img src="assets/image.png" alt="News 5">
-                        <div class="news-content">
-                            <h3>New Online Payment System</h3>
-                            <p>We've launched a new system for easier online payments for barangay services.</p>
-                        </div>
-                    </a>
-                    <a class="news-card">
-                        <img src="assets/image.png" alt="News 5">
-                        <div class="news-content">
-                            <h3>COVID-19 Vaccination Schedule</h3>
-                            <p>Check the latest schedule for COVID-19 vaccinations in our barangay.</p>
-                        </div>
-                    </a>
-                    <div class="news-card">
-                        <img src="assets/image.png" alt="News 5">
-                        <div class="news-content">
-                            <h3>Barangay Youth Program</h3>
-                            <p>New activities added to our youth development program. Register now!</p>
-                        </div>
-                    </div>
-                    <a class="news-card">
-                        <img src="assets/image.png" alt="News 5">
-                        <div class="news-content">
-                            <h3>Community Garden Project</h3>
-                            <p>Help us grow our community garden. Volunteers needed this week.</p>
-                        </div>
-                    </a>
+                    <?php display_news(); ?>
                 </div>
             </div>
         </section>
+
 
        <section class="events-section">
             <div class="container">
