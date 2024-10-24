@@ -137,18 +137,18 @@ include_once("userController/request_controller.php");
                         </tbody>
                     </table>
                     <div class="pagination">
-                        <span>Showing <?php echo $page ?> of <?php echo $pages; ?></span>
-                        <a href="?page=1#request">First</a>
-                        <a href="?page=<?= max(1, $page - 1) ?>#request">Previous</a>
+                        <span>Showing <?php echo $page; ?> of <?php echo $pages; ?></span>
+                        <a href="?page=1&status=<?= urlencode($selectedStatus) ?>#request">First</a>
+                        <a href="?page=<?= max(1, $page - 1) ?>&status=<?= urlencode($selectedStatus) ?>#request">Previous</a>
                     
                         <div class="page-numbers">
                             <?php for ($i = 1; $i <= $pages; $i++): ?>
-                                <a href="?page=<?= $i ?>#request" <?= ($i == $page) ? 'class="active"' : '' ?>><?= $i ?></a>
+                                <a href="?page=<?= $i ?>&status=<?= urlencode($selectedStatus) ?>#request" <?= ($i == $page) ? 'class="active"' : '' ?>><?= $i ?></a>
                             <?php endfor; ?>
                         </div>
                     
-                        <a href="?page=<?= min($pages, $page + 1) ?>#request">Next</a>
-                        <a href="?page=<?= $pages ?>#request">Last</a>
+                        <a href="?page=<?= min($pages, $page + 1) ?>&status=<?= urlencode($selectedStatus) ?>#request">Next</a>
+                        <a href="?page=<?= $pages ?>&status=<?= urlencode($selectedStatus) ?>#request">Last</a>
                     </div>
 
                 </div> 
@@ -164,7 +164,7 @@ include_once("userController/request_controller.php");
             window.location.href += '#request';
         }
     }
-</script>
+    </script>
 </body>
 
 </html>
