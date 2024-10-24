@@ -81,10 +81,11 @@ include_once("../adminController/secretaryController/secretary_resident_controll
 
             <h1>Master List</h1><br>
             <section class="events" id="request">
-                <form id="searchForm" method="GET" action="">
+                <form method="GET" action="">
                     <input type="search" name="search" id="search" placeholder="Search by name..." 
-                        value="<?php echo $_GET['search'] ?? ''; ?>" oninput="submitSearchForm()">
-                    <!-- Automatically submit the form on input -->
+                    value="<?php echo $_GET['search'] ?? ''; ?>" oninput="this.form.submit()">
+                                    <!-- Automatically submit the form on input -->
+
                     <input type="hidden" name="page" value="<?= $page; ?>">
                 </form><br>
                 <table>
@@ -124,33 +125,6 @@ include_once("../adminController/secretaryController/secretary_resident_controll
     </div>
     <script src="../../javascript/image.js"></script>
     <script>
-        function submitSearchForm() {
-            const form = document.getElementById('searchForm');
-            const formData = new FormData(form);
-            const queryString = new URLSearchParams(formData).toString();
-            
-            fetch(window.location.pathname + '?' + queryString)
-                .then(response => response.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const tableContent = doc.querySelector('table tbody').innerHTML;
-                    const paginationContent = doc.querySelector('.pagination').innerHTML;
-                    
-                    // Update the table and pagination content
-                    document.querySelector('table tbody').innerHTML = tableContent;
-                    document.querySelector('.pagination').innerHTML = paginationContent;
-                    
-                    // Keep the search input focused
-                    const searchInput = document.getElementById('search');
-                    if (searchInput.value) {
-                        searchInput.focus();
-                        const length = searchInput.value.length;
-                        searchInput.setSelectionRange(length, length);
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
         window.addEventListener('load', function() {
             const searchInput = document.getElementById('search');
             if (searchInput.value) {

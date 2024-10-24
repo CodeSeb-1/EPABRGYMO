@@ -7,15 +7,15 @@ $events = [
     'value'=> '',
 ];
 
-$colors = [
-    "Tanod" => "#ce5151",
-    "Health Workers" => "#51ce57",
-    "Kagawad" => "#518fce",
-    "BrgyCaptain" => "#a45eb4"
-];
-
 function display_events() {
     global $events, $colors;
+
+    $colors = [
+        "Tanod" => "#ce5151",
+        "Health Workers" => "#51ce57",
+        "Kagawad" => "#518fce",
+        "BrgyCaptain" => "#a45eb4"
+    ];
 
     displayAll($events, null, function ($row, $id) use ($colors) {
         $start = new DateTime($row['event_start']);
@@ -138,6 +138,7 @@ $data = [
 
 
 $results = select($data); 
+
 $colors = [
     "Tanod" => "red",
     "Health Workers" => "green",
