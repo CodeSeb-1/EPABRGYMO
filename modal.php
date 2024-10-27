@@ -83,11 +83,14 @@
                                 <span id="issued_date"><?= $duration?></span>
                             </div>
                         <?php
-                        } else if ($requestDetails['request_status'] === "Canceled") {?>
+                        } else if ($requestDetails['request_status'] === "Canceled"|| $requestDetails['request_status'] === "Declined") {?>
                             <div class="form-group">
-                                <label for="reason">Reason for cancellation</label>
-                                <span><?= $requestDetails['reason'] ?? '';  ?></span>
+                                <label for="reason">
+                                    <?= $requestDetails['request_status'] === "Canceled" ? "Reason for Cancellation" : "Reason for Request Denial"; ?>
+                                </label>
+                                <span><?= $requestDetails['reason'] ?? ''; ?></span>
                             </div>
+
                        <?php }
                     ?>
                 </div>

@@ -139,11 +139,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_
       
 
     } else if (isset($_POST['decline'])) {
+        $doc_req_id = $_POST['doc_req_id'];
+        $decline_reason = ($_POST['decline_reason'] === "others")? $_POST['other_decline_reason']: $_POST['decline_reason'];
+
+
         $update = [
-            'query' => "UPDATE document_request SET request_status = ?
-                        WHERE doc_req_id = ?",
-            'bind' => 'si',
-            'value' => ["Declined", $doc_req_id]
+            'query' => "UPDATE document_request 
+                    SET request_status = ?, Reason = ? 
+                    WHERE doc_req_id = ?",
+            'bind' => 'ssi',
+            'value' => ["Declined", $decline_reason, $doc_req_id]
         ];
       
     } else if (isset($_POST["claim"])) { 
