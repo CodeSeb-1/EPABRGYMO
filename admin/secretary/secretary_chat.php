@@ -13,6 +13,12 @@ include_once("../adminController/secretaryController/secretary_resident_controll
     <link rel="stylesheet" href="../../assets/pagination.css">
     <link rel="stylesheet" href="../../assets/chat.css?">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .bold {
+    font-weight: bold;
+    color: #333333;
+}
+    </style>
 </head>
 <body>
     <?php include_once '../header.php'; ?>
