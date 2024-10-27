@@ -15,28 +15,20 @@ include_once("../adminController/secretaryController/secretary_document_request_
     <link rel="stylesheet" href="../../assets/pagination.css?">
     <style>
         #declineModal {
-    z-index: 1001; /* Make it higher than myModal */
-}
+            z-index: 1001; /* Make it higher than myModal */
+        }
 
-.modal-content {
-    background-color: white;
-    margin: 15% auto;
-    padding: 20px;
-    border-radius: 5px;
-    width: 50%;
-}
+        .close {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+        }
 
-.close {
-    float: right;
-    font-size: 28px;
-    cursor: pointer;
-}
-
-textarea {
-    width: 100%;
-    padding: 10px;
-    resize: vertical;
-}
+        textarea {
+            width: 100%;
+            padding: 10px;
+            resize: vertical;
+        }
 
     </style>
 </head>
@@ -101,42 +93,42 @@ textarea {
     </div>
 
     <!-- Reason for Decline Modal -->
-<div id="declineModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Reason for Declining</h2>
-            <span class="close" id="closeDeclineModal">&times;</span>
+    <div id="declineModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reason for Declining</h2>
+                <span class="close" id="closeDeclineModal">&times;</span>
+            </div>
+            <form action="../adminController/secretaryController/secretary_document_request_controller.php" method="POST">
+                <input type="hidden" name="doc_req_id" id="decline_doc_req_id">
+                <div class="form-group">
+                    <label for="decline-reason" >Reason for Declining Request:</label>
+                        <select id="decline-reason" name="decline_reason" onchange="toggleOtherpurpose(this.value)">
+                            <option value="Incomplete Application">Incomplete Application</option>
+                            <option value="Eligibility Issues">Eligibility Issues</option>
+                            <option value="Pending Obligations">Pending Obligations</option>
+                            <option value="Invalid Request">Invalid Request</option>
+                            <option value="Documentation Mismatch">Documentation Mismatch</option>
+                            <option value="Regulatory Compliance">Regulatory Compliance</option>
+                            <option value="Expired Documents">Expired Documents</option>
+                            <option value="Fraud Prevention">Fraud Prevention</option>
+                            <option value="Time Constraints">Time Constraints</option>
+                            <option value="others">Others</option>
+
+                        </select>
+                        <br><br>
+                        <div id="other_decline_reason_div" style="display:none;">
+                            <textarea name="other_decline_reason" id="other_decline_reason" rows="4"  ></textarea>
+                        </div>
+
+                    
+                </div>
+                <div class="form-actions">
+                    <button type="submit" name="decline" class="btn btn-primary">Confirm</button>
+                </div>
+            </form>
         </div>
-        <form action="../adminController/secretaryController/secretary_document_request_controller.php" method="POST">
-            <input type="hidden" name="doc_req_id" id="decline_doc_req_id">
-            <div class="form-group">
-                <label for="decline-reason" >Reason for Declining Request:</label>
-                    <select id="decline-reason" name="decline_reason" onchange="toggleOtherpurpose(this.value)">
-                        <option value="Incomplete Application">Incomplete Application</option>
-                        <option value="Eligibility Issues">Eligibility Issues</option>
-                        <option value="Pending Obligations">Pending Obligations</option>
-                        <option value="Invalid Request">Invalid Request</option>
-                        <option value="Documentation Mismatch">Documentation Mismatch</option>
-                        <option value="Regulatory Compliance">Regulatory Compliance</option>
-                        <option value="Expired Documents">Expired Documents</option>
-                        <option value="Fraud Prevention">Fraud Prevention</option>
-                        <option value="Time Constraints">Time Constraints</option>
-                        <option value="others">Others</option>
-
-                    </select>
-                    <br><br>
-                    <div id="other_decline_reason_div" style="display:none;">
-                        <textarea name="other_decline_reason" id="other_decline_reason" rows="4"  ></textarea>
-                    </div>
-
-                
-            </div>
-            <div class="form-actions">
-                <button type="submit" name="decline" class="btn btn-primary">Confirm</button>
-            </div>
-        </form>
     </div>
-</div>
 
 
     <!-- Modal -->
@@ -198,6 +190,13 @@ textarea {
                                 <span id="issued_date"><?= $duration?></span>
                             </div>
                         <?php
+                        } else if ($requestDetails['request_status'] === "Canceled" || $requestDetails['request_status'] === "Declined") {?>
+                            <div class="form-group">
+                                <label for="doc_type">Reason:</label>
+                                <span id="doc_type"><?= $requestDetails['reason'] ?? '' ?></span>
+                            </div>
+                            
+                        <?php
                         }
                     ?>
                 </div>
@@ -208,7 +207,7 @@ textarea {
                     if ($requestDetails['request_status'] === 'Approved') {
                         echo '<button type="submit" name="claim" class="btn btn-primary">Ready To Claim</button>';
                     } else if ($requestDetails['request_status'] === 'Pending') {
-                        echo '<button type="submit" name="decline" class="btn btn-sec">Decline</button> ';
+                        echo '<button type="button" onclick="openDeclineModal(' . $requestDetails['doc_req_id'] . ')" class="btn btn-sec">Decline</button> ';
                         echo '<button type="submit" name="accept" class="btn btn-primary">Accept</button>';
                     }else if ($requestDetails['request_status'] === 'Ready To Claim') {
                         echo '<button type="submit" name="claimed" class="btn btn-primary">Claimed</button>';
@@ -223,11 +222,11 @@ textarea {
     var modal = document.getElementById("myModal");
     var span = document.getElementById("closeModal");
 
-    <?php if ($requestDetails): ?>
+    <?php if ($requestDetails): ?>                 
         modal.style.display = "block";
     <?php endif; ?>
 
-    span.onclick = function() {
+    span.onclick = function() {                                                                             
         modal.style.display = "none";
     }
 
@@ -238,33 +237,35 @@ textarea {
     }
 
     var declineModal = document.getElementById("declineModal");
-var closeDeclineModal = document.getElementById("closeDeclineModal");
+    var closeDeclineModal = document.getElementById("closeDeclineModal");
 
-function openDeclineModal(docReqId) {
-    document.getElementById("decline_doc_req_id").value = docReqId;
-    declineModal.style.display = "block";
-}
+    function openDeclineModal(docReqId) { 
+        document.getElementById("decline_doc_req_id").value = docReqId;
+        declineModal.style.display = "block";
+        modal.style.display = "none";
+    }
 
-closeDeclineModal.onclick = function() {
-    declineModal.style.display = "none";
-};
-
-window.onclick = function(event) {
-    if (event.target == declineModal) {
+    closeDeclineModal.onclick = function() {
         declineModal.style.display = "none";
+    };
+
+    window.onclick = function(event) {
+        if (event.target == declineModal) {
+            declineModal.style.display = "none";
+        }
+    };
+
+    function toggleOtherpurpose(value) {
+        const otherInput = document.getElementById("other_decline_reason");
+        const otherDiv = document.getElementById("other_decline_reason_div");
+        if (value === "others") {
+            otherDiv.style.display = "block";
+            otherInput.required = true;
+        } else {
+            otherDiv.style.display = "none";
+            otherInput.required = false;
+        }
     }
-};
-function toggleOtherpurpose(value) {
-    const otherInput = document.getElementById("other_decline_reason");
-    const otherDiv = document.getElementById("other_decline_reason_div");
-    if (value === "others") {
-      otherDiv.style.display = "block";
-      otherInput.required = true;
-    } else {
-      otherDiv.style.display = "none";
-      otherInput.required = false;
-    }
-  }
 
 </script>
 </body>

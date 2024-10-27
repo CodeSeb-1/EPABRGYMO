@@ -1,6 +1,6 @@
 <?php
 include '../calendar.php';
-include_once("../adminController/tanod_calendar_controller.php");
+// include_once("../adminController/tanod_calendar_controller.php");
 include_once("../adminController/secretaryController/secretary_calendar_controller.php");
 ?>
 <!DOCTYPE html>
@@ -191,42 +191,62 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
                 <h2 class="modal-title">Event Details</h2>
                 <span class="close" id="closeModal">&times;</span>
             </div>
-            <form action="../adminController/secretaryController/secretary_document_request_controller.php" method="POST">
-                <input type="hidden" name="event_id" id="event_id" value="<?= $requestDetails['event_id'] ?? '' ?>">
+            <form action="../adminController/secretaryController/secretary_calendar_controller.php" method="POST">
+                <?php $_SESSION['event_id'] = $requestDetails['event_id']; ?>
+                <input type="hidden" name="event_id_edit" id="event_id_edit" value="<?= $requestDetails['event_id'] ?? '' ?>">
                 <img id="modalEventImage" src="<?php echo "/EPABRGYMO/dataImages/Events.{$requestDetails['event_id']}.jpg"; ?>" alt=""><br><br><br>
                 <div id="modal-body" class="form-content">
                     <div class="form-column">
                         <div class="form-group">
-                            <label for="request_name">User Position:</label>
-                            <span id="request_name"><?= $requestDetails['event_user_position'] ?? '' ?></span>
+                            <label for="event_user_position">User Position:</label>
+                            <span>
+                                <select name="users" disabled required>
+                                    <option value="<?= $requestDetails['event_user_position'] ?? '' ?>"><?php echo $requestDetails['event_user_position'] ?? ''; ?></option>
+                                    <option value="Tanod">Tanod</option>
+                                    <option value="Health Workers">Health Workers</option>
+                                    <option value="Kagawad">Kagawad</option>
+                                    <option value="BrgyCaptain">Brgy Captain</option>
+                                </select>       
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="request_name">Event:</label>
-                            <span id="request_name"><?= $requestDetails['event_name'] ?? '' ?></span>
+                            <label for="event_name">Event:</label>
+                            <span>
+                                <input type="text" id="event_name" name="event_name" value="<?= $requestDetails['event_name'] ?? '' ?>" disabled required>
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="request_name">Address:</label>
-                            <span id="request_name"><?= $requestDetails['event_address'] ?? '' ?></span>
+                            <label for="event_address">Address:</label>
+                            <span>
+                                <input type="text" id="event_address" name="event_address" value="<?= $requestDetails['event_address'] ?? '' ?>" disabled required>
+                            </span>
                         </div>
                     </div>
                     <div class="form-column">
                         <div class="form-group">
-                            <label for="request_purpose" class="<?=$statusClass?>">Event Address:</label>
-                            <span id="request_purpose"><?= $requestDetails['event_address'] ?? '' ?></span>
+                            <label for="event_start">Description:</label>
+                            <span>
+                                <input type="text" id="event_description" name="event_description" value="<?= $requestDetails['event_description'] ?? '' ?>" disabled required>
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="request_date">Start Date:</label>
-                            <span id="request_date"><?= $eventStart ?? '' ?></span>
+                            <label for="event_start">Start Date:</label>
+                            <span>
+                                <input type="datetime-local" id="event_start" name="event_start" value="<?= $requestDetails['event_start'] ?? '' ?>" disabled required>
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="request_status">End Date:</label>
-                            <span id="request_status"><?= $eventEnd ?? '' ?></span>
+                            <label for="event_end">End Date:</label>
+                            <span>
+                                <input type="date" id="event_end" name="event_end" value="<?= $requestDetails['event_end'] ?? '' ?>" disabled required>
+                            </span>
                         </div>
                     </div>
                 </div>
                 <div class="form-actions" id="form-actions">
-                    <button type="submit" name="delete_event" class="btn btn-sec">Remove</button> 
-                    <button type="submit" name="edit_event" class="btn btn-primary">Edit</button>
+                    <button type="submit" name="delete_event" class="btn btn-sec">Remove</button>
+                    <button type="button" class="btn btn-primary" onclick="toggleEdit()" id="editBtn">Edit</button> 
+                    <button type="submit" name="save_event" class="btn btn-primary" style="display: none;" id="saveBtn">Save</button>
                 </div>
             </form>
         </div>
@@ -265,6 +285,21 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
             if (event.target == modal) {
                 modal.style.display = "none";
             }
+        }
+
+        function toggleEdit() {
+            const inputs = document.querySelectorAll('#myModal input, #myModal select');
+            const editBtn = document.getElementById("editBtn");
+            const saveBtn = document.getElementById("saveBtn");
+
+            // Toggle disabled state of inputs
+            inputs.forEach(input => {
+                input.disabled = !input.disabled;
+            });
+
+            // Toggle visibility of buttons
+            editBtn.style.display = "none";
+            saveBtn.style.display = "inline-block";
         }
     </script>
 </body>

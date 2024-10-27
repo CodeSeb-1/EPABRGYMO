@@ -113,20 +113,28 @@ function findImageFile($table, $id) {
 
 function deleteData($data, $deleteImage = false) {
     global $con;
-
-    if($stmt = $con->prepare($data['query'])) {
+    $success = false; 
+    if ($stmt = $con->prepare($data['query'])) {
         if (!empty($data['bind']) && !empty($data['value'])) {
             $stmt->bind_param($data['bind'], ...$data['value']);
         }
 
-        $filePath = $_SERVER['DOCUMENT_ROOT'] . "/EPABGRYMO/dataImages/{$deleteImage['table']}.{$deleteImage['primaryKey']}.jpg";
-        if (file_exists($filePath)) {
-            unlink($filePath); 
+        $stmt->execute();
+        if ($stmt->affected_rows > 0) {
+            $success = true; 
         }
 
-        $stmt->execute();
+        // Check if we need to delete an image
+        if ($deleteImage && !empty($deleteImage['table']) && !empty($deleteImage['primaryKey'])) {
+            $filePath = $_SERVER['DOCUMENT_ROOT'] . "/EPABGRYMO/dataImages/{$deleteImage['table']}.{$deleteImage['primaryKey']}.jpg";
+            if (file_exists($filePath)) {
+                unlink($filePath); 
+            }
+        }
+
         $stmt->close();
     }
+    return $success;
 }
 
 function generateVerificationCode() {
