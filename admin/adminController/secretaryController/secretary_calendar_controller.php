@@ -1,14 +1,28 @@
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/includes/model.php');
+$start = 0;
+$rows_per_page = 10;
+$selectedStatus = $_GET['status'] ?? 'All';
+$filterStatus = $selectedStatus !== 'All' ? $selectedStatus : null;
 
-$events = [
-    'query' => 'SELECT * FROM events',
-    'bind'=> '',
-    'value'=> '',
-];
+$record_sql = "SELECT * FROM events";
+
+if ($filterStatus) {
+    $record_sql .= " WHERE event_user_position = '$filterStatus'";
+}
+
+$records = $con->query($record_sql);
+$nr_of_rows = $records->num_rows;
+
+$pages = ceil($nr_of_rows / $rows_per_page);
+
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
+$page = max(1, min($page, $pages)); 
+
+$start = ($page - 1) * $rows_per_page;
 
 function display_events() {
-    global $events, $colors;
+    global $events, $colors, $filterStatus, $start, $rows_per_page;
 
     $colors = [
         "Tanod" => "#ce5151",
@@ -17,32 +31,48 @@ function display_events() {
         "BrgyCaptain" => "#a45eb4"
     ];
 
+    $events['query'] = "SELECT * FROM events";
+    $events['bind'] = '';
+    $events['value'] = []; 
+
+    if ($filterStatus) {
+        $events['query'] .= " WHERE event_user_position = ?";
+        $events['bind'] .= 's'; // Bind type for string
+        $events['value'][] = $filterStatus;
+    }
+
+    $events['query'] .= " ORDER BY event_id DESC LIMIT ?, ?";
+    $events['bind'] .= 'ii'; // Bind types for integers
+    $events['value'][] = $start;
+    $events['value'][] = $rows_per_page;
+
     displayAll($events, null, function ($row, $id) use ($colors) {
+        global $page, $filterStatus;
+
         $start = new DateTime($row['event_start']);
         $end = new DateTime($row['event_end']);
 
         $start_date = $start->format('F j, Y'); 
-        $start_time = $start->format('g:i A');  
-        $end_date = $end->format('F j, Y');     
+        $end_date = $end->format('F j, Y'); 
         
         // Get the user type and corresponding color
         $user_type = $row['event_user_position'];
         $line_color = isset($colors[$user_type]) ? $colors[$user_type] : 'gray';
 
-        $img_path = "/EPABRGYMO/dataImages/Events.{$row['event_id']}.jpg";
-
         echo "
-        <div class='event-card' onclick=\"showModal('{$row['event_name']}', '{$row['event_user_position']}', '{$row['event_address']}', '$start_date at $start_time', '$end_date', '{$row['event_description']}', '$img_path')\">
-            <div class='line' style='background: $line_color;'></div>
-            <div class='event-info'>
-                <h3>{$row['event_name']}</h3>
-                <p>{$row['event_user_position']}</p>
-                <p class='location'>Location: {$row['event_address']}</p>
-                <p class='time'>Start: $start_date at $start_time</p>
-                <p class='time'>End: $end_date</p>
-            </div>
-            <img src='$img_path' alt='Event Image' style='width:100px; height:100px;'>
-        </div>";
+            <tr>
+                <td><p style='background: $line_color'>.</p></td>
+                <td>{$row['event_user_position']}</td>
+                <td>{$row['event_name']}</td>
+                <td>{$row['event_address']}</td>
+                <td>{$start_date}</td>
+                <td>{$end_date}</td>
+                <td>
+                    <a href='secretary_calendar.php?page=$page&status=$filterStatus&event_id={$row['event_id']}' id='view'>View</a>
+                    <a href='secretary_calendar.php?page=$page&status=$filterStatus&event_id={$row['event_id']} style='margin-left:15px'' id='edit'>Edit</a>
+                </td>
+            </tr>
+        ";
     });
 }
 
@@ -181,4 +211,44 @@ if ($results && is_array($results)) {
     error_log("No events found or an error occurred: " . print_r($results, true));
 }
 
+
+//DISPLAY MODAL WITH VALUES
+
+$requestDetails = null;
+if (isset($_GET['event_id'])) {
+    $event_id = $_GET['event_id'];
+
+    $data = [
+        'query' => "SELECT * FROM events 
+                    WHERE event_id = ?;
+                    ",
+        'bind' => 'i',
+        'value' => [$event_id]
+    ];
+
+    // $img_path = "/EPABRGYMO/dataImages/Events.{$row['event_id']}.jpg";
+
+    $requestDetails = select($data, true);
+    if (!$requestDetails) {
+        echo "<script> alert('No results found for event_id: $event_id');</script>";
+    }
+}
+
+//pang format lang
+$eventStart = isset($requestDetails['event_start']) ? (new DateTime($requestDetails['event_start']))->format('F j, Y') : 'N/A';
+$eventEnd = isset($requestDetails['event_end']) ? (new DateTime($requestDetails['event_end']))->format('F j, Y') : 'N/A';
+
+
+// $duration = $formattedIssuedDate." - ". $formattedExpirationDate;
+
+//para lang sa kulay
+$requestStatus = $requestDetails['request_status'] ?? '';
+$statusClass = '';
+if ($requestStatus === 'Pending') {
+    $statusClass = 'status-pending';
+} elseif ($requestStatus === 'Approved') {
+    $statusClass = 'status-approved';
+} elseif ($requestStatus === 'Declined') {
+    $statusClass = 'status-declined';
+}
 

@@ -23,14 +23,13 @@ function nav($active)
                     <li><a href="chat.php" class="' . ($active == "chat" ? "active" : "") . '">Chat</a></li>
                     <li><a href="report.php" class="' . ($active == "reports" ? "active" : "") . '">Reports</a></li>
                 </ul>
-                <div class="notifications">
+                <div class="user-info">
+                    <div class="notifications">
                         <a href="notifications.php">
                             <span class="material-symbols-outlined">notifications</span>
                             ' . ($unread_count > 0 ? '<span class="notif-count">' . $unread_count . '</span>' : '') . '
                         </a>
                     </div>
-                <div class="user-info">
-                
                     <img src="assets/image.png" alt="">
                     <a href="profile.php" class="'.($active == "profile" ? "active" : "").'"><span>' . $_SESSION["user_fullname"] . '</span></a>
                 </div>
