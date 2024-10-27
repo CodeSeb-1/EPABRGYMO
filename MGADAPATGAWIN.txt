@@ -1,0 +1,37 @@
+document req
+- kita dapat kung bakit dinecline
+- pag kinancel dapat lagyan ng reason din sa user side
+
+admin side
+- magdagdag ng document 
+- hindi pa kita ung mga reports
+- lagyan ng reason kung bakit ni denicline ung docu request
+
+tanod 
+- dapat mag notif sakanila ung inisched sakanila
+
+justice side 
+- ung harap sa brgy wala pa 
+
+<link rel="stylesheet" href="assets/modal.css???">
+<link rel="stylesheet" href="assets/success-modal.css">
+
+<div id="successModal" class="modal">
+     <div class="modal-content success">
+        <div class="modal-header">
+            <h2>Success</h2>
+            <span class="close" onclick="closeSuccessModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <p>Your request has been successfully canceled!</p>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeSuccessModal()" class="btn btn-primary">OK</button>
+        </div>
+    </div>
+</div>
+<?php include_once("show-success-error-modal.php") ?>
+
+$_SESSION['modal_btn'] = true;
+$_SESSION['message_modal'] = "Email is not in the masterlist";
+echo "<script>window.history.back(); window.location.href='../register.php'</script>";

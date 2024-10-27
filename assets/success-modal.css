@@ -1,0 +1,22 @@
+.modal-content.success {
+    background-color: #e9f7e9;
+    color: #2c662d;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 2px solid #c4e2c4;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+}
+
+.close {
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+}

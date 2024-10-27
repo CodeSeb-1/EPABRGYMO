@@ -1,0 +1,240 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.container {
+    display: flex;
+    max-width: 1100px;
+    height: 530px;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+.login-section {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.register-section {
+    flex: 1.3;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    height: 530px;
+}
+
+form.login-form {
+    padding: 0 70px;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-group label {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%); 
+    background-color: #fff;
+    padding: 0 5px; 
+    font-size: 13px; 
+    color: #999; 
+    pointer-events: none; 
+    transition: 0.3s ease-in-out; 
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: -10px;
+    left:7px; 
+    transform: none; 
+    font-size: 12px; 
+    color: #666;
+    background-color: #fff;
+}
+
+
+.image-section {
+    flex: 1;
+    background-image: url('barangay.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+.welcome-text {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+.logo span {
+    color: #DD5341;
+}
+.description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.name-fields {
+    display: flex;
+    gap: 10px;
+}
+.name-fields .input-group {
+    flex: 1;
+}
+.input-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 10px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    color: #666; 
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.input-group input[type='date'],
+.input-group input[type='file'] {
+    color: #999;
+}
+
+
+.input-group input::placeholder {
+    color: #999; /* Match placeholder to input text color */
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #11212D;
+}
+.sign-in-btn,
+.register-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #C90508  ;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 300;
+    transition: background-color 0.3s;
+}
+
+#logo {
+    width: 230px;
+}
+#register {
+    width: 200px;
+}
+
+#loginLogo {
+    margin: 0 auto;
+    width: 200px;
+}
+.sign-in-btn:hover,
+.register-btn:hover{
+    background-color: #b73c3c;
+}
+.sign-up-text,
+.login-text {
+    font-size: 14px;
+    color: #666;
+    margin-top: 20px;
+    text-align: center;
+}
+.sign-up-text a,
+.login-text a {
+    color: #DD5341;
+    text-decoration: none;
+    font-weight: bold;
+}
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+.seal {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 0 10px;
+    }
+    
+    .container {
+        flex-direction: column;
+        max-width: 100%;
+        height: auto;
+    }
+    form.login-form {
+        padding: 0;
+    }
+
+    .image-section {
+        display: none;
+    }
+
+    .register-section {
+        width: 100%;
+        align-items: center;
+    }
+
+    .name-fields {
+        flex-direction: column;
+    }
+
+    .input-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #register {
+        width: 150px;
+    }
+}

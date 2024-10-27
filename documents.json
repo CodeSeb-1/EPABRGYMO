@@ -1,0 +1,25 @@
+{
+    "documents": [
+      {
+        "type": "Barangay Clearance",
+        "purpose": "Proof that a person has no pending cases."
+      },
+      {
+        "type": "Certificate of Indigency",
+        "purpose": "Certification for financial assistance eligibility."
+      },
+      {
+        "type": "Barangay ID",
+        "purpose": "Identification for residents."
+      },
+      {
+        "type": "Barangay Business Clearance",
+        "purpose": "Required when starting a business."
+      },
+      {
+        "type": "Barangay Health Certificate",
+        "purpose": "Certification of good health for employment."
+      }
+    ]
+  }
+  
