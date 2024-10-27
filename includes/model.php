@@ -211,3 +211,25 @@ function NotActive() {
 }
 
 
+function getUnreadCount($user_id)
+{
+    $query = "SELECT COUNT(*) as unread_count FROM notifications WHERE user_id = ? AND is_read = 0";
+    $data = [
+        'query' => $query,
+        'bind' => 'i',
+        'value' => [$user_id]
+    ];
+    $result = select($data);
+    return $result[0]['unread_count'] ?? 0;
+}
+
+function markAsRead($notification_id)
+{
+    $query = "UPDATE notifications SET is_read = 1 WHERE id = ?";
+    $data = [
+        'query' => $query,
+        'bind' => 'i',
+        'value' => [$notification_id]
+    ];
+    return updateData($data, 'notifications');
+}
