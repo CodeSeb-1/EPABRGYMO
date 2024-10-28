@@ -77,7 +77,7 @@ include_once("../adminController/secretaryController/secretary_reports_controlle
     <div id="myModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2 class="modal-title">Document Request Details</h2>
+            <h2 class="modal-title">Report Details</h2>
             <span class="close" id="closeModal">&times;</span>
         </div>
         <form action="../adminController/secretaryController/secretary_document_request_controller.php" method="POST">
@@ -93,13 +93,19 @@ include_once("../adminController/secretaryController/secretary_reports_controlle
                         <span id="request_name"><?= $requestDetails['report_type'] ?? '' ?></span>
                     </div>
                     <div class="form-group">
-                        <label for="request_name">Content:</label>
+                        <label for="request_name">Description:</label>
                         <span id="request_name"><?= $requestDetails['report_content'] ?? '' ?></span>
                     </div>
-                    <div class="form-group">
-                        <label for="doc_type">Person Involved:</label>
-                        <span id="doc_type"><?= $requestDetails['report_name'] ?? '' ?></span>
-                    </div>
+
+                    <?php
+                        if(!empty($requestDetails['report_name'])) {?>
+                            <div class="form-group">
+                                <label for="doc_type">Person Involved:</label>
+                                <span id="doc_type"><?= $requestDetails['report_name'] ?? '' ?></span>
+                            </div>
+                        <?php
+                        }
+                    ?>
                 </div>
                 <div class="form-column">
                     <div class="form-group">

@@ -224,17 +224,10 @@ if (isset($_POST["add_event"])) {
         "value" => [$event_id]
     ];
 
-    $result = deleteData($deleteQuery, ['table' => "Events", 'primaryKey' => $event_id]);
-
-    if ($result) {
-        $_SESSION['modal_btn'] = true;
-        $_SESSION['message_modal'] = "Event deleted successfully.";
-        echo "<script>window.location.href='../../secretary/secretary_calendar.php'</script>";
-    } else {
-        $_SESSION['modal_btn'] = true;
-        $_SESSION['message_modal'] = "Failed to delete event.";
-        echo "<script>window.history.back(); window.location.href='../secretary_calendar.php'</script>";
-    }
+    deleteData($deleteQuery, ['table' => "Events", 'primaryKey' => $event_id]);
+    $_SESSION['modal_btn'] = true;
+    $_SESSION['message_modal'] = "Event deleted successfully.";
+    echo "<script>window.location.href='../../secretary/secretary_calendar.php'</script>";
     unset($event_id);
 }
 

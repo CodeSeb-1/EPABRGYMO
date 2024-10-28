@@ -11,16 +11,48 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
     <title>E-PaBrgyMo Calendar</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
     <link rel="stylesheet" href="../../assets/event-calendar.css?">
-    <link rel="stylesheet" href="../../assets/modal.css?">
+    <link rel="stylesheet" href="../../assets/modal.css??">
     <link rel="stylesheet" href="../../assets/success-modal.css">
     <link rel="stylesheet" href="../../assets/pagination.css">
     <style>
         #modalEventImage {
-            height: 400px;
+            height: 330px;
             width: 100%;
             margin-left: 50%;
             object-fit: cover;
             transform: translateX(-50%);
+        }
+
+        #fullImageModal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1999; /* Ensure it's on top of other elements */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark background */
+        }
+
+        #fullImageModal .modal-content {
+            position: relative;
+            margin: 10% auto;
+            padding: 0;
+            width: 80%;
+            max-width: 800px; /* Adjust max width as needed */
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        #fullImageModal .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: black;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1000;
         }
     </style>
 </head>
@@ -194,7 +226,14 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
             <form action="../adminController/secretaryController/secretary_calendar_controller.php" method="POST">
                 <?php $_SESSION['event_id'] = $requestDetails['event_id']; ?>
                 <input type="hidden" name="event_id_edit" id="event_id_edit" value="<?= $requestDetails['event_id'] ?? '' ?>">
-                <img id="modalEventImage" src="<?php echo "/EPABRGYMO/dataImages/Events.{$requestDetails['event_id']}.jpg"; ?>" alt=""><br><br><br>
+                <img 
+                    id="modalEventImage" 
+                    src="<?php echo "/EPABRGYMO/dataImages/Events.{$requestDetails['event_id']}.jpg"; ?>" 
+                    alt="image" 
+                    onclick="openImageModal(this.src)"
+                    style="cursor: pointer;"
+                ><br><br>
+                <!-- <img id="modalEventImage" src="<?php echo "/EPABRGYMO/dataImages/Events.{$requestDetails['event_id']}.jpg"; ?>" alt=""><br><br><br> -->
                 <div id="modal-body" class="form-content">
                     <div class="form-column">
                         <div class="form-group">
@@ -251,6 +290,7 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
             </form>
         </div>
     </div>
+    <?php include_once("../../full_image_modal.php"); ?>
     <div id="successModal" class="modal">
         <div class="modal-content success">
             <div class="modal-header">
@@ -266,41 +306,9 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
         </div>
     </div>
     <?php include_once("../../show-success-error-modal.php") ?>
-    <!-- <script src="../../javascript/modal-event.js"></script> -->
     <script src="../../javascript/image.js"></script>
-    <script>
-        var modal = document.getElementById("myModal");
-        var span = document.getElementById("closeModal");
-
-        <?php if ($requestDetails): ?>
-            modal.style.display = "block";
-            window.location.href = "#table"; 
-        <?php endif; ?>
-
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
-        function toggleEdit() {
-            const inputs = document.querySelectorAll('#myModal input, #myModal select');
-            const editBtn = document.getElementById("editBtn");
-            const saveBtn = document.getElementById("saveBtn");
-
-            // Toggle disabled state of inputs
-            inputs.forEach(input => {
-                input.disabled = !input.disabled;
-            });
-
-            // Toggle visibility of buttons
-            editBtn.style.display = "none";
-            saveBtn.style.display = "inline-block";
-        }
-    </script>
+    <?php include_once("../../modal-open-close.php") ?>
+    <script src="../../javascript/toggle-edit.js"></script>
+    <script src="../../javascript/open-image-modal.js"></script>
 </body>
 </html>
