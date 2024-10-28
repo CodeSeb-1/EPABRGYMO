@@ -226,6 +226,36 @@ function sendVerificationEmail($email, $verification_code) {
         return false; // Email not sent
     }
 }
+function getAllNotifications($user_id) {
+    $query = "SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC";
+    $data = [
+        'query' => $query,
+        'bind' => 'i',
+        'value' => [$user_id]
+    ];
+    return select($data);
+}
+
+function markNotificationAsRead($notification_id) {
+    $query = "UPDATE notifications SET is_read = 1 WHERE id = ?";
+    $data = [
+        'query' => $query,
+        'bind' => 'i',
+        'value' => [$notification_id]
+    ];
+    return updateData($data);
+}
+
+function deleteNotification($notification_id) {
+    $query = "DELETE FROM notifications WHERE id = ?";
+    $data = [
+        'query' => $query,
+        'bind' => 'i',
+        'value' => [$notification_id]
+    ];
+    return deleteData($data);
+}
+
 
 function location($location) {
     header("location: $location");

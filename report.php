@@ -7,7 +7,7 @@
     <title>EPABRGYMO</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_circle_right" />
-    <link rel="stylesheet" href="assets/style1.css????">
+    <link rel="stylesheet" href="assets/style1.css???????">
     <link rel="stylesheet" href="assets/success-modal.css">
     <link rel="stylesheet" href="assets/modal.css">
 </head>
@@ -95,7 +95,7 @@
             </div>
     <?php include_once("show-success-error-modal.php") ?>
     <?php include_once("footer.php"); ?>
-    <script src="javascript/navbar.js?"></script>
+    <script src="javascript/navbar.js??"></script>
     <script src="javascript/report.js"></script>
 </body>
 

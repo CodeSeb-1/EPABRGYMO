@@ -4,7 +4,6 @@ include_once("../adminController/tanod_calendar_controller.php");
 // include_once("../adminController/secretaryController/secretary_calendar_controller.php");
 include_once("../adminController/secretaryController/secretary_news_controller.php");
 
-// Initialize the selected status with a default value
 $selectedStatus = isset($_GET['status']) ? $_GET['status'] : 'Card';
 ?>
 <!DOCTYPE html>

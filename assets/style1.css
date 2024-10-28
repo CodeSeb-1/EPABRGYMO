@@ -58,6 +58,7 @@ nav {
 .menu {
     display: flex;
     list-style-type: none;
+    margin-right: 100px;
 }
 .menu li {
     margin-left: 20px;
@@ -112,8 +113,8 @@ header .user-info > a {
 }
 
 header .user-info img {
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     object-fit: cover;
     border-radius: 50%;
 }
@@ -123,7 +124,7 @@ main h1 {
     margin-bottom: 20px;
     color: #222B31;
 }
-main h1 span {
+main h1 span.title-page{
     color: #FF1E22;      
 }
 main p {

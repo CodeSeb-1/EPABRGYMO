@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <link rel="stylesheet" href="assets/style1.css??">
+    <link rel="stylesheet" href="assets/style1.css???????">
 </head>
 <body>
     <?php
         include_once("header.php");
         nav("profile");
+        $img_path = file_exists($img = $_SERVER['DOCUMENT_ROOT'] . "/EPABRGYMO/dataImages/Resident.{$_SESSION['user_id']}.jpg") ? "/EPABRGYMO/dataImages/Resident.{$_SESSION['user_id']}.jpg" : "assets/profile.jpg";      
     ?>
     <div class="container">
         <div class="profile">
             <div class="line"></div>
             <div class="profile-picture-section">
                 <div class="profile-picture-container">
-                    <img src="assets/image.png" alt="Jeremy Rose" class="profile-picture">
+                    <img src="<?php echo$img_path ?>" alt="Jeremy Rose" class="profile-picture">
                 </div>
                 <h1><?php echo $_SESSION['user_fullname']; ?></h1><br>
                 <form action="userController/profile_controller.php" method="POST">
