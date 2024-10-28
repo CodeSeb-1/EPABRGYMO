@@ -1,5 +1,5 @@
 <?php 
-session_start();
+include_once("userController/verification_controller.php");
 ?>
 
 <!DOCTYPE html>
@@ -89,10 +89,15 @@ session_start();
                         <span class="close" onclick="closeSuccessModal()">&times;</span>
                     </div>
                     <div class="modal-body">
-                        <p><?php echo$_SESSION['message_modal'] ?? ''; ?></p>
+                        <p><?php echo$_SESSION['message_modal'] ?? ''; ?></p><br><br>
                     </div>
                     <div class="modal-footer">
-                        <button onclick="closeSuccessModal()" class="btn btn-primary">OK</button>
+                        <?php if($_SESSION['message_modal'] === "Account verified successfully!") {?>
+                            <button onclick="closeSuccessModal('login.php')" class="btn btn-primary">OK</button>
+                            <?php session_destroy(); ?>
+                        <?php } else {?>
+                            <button onclick="closeSuccessModal()" class="btn btn-primary">OK</button>
+                        <?php } ?>
                     </div>
                 </div>
             </div>

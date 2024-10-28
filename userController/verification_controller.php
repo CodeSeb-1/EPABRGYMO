@@ -1,5 +1,5 @@
 <?php
-include_once("../includes/model.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/includes/model.php');
 
 if (isset($_POST["verify"])) {
     $otp_input = isset($_POST['otp']) ? implode('', $_POST['otp']) : '';
@@ -22,9 +22,8 @@ if (isset($_POST["verify"])) {
         if ($result) {
             $_SESSION['modal_btn'] = true;
             $_SESSION['message_modal'] = "Account verified successfully!";
-            header("Location: ../login.php");
+            echo"<script>window.location.href='../verification.php'</script>";
             // session_destroy();//para sa iba naman
-            exit;
         } else {
             $_SESSION['modal_btn'] = true;
             $_SESSION['message_modal'] = "Failed to verify account. Please try again.";

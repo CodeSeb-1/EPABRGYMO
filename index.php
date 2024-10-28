@@ -10,7 +10,7 @@ include_once("userController/index_controller.php");
     <title>EPABRGYMO</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_circle_right" />
-    <link rel="stylesheet" href="assets/style1.css">
+    <link rel="stylesheet" href="assets/style1.css??">
 </head>
 
 <body>
@@ -56,7 +56,7 @@ include_once("userController/index_controller.php");
 
     </main>
     <?php include_once("footer.php") ?>
-    <script src="javascript/navbar.js"></script>
+    <script src="javascript/navbar.js?"></script>
 </body>
 
 </html>

@@ -113,6 +113,8 @@ header .user-info > a {
 
 header .user-info img {
     height: 40px;
+    width: 40px;
+    object-fit: cover;
     border-radius: 50%;
 }
 
@@ -654,6 +656,7 @@ th {
     max-width: 70%;
     margin-bottom: 20px;
     clear: both;
+    font-size: 13px;
 }
 .message-content {
     padding: 10px;
@@ -664,7 +667,7 @@ th {
     float: right;
 }
 .message.sent .message-content {
-    background-color: #ff0000;
+    background-color: var(--second-main-red);
     color: white;
 }
 .message.received {
@@ -706,7 +709,7 @@ th {
 }
 .chat-input button {
     padding: 10px 20px;
-    background-color: #ff0000;
+    background-color: var(--second-main-red);
     color: white;
     border: none;
     border-radius: 20px;

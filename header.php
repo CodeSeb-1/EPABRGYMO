@@ -9,6 +9,8 @@ function nav($active)
 {
     $user_id = $_SESSION["user_id"]; // Assuming user ID is stored in the session
     $unread_count = getUnreadCount($user_id);
+    $img_path = "/EPABRGYMO/dataImages/Resident.{$user_id}.jpg"; // Fixed the concatenation
+
     echo '
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <header>
@@ -26,16 +28,17 @@ function nav($active)
                 <div class="user-info">
                     <div class="notifications">
                         <a href="notifications.php">
-                            <span class="material-symbols-outlined">notifications</span>
+                            <span class="material-symbols-outlined" style="color:#fff;">notifications</span>
                             ' . ($unread_count > 0 ? '<span class="notif-count">' . $unread_count . '</span>' : '') . '
                         </a>
                     </div>
-                    <img src="assets/image.png" alt="">
-                    <a href="profile.php" class="'.($active == "profile" ? "active" : "").'"><span>' . $_SESSION["user_fullname"] . '</span></a>
+                    <img src="' . $img_path . '" alt="profile" style="border-radius:50%;"> <!-- Fixed the concatenation here -->
+                    <a href="profile.php" class="' . ($active == "profile" ? "active" : "") . '"><span>' . $_SESSION["user_fullname"] . '</span></a>
                 </div>
             </nav>
         </div>
     </header>
     ';
 }
+
 

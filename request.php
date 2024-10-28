@@ -10,7 +10,7 @@ include_once("userController/request_controller.php");
     <title>EPABRGYMO</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="assets/style1.css??????">
+    <link rel="stylesheet" href="assets/style1.css?????">
     <link rel="stylesheet" href="assets/pagination.css?">
     <link rel="stylesheet" href="assets/modal.css">
     <link rel="stylesheet" href="assets/success-modal.css">
@@ -27,7 +27,6 @@ include_once("userController/request_controller.php");
                     <h1>Document Request Form</h1>
                     <div class="btn">
                         <a href="view_request.php">View document requests</a>
-                        <span class="material-symbols-outlined">arrow_right_alt</span>
                     </div>
                 </div>
                     <form action="userController/request_controller.php" method="POST">
@@ -179,7 +178,7 @@ include_once("userController/request_controller.php");
     <?php include_once("show-modal.php"); ?>
     </main>
     <?php include_once("footer.php"); ?>
-    <script src="javascript/navbar.js"></script>
+    <script src="javascript/navbar.js?"></script>
     <script src="javascript/request.js"></script>
     <script src="javascript/other.js"></script>
     <script src="javascript/request-location.js"></script>

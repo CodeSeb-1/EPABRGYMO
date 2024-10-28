@@ -25,7 +25,6 @@ include_once("userController/request_controller.php");
                 <div class="table" id="request">
                     <div class="head">
                         <div class="btn">
-                            <span class="material-symbols-outlined">arrow_left_alt</span>
                             <a href="request.php">back</a>
                         </div>
                     </div>
