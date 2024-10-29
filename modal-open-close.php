@@ -4,7 +4,7 @@
 
         <?php if ($requestDetails): ?>
             modal.style.display = "block";
-            window.location.href = "#calendarss"; 
+            window.location.href = "#table"; 
         <?php endif; ?>
 
         span.onclick = function() {

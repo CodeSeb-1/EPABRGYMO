@@ -10,7 +10,7 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-PaBrgyMo Calendar</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
-    <link rel="stylesheet" href="../../assets/event-calendar.css?">
+    <link rel="stylesheet" href="../../assets/event-calendar.css??????????">
     <link rel="stylesheet" href="../../assets/modal.css??">
     <link rel="stylesheet" href="../../assets/success-modal.css">
     <link rel="stylesheet" href="../../assets/pagination.css">

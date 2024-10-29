@@ -1,3 +1,8 @@
+<style>
+    a {
+        text-decoration: none;
+    }
+</style>
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/includes/model.php');
 
