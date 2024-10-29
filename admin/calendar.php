@@ -121,21 +121,3 @@ class Calendar {
     }
 
 }
-
-$requestDetails = null;
-if (isset($_GET['event_id'])) {
-    $event_id = $_GET['event_id'];
-
-    $data = [
-        'query' => "SELECT * FROM events 
-                    WHERE event_id = ?;
-                    ",
-        'bind' => 'i',
-        'value' => [$event_id]
-    ];
-
-    $requestDetails = select($data, true);
-    if (!$requestDetails) {
-        echo "<script> alert('No results found for event_id: $event_id');</script>";
-    }
-}

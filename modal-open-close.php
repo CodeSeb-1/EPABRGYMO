@@ -1,10 +1,10 @@
 <script>
-    var modal = document.getElementById("myModal");
+        var modal = document.getElementById("myModal");
         var span = document.getElementById("closeModal");
 
         <?php if ($requestDetails): ?>
             modal.style.display = "block";
-            window.location.href = "#table"; 
+            window.location.href = "#calendarss"; 
         <?php endif; ?>
 
         span.onclick = function() {

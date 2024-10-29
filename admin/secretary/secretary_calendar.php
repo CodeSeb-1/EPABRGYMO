@@ -69,7 +69,7 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
             <div class="content home">
             <h1>Add Event</h1><br>
             <section class="add-event">
-                <div class="event-form">
+                <div class="event-form" id="calendarss">
                     <form action="../adminController/secretaryController/secretary_calendar_controller.php" method="POST" enctype="multipart/form-data">
                         <div class="field">
                             <label>User:</label>

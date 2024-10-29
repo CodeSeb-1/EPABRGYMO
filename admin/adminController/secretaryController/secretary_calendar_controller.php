@@ -61,6 +61,7 @@ function display_events() {
         $user_type = $row['event_user_position'];
         $line_color = isset($colors[$user_type]) ? $colors[$user_type] : 'gray';
 
+
         echo "
             <tr>
                 <td><p style='background: $line_color'>.</p></td>
@@ -70,7 +71,7 @@ function display_events() {
                 <td>{$start_date}</td>
                 <td>{$end_date}</td>
                 <td>
-                    <a href='secretary_calendar.php?page=$page&status=$filterStatus&event_id_tag={$row['event_id']}' id='view'>View</a>
+                    <a href='secretary_calendar.php?page=$page&status=$filterStatus&event_id_tag={$row['event_id']}#table' id='view'>View</a>
                 </td>
             </tr>
         ";
@@ -297,6 +298,7 @@ if ($results && is_array($results)) {
 //DISPLAY MODAL WITH VALUES
 
 $requestDetails = null;
+
 if (isset($_GET['event_id_tag'])) {
     $event_id = $_GET['event_id_tag'];
 
