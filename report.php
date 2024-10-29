@@ -20,7 +20,13 @@
         <div class="container">
             <section class="form">
                 <div class="form-contents">
-                <h1>Report Form</h1>
+                    <div class="head">
+<h1>Report Form</h1>
+                <div class="btn">
+                        <a href="view_report.php">View reports</a>
+                    </div>
+                    </div>
+                
                     <form action="userController/report_controller.php" method="POST">
 
                         <div class="form-groups">

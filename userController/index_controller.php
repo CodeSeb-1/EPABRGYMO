@@ -11,7 +11,8 @@ $news = [
     'query' => 'SELECT * FROM news 
                 WHERE (YEAR(news_date) = YEAR(CURDATE()) AND MONTH(news_date) = MONTH(CURDATE()))
                 OR (YEAR(news_date) = YEAR(CURDATE()) AND MONTH(news_date) = MONTH(CURDATE()) - 1)
-                OR (MONTH(CURDATE()) = 1 AND YEAR(news_date) = YEAR(CURDATE()) - 1 AND MONTH(news_date) = 12)',
+                OR (MONTH(CURDATE()) = 1 AND YEAR(news_date) = YEAR(CURDATE()) - 1 AND MONTH(news_date) = 12)
+                ORDER BY news_date DESC',
     'bind' => '',
     'value' => '',
 ];
