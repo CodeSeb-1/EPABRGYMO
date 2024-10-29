@@ -140,17 +140,6 @@ include_once("../adminController/secretaryController/secretary_ordinance_shiftin
                                 </select>
                             </div>
                         </div>
-                        <!-- <div class="form-group">
-                            <label for="time">Select Time:</label>
-                            <select id="time" name="time" required>
-                                <option value="">Choose a time</option>
-                                <option value="6:00 AM - 9:00 AM">6:00 AM - 9:00 AM</option>
-                                <option value="9:00 AM - 12:00 PM">9:00 AM - 12:00 PM</option>
-                                <option value="1:00 PM - 4:00 PM">1:00 PM - 4:00 PM</option>
-                                <option value="4:00 PM - 7:00 PM">4:00 PM - 7:00 PM</option>
-                                <option value="7:00 PM - 10:00 PM">7:00 PM - 10:00 PM</option>
-                            </select>
-                        </div> -->
                         <div class="form-group">
                             <label for="person">Assign Person:</label>
                             <select name="barangay_officials">

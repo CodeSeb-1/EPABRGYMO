@@ -89,9 +89,27 @@ include_once("../adminController/secretaryController/secretary_document_request_
                     </div>
                 </section>
             </div>
+
+            <div class="content home">
+            <h1>Add Event</h1><br>
+            <section class="add-event">
+                <div class="event-form" id="calendarss">
+                    <form action="../adminController/secretaryController/secretary_document_controller.php" method="POST" enctype="multipart/form-data">
+                        <div class="field">
+                            <label>Event:</label>
+                            <input type="text" name="event_name" placeholder="Event Name" required>
+                        </div>
+                        <div class="field">
+                            <label>Photo:</label>
+                        </div>                        
+                    </form>
+                    <div class="image-container">
+                        <img src="../../assets/holder-image.png" id="userpicture" alt="image holder">
+                    </div>
+                </div>
+            </section><hr>
         </main>
     </div>
-
     <!-- Reason for Decline Modal -->
     <div id="declineModal" class="modal">
         <div class="modal-content">
@@ -134,7 +152,7 @@ include_once("../adminController/secretaryController/secretary_document_request_
 
     <!-- Modal -->
     <div id="myModal" class="modal">
-    <div class="modal-content">
+        <div class="modal-content">
         <div class="modal-header">
             <h2 class="modal-title">Document Request Details</h2>
             <span class="close" id="closeModal">&times;</span>
@@ -219,6 +237,8 @@ include_once("../adminController/secretaryController/secretary_document_request_
             </div>
         </form>
     </div>
+
+    
 </div>
 <script>
     var modal = document.getElementById("myModal");
