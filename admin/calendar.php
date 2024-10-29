@@ -83,7 +83,7 @@ class Calendar {
             foreach ($this->events as $event) {
                 for ($d = 0; $d <= ($event['days'] - 1); $d++) {
                     if (date('Y-m-d', strtotime($this->active_year . '-' . $month . '-' . $i . ' -' . $d . ' day')) == date('Y-m-d', strtotime($event['date']))) {
-                        $events_html .= " <a href='secretary_calendar.php?&event_id_tag={$event['event_id']}'>";
+                        $events_html .= " <a href='secretary_calendar.php?event_id_tag={$event['event_id']}#calendar-id'>";
                         $events_html .= '<div class="event' . $event['color'] . '">';
                         $events_html .= "Event: {$event['name']}";
                         $events_html .= '<div class="address"> Location: ' . $event['address'] . '</div>';
