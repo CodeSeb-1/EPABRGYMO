@@ -178,7 +178,7 @@ include_once("userController/request_controller.php");
     <?php include_once("show-modal.php"); ?>
     </main>
     <?php include_once("footer.php"); ?>
-    <script src="javascript/navbar.js??"></script>
+    <script src="javascript/navbar.js???????"></script>
     <script src="javascript/request.js"></script>
     <script src="javascript/other.js"></script>
     <script src="javascript/request-location.js"></script>

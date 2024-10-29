@@ -41,7 +41,7 @@ function nav($active)
                     <div class="notifications">
                         <a href="chat.php">
                             <span class="material-symbols-outlined chat" style="color:#fff; cursor: pointer;">chat</span>
-                            ' . ($unread_chat_count > 0 ? '<span class="notif-count">' . $unread_chat_count . '</span>' : '') . '
+                            ' . ($unread_chat_count > 0 ? '<span class="notif-count" style="color:#fff;">' . $unread_chat_count . '</span>' : '') . '
                         </a>
                     </div>
                     <div class="notifications">

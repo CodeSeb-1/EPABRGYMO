@@ -95,7 +95,7 @@
             </div>
     <?php include_once("show-success-error-modal.php") ?>
     <?php include_once("footer.php"); ?>
-    <script src="javascript/navbar.js??"></script>
+    <script src="javascript/navbar.js?????????"></script>
     <script src="javascript/report.js"></script>
 </body>
 
