@@ -13,7 +13,22 @@ include_once("../adminController/secretaryController/secretary_document_request_
     <link rel="stylesheet" href="../../assets/event-calendar.css??">
     <link rel="stylesheet" href="../../assets/modal.css?">
     <link rel="stylesheet" href="../../assets/pagination.css?">
+    <link rel="stylesheet" href="../../assets/success-modal.css">
     <style>
+        :root {
+            --main-red:#D04848;
+            --main-hover-red: #b73c3c;
+            --second-main-red: #C90508;
+            --white: #fff;
+            --background-middle-white: #f0f2f5;
+            --sidebar-text-color: #7a7a7a;
+            --input-color-gray: #636e73;
+
+            --light-black: #1A1A19;
+
+
+            --regular-size: 13px;
+        }
         #declineModal {
             z-index: 1001; /* Make it higher than myModal */
         }
@@ -28,6 +43,14 @@ include_once("../adminController/secretaryController/secretary_document_request_
             width: 100%;
             padding: 10px;
             resize: vertical;
+        }
+
+        tr > td > a > span.edit {
+            color: #51ce57;
+        }
+
+        tr > td > a > span.delete {
+            color: var(--main-hover-red);
         }
 
     </style>
@@ -90,25 +113,23 @@ include_once("../adminController/secretaryController/secretary_document_request_
                 </section>
             </div>
 
-            <div class="content home">
-            <h1>Add Event</h1><br>
-            <section class="add-event">
-                <div class="event-form" id="calendarss">
-                    <form action="../adminController/secretaryController/secretary_document_controller.php" method="POST" enctype="multipart/form-data">
-                        <div class="field">
-                            <label>Event:</label>
-                            <input type="text" name="event_name" placeholder="Event Name" required>
-                        </div>
-                        <div class="field">
-                            <label>Photo:</label>
-                        </div>                        
-                    </form>
-                    <div class="image-container">
-                        <img src="../../assets/holder-image.png" id="userpicture" alt="image holder">
-                    </div>
-                </div>
-            </section><hr>
+            <!-- ADD DOCUMENT -->
+            
         </main>
+    </div>
+    <div id="successModal" class="modal">
+        <div class="modal-content success">
+            <div class="modal-header">
+                <h2>Success</h2>
+                <span class="close" onclick="closeSuccessModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><?php echo$_SESSION['message_modal'] ?? ''; ?></p><br>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeSuccessModal()" class="btn btn-primary">OK</button>
+            </div>
+        </div>
     </div>
     <!-- Reason for Decline Modal -->
     <div id="declineModal" class="modal">
@@ -139,8 +160,6 @@ include_once("../adminController/secretaryController/secretary_document_request_
                         <div id="other_decline_reason_div" style="display:none;">
                             <textarea name="other_decline_reason" id="other_decline_reason" rows="4"  ></textarea>
                         </div>
-
-                    
                 </div>
                 <div class="form-actions">
                     <button type="submit" name="decline" class="btn btn-primary">Confirm</button>
@@ -149,6 +168,7 @@ include_once("../adminController/secretaryController/secretary_document_request_
         </div>
     </div>
 
+    <!--MODAL ADD DOCUMENT-->
 
     <!-- Modal -->
     <div id="myModal" class="modal">
@@ -237,9 +257,8 @@ include_once("../adminController/secretaryController/secretary_document_request_
             </div>
         </form>
     </div>
-
-    
 </div>
+<?php include_once("../../show-success-error-modal.php") ?>
 <script>
     var modal = document.getElementById("myModal");
     var span = document.getElementById("closeModal");

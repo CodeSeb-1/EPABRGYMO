@@ -21,6 +21,12 @@ function sidebar($current_page) {
                     <span>Document Request</span>
                 </div>    
             </a>
+            <a href="secretary_add_document.php">
+                <div class="menu-item' . ($current_page === 'document_add' ? ' active' : '') . '">
+                    <span class="material-symbols-outlined">Add</span>                    
+                    <span>Add Document</span>
+                </div>    
+            </a>
             <a href="secretary_chat.php">
                 <div class="menu-item' . ($current_page === 'chat' ? ' active' : '') . '">
                     <span class="material-symbols-outlined">chat</span>                
