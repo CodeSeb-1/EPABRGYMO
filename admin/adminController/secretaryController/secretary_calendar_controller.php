@@ -71,7 +71,7 @@ function display_events() {
                 <td>{$start_date}</td>
                 <td>{$end_date}</td>
                 <td>
-                    <a href='secretary_calendar.php?page=$page&status=$filterStatus&event_id_tag={$row['event_id']}#table' id='view'>View</a>
+                    <a href='secretary_calendar.php?page=$page&status=$filterStatus&event_id_tag={$row['event_id']}' id='view'>View</a>
                 </td>
             </tr>
         ";
