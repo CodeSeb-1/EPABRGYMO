@@ -101,6 +101,7 @@ include_once("../adminController/secretaryController/secretary_document_request_
             </div>
             <form action="../adminController/secretaryController/secretary_document_request_controller.php" method="POST">
                 <input type="hidden" name="doc_req_id" id="decline_doc_req_id">
+                <input type="hidden" name="user_id" id="user_id">
                 <div class="form-group">
                     <label for="decline-reason" >Reason for Declining Request:</label>
                         <select id="decline-reason" name="decline_reason" onchange="toggleOtherpurpose(this.value)">
@@ -140,6 +141,7 @@ include_once("../adminController/secretaryController/secretary_document_request_
         </div>
         <form action="../adminController/secretaryController/secretary_document_request_controller.php" method="POST">
             <input type="hidden" name="doc_req_id" id="doc_req_id" value="<?= $requestDetails['doc_req_id'] ?? '' ?>">
+            <input type="hidden" name="user_id" id="user_id" value="<?= $requestDetails['user_id'] ?? '' ?>">
             <div id="modal-body" class="form-content">
                 <div class="form-column">
                     <div class="form-group">
@@ -207,7 +209,7 @@ include_once("../adminController/secretaryController/secretary_document_request_
                     if ($requestDetails['request_status'] === 'Approved') {
                         echo '<button type="submit" name="claim" class="btn btn-primary">Ready To Claim</button>';
                     } else if ($requestDetails['request_status'] === 'Pending') {
-                        echo '<button type="button" onclick="openDeclineModal(' . $requestDetails['doc_req_id'] . ')" class="btn btn-sec">Decline</button> ';
+                        echo '<button type="button" onclick="openDeclineModal(' . $requestDetails['doc_req_id'] . ',' . $requestDetails['user_id'] . ')" class="btn btn-sec">Decline</button> ';
                         echo '<button type="submit" name="accept" class="btn btn-primary">Accept</button>';
                     }else if ($requestDetails['request_status'] === 'Ready To Claim') {
                         echo '<button type="submit" name="claimed" class="btn btn-primary">Claimed</button>';
@@ -239,8 +241,9 @@ include_once("../adminController/secretaryController/secretary_document_request_
     var declineModal = document.getElementById("declineModal");
     var closeDeclineModal = document.getElementById("closeDeclineModal");
 
-    function openDeclineModal(docReqId) { 
+    function openDeclineModal(docReqId,user_id) { 
         document.getElementById("decline_doc_req_id").value = docReqId;
+        document.getElementById("user_id").value = user_id;
         declineModal.style.display = "block";
         modal.style.display = "none";
     }

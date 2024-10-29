@@ -128,6 +128,8 @@ if ($requestStatus === 'Pending') {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_POST['decline']) || isset($_POST['claim']) || isset($_POST['claimed']))) {
     $doc_req_id = $_POST['doc_req_id'];
+    $user_id = $_POST['user_id'];
+    $notificationLink = "view_request.php?page=1&status=&doc_req_id=$doc_req_id";
 
     if (isset($_POST['accept'])) {
         $update = [
@@ -136,29 +138,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_
             'bind' => 'si',
             'value' => ["Approved", $doc_req_id]
         ];
-      
+
+        // Notification data for Approved
+        $insertNotification = [
+            "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+            "bind" => "isss",
+            "value" => [$user_id, "Request Update Status", "Your Request has been approved", $notificationLink]
+        ];
 
     } else if (isset($_POST['decline'])) {
-        $doc_req_id = $_POST['doc_req_id'];
-        $decline_reason = ($_POST['decline_reason'] === "others")? $_POST['other_decline_reason']: $_POST['decline_reason'];
-
+        $decline_reason = ($_POST['decline_reason'] === "others") ? $_POST['other_decline_reason'] : $_POST['decline_reason'];
 
         $update = [
-            'query' => "UPDATE document_request 
-                    SET request_status = ?, Reason = ? 
-                    WHERE doc_req_id = ?",
+            'query' => "UPDATE document_request SET request_status = ?, Reason = ?
+                        WHERE doc_req_id = ?",
             'bind' => 'ssi',
             'value' => ["Declined", $decline_reason, $doc_req_id]
         ];
-      
-    } else if (isset($_POST["claim"])) { 
+
+        // Notification data for Declined
+        $insertNotification = [
+            "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+            "bind" => "isss",
+            "value" => [$user_id, "Request Update Status", "Request was Declined", $notificationLink]
+        ];
+
+    } else if (isset($_POST["claim"])) {
         $expiration_date = $_POST['expire_date'];
+
         $update = [
-            'query' => "UPDATE document_request 
-                SET request_status = ?, issued_date = NOW(), expiration_date = ? 
-                WHERE doc_req_id = ?",
+            'query' => "UPDATE document_request SET request_status = ?, issued_date = NOW(), expiration_date = ?
+                        WHERE doc_req_id = ?",
             'bind' => 'ssi',
             'value' => ["Ready To Claim", $expiration_date, $doc_req_id]
+        ];
+
+        // Notification data for Ready To Claim
+        $insertNotification = [
+            "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+            "bind" => "isss",
+            "value" => [$user_id, "Request Update Status", "Your document is ready to claim", $notificationLink]
         ];
 
     } else if (isset($_POST['claimed'])) {
@@ -169,7 +188,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_
             'value' => ["Claimed", $doc_req_id]
         ];
 
-    }   
+        // Notification data for Claimed
+        $insertNotification = [
+            "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+            "bind" => "isss",
+            "value" => [$user_id, "Request Update Status", "Your document has been claimed", $notificationLink]
+        ];
+    }
+
+    // Execute update and notification insertion
     updateData($update);
+    insertData($insertNotification);
     location("../../secretary/secretary_document_request.php");
 }
