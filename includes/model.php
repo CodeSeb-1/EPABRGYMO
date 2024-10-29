@@ -226,8 +226,9 @@ function sendVerificationEmail($email, $verification_code) {
         return false; // Email not sent
     }
 }
-function getAllNotifications($user_id) {
-    $query = "SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC";
+function getAllNotifications($user_id)
+{
+    $query = "SELECT * FROM notifications WHERE user_id = ? OR user_id = 0 ORDER BY created_at DESC";
     $data = [
         'query' => $query,
         'bind' => 'i',
@@ -235,6 +236,7 @@ function getAllNotifications($user_id) {
     ];
     return select($data);
 }
+
 
 function markNotificationAsRead($notification_id) {
     $query = "UPDATE notifications SET is_read = 1 WHERE id = ?";

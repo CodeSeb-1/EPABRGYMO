@@ -138,6 +138,13 @@ if (isset($_POST["add_event"])) {
             ];
 
             $result = insertData($data, "Events");
+            $eventStart = isset($event_start) ? (new DateTime($event_start))->format('F j, Y') : 'N/A';
+            $insertNotification = [
+                "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+                "bind" => "isss",
+                "value" => ["0", $event_name, "Event starts at: ".$eventStart, "index.php"]
+            ];
+            insertData($insertNotification);
             if ($result) {
                 $_SESSION['modal_btn'] = true;
                 $_SESSION['message_modal'] = "Event added successfully.";
@@ -202,6 +209,13 @@ if (isset($_POST["add_event"])) {
         ];
 
         $result = updateData($updateQuery, "Events");
+
+        $insertNotification = [
+            "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+            "bind" => "isss",
+            "value" => ["0", $event_name, "Event updated", "index.php"]
+        ];
+        insertData($insertNotification);
 
         if ($result) {
             $_SESSION['modal_btn'] = true;

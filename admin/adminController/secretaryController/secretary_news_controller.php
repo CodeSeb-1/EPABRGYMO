@@ -33,6 +33,12 @@ if(isset($_POST['add_news'])) {
     ];
     
     $results = insertData($insert_news, "News");
+    $insertNotification = [
+        "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+        "bind" => "isss",
+        "value" => ["0", "News", $_POST['news_name'], "index.php"]
+    ];
+    insertData($insertNotification);
     if($results) {
         $_SESSION['modal_btn'] = true;
         $_SESSION['message_modal'] = "News Added";
