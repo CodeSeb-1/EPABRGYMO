@@ -240,7 +240,7 @@ $calendar = new Calendar($selectedYear . '-' . $selectedMonth . '-01', false);
 
 $data = [
     'query' => "
-        SELECT event_name, event_user_position, event_start, event_end, event_description, event_address 
+        SELECT event_id, event_name, event_user_position, event_start, event_end, event_description, event_address 
         FROM events 
         WHERE (
             MONTH(event_start) = ? 
@@ -280,6 +280,7 @@ if ($results && is_array($results)) {
         $currentColor = $colors[$userPosition] ?? "black";
 
         $calendar->add_event(
+            $result['event_id'],
             $result['event_name'],
             $result['event_start'], 
             $duration,

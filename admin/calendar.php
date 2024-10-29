@@ -1,4 +1,5 @@
 <?php
+include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/includes/model.php');
 
 class Calendar {
 
@@ -13,9 +14,10 @@ class Calendar {
         $this->show_full_year = $show_full_year; // Initialize the property
     }
 
-    public function add_event($txt, $date, $days = 1, $color = '', $description = '', $address = '') {
+    public function add_event($id, $txt, $date, $days = 1, $color = '', $description = '', $address = '') {
         $color = $color ? ' ' . $color : '';
         $this->events[] = [
+            'event_id' => $id,
             'name' => $txt, 
             'date' => $date, 
             'days' => $days, 
@@ -76,11 +78,12 @@ class Calendar {
             foreach ($this->events as $event) {
                 for ($d = 0; $d <= ($event['days'] - 1); $d++) {
                     if (date('Y-m-d', strtotime($this->active_year . '-' . $month . '-' . $i . ' -' . $d . ' day')) == date('Y-m-d', strtotime($event['date']))) {
+                        $events_html .= " <a href='secretary_calendar.php?&event_id_tag={$event['event_id']}'>";
                         $events_html .= '<div class="event' . $event['color'] . '">';
                         $events_html .= "Event: {$event['name']}";
-                        // Optional: You can add description and address if needed
                         $events_html .= '<div class="address"> Location: ' . $event['address'] . '</div>';
                         $events_html .= '</div>';
+                        $events_html .= '</a>';
                     }
                 }
             }
@@ -117,4 +120,22 @@ class Calendar {
         return $html;
     }
 
+}
+
+$requestDetails = null;
+if (isset($_GET['event_id'])) {
+    $event_id = $_GET['event_id'];
+
+    $data = [
+        'query' => "SELECT * FROM events 
+                    WHERE event_id = ?;
+                    ",
+        'bind' => 'i',
+        'value' => [$event_id]
+    ];
+
+    $requestDetails = select($data, true);
+    if (!$requestDetails) {
+        echo "<script> alert('No results found for event_id: $event_id');</script>";
+    }
 }

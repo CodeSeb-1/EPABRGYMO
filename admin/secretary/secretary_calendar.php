@@ -1,5 +1,5 @@
 <?php
-include '../calendar.php';
+include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/admin/calendar.php');
 // include_once("../adminController/tanod_calendar_controller.php");
 include_once("../adminController/secretaryController/secretary_calendar_controller.php");
 ?>
@@ -116,7 +116,7 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
             </section><hr>
 
             <h1>Calendar</h1><br>
-                <form method="GET" action="">
+                <form method="GET" action="" id="calendar-id">
                     <label for="month">Select Month:</label>
                     <select name="month" id="month" onchange="this.form.submit()">
                         <?php
