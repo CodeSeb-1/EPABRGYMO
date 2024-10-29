@@ -56,7 +56,7 @@ include_once("userController/index_controller.php");
 
     </main>
     <?php include_once("footer.php") ?>
-    <script src="javascript/navbar.js???"></script>
+    <script src="javascript/navbar.js??????"></script>
 </body>
 
 </html>

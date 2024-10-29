@@ -1,9 +1,10 @@
 window.addEventListener('scroll', function() {
     const header = document.querySelector('header');
     const links = document.querySelectorAll('header nav .user-info #profile_pic'); // Select all user-info links
-    const chatIcon = document.querySelector('header nav .chat-containers a span.material-symbols-outlined'); // Notification icon
-    const notificationIcon = document.querySelector('header nav .notifications span.material-symbols-outlined'); // Notification icon
+    const chatIcon = document.querySelector('header nav .notifications a span.chat'); // Notification icon
+    const notificationIcon = document.querySelector('header nav .notifications span.notif'); // Notification icon
     const notificationCount = document.querySelector('header nav .notif-count'); // Notification count
+    
 
     if (window.scrollY > 0) {
         header.style.backgroundColor = '#fff'; 
