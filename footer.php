@@ -11,16 +11,15 @@
                 <h3>GET IN TOUCH</h3>
                 <div class="get-container">
                     <img src="assets/location_on.png" alt="location">
-                    <p>8819 Ohio St. South Gate,
-                        CA 90280</p>
+                    <p>Maronquillo, San Rafael, Bulacan, 3008</p>
                 </div>
                 <div class="get-container">
                     <img src="assets/email.png" alt="email">
-                    <p>Ourstudio@hello.com/span>
+                    <p>brgymaronquillo@gmail.com</p>
                 </div>
                 <div class="get-container">
                     <img src="assets/call.png" alt="call">
-                    <p>+1 386-688-3295</p>
+                    <p>+63 912 345 6789</p>
                 </div>
             </div>
             <div class="services">
