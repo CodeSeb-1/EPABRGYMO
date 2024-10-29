@@ -46,34 +46,40 @@
         setInterval(fetchUsers, 3000);
 
         function loadChat(outgoing_id, user_name) {
-            $('.chat-username').text(user_name);
-            selectedUserId = outgoing_id;
+    $('.chat-username').text(user_name);
+    selectedUserId = outgoing_id;
 
-            $.ajax({
-                url: '../fetch_messages.php',
-                method: 'POST',
-                data: { incoming_id, outgoing_id },
-                success: function(data) {
-                    try {
-                        const messages = JSON.parse(data);
-                        let chatArea = '';
-                        messages.forEach(msg => {
-                            chatArea += msg.outgoing_msg_id == outgoing_id
-                                ? `<div class="message sent"><div class="message-content">${msg.msg}</div><div class="message-time">${msg.time}</div></div>`
-                                : `<div class="message received"><div class="message-content">${msg.msg}</div><div class="message-time">${msg.time}</div></div>`;
-                        });
-                        $('.chat-messages').html(chatArea);
-                        scrollToBottom(); // Scroll to the bottom after loading messages
-                    } catch (error) {
-                        console.error("Error parsing JSON response from fetch_messages:", error);
-                    }
-                },
-                error: function(xhr) {
-                    console.error("AJAX error loading chat:", xhr);
-                }
-            });
+    $.ajax({
+        url: '../fetch_messages.php',
+        method: 'POST',
+        data: { incoming_id, outgoing_id },
+        success: function(data) {
+            try {
+                const messages = JSON.parse(data);
+                let chatArea = '';
+                    messages.forEach(msg => {
+                        if (msg.separator) {
+                            chatArea += `<div class="date-separator">${msg.separator}</div>`;
+                        } else {
+                            const messageClass = msg.outgoing_msg_id == outgoing_id ? 'sent' : 'received';
+                            chatArea += `
+                                <div class="message ${messageClass}">
+                                    <div class="message-content">${msg.msg}</div>
+                                    <div class="message-time">${msg.time}</div>
+                                </div>`;
+                        }
+                    });
+                    $('.chat-messages').html(chatArea);
+                scrollToBottom(); // Scroll to the bottom after loading messages
+            } catch (error) {
+                console.error("Error parsing JSON response from fetch_messages:", error);
+            }
+        },
+        error: function(xhr) {
+            console.error("AJAX error loading chat:", xhr);
         }
-
+    });
+}
         function sendMessage() {
             const message = $('#messageInput').val(); 
             const outgoing_id = selectedUserId;

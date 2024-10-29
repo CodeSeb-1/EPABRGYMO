@@ -12,13 +12,19 @@ if (isset($_GET['view_notification_id'])) {
     markNotificationAsRead($notification_id);
 }
 
-function nav($active) {
+function nav($active)
+{
     $user_id = $_SESSION['user_id'];
     $notifications = getAllNotifications($user_id);
-    $unread_count = count(array_filter($notifications, function($n) { return !$n['is_read']; }));
-    $img_path = file_exists($img = $_SERVER['DOCUMENT_ROOT'] . "/EPABRGYMO/dataImages/Resident.{$_SESSION['user_id']}.jpg") ? "/EPABRGYMO/dataImages/Resident.{$_SESSION['user_id']}.jpg" : "assets/profile.jpg";      
+    $unread_notification_count = count(array_filter($notifications, function ($n) {
+        return !$n['is_read']; }));
+     $unread_chat_count = getUnreadChatCount($user_id);  // Get unread chat count
 
-    // <li><a href="chat.php" class="' . ($active == "chat" ? "active" : "") . '">Chat</a></li>
+    echo "Unread Chat: $unread_chat_count";
+    $img_path = file_exists($img = $_SERVER['DOCUMENT_ROOT'] . "/EPABRGYMO/dataImages/Resident.{$_SESSION['user_id']}.jpg")
+        ? "/EPABRGYMO/dataImages/Resident.{$_SESSION['user_id']}.jpg"
+        : "assets/profile.jpg";
+
     echo '
     <header>
         <div class="container">
@@ -32,44 +38,46 @@ function nav($active) {
                     <li><a href="report.php" class="' . ($active == "reports" ? "active" : "") . '">Reports</a></li>
                 </ul>
                 <div class="user-info">
-                    <div class="chat-containers">
-                        <a href="chat.php"><span class="material-symbols-outlined" style="color:#fff; cursor: pointer;" >chat</span></a>
+                    <div class="notifications">
+                        <a href="chat.php">
+                            <span class="material-symbols-outlined" style="color:#fff; cursor: pointer;">chat</span>
+                            ' . ($unread_chat_count > 0 ? '<span class="notif-count">' . $unread_chat_count . '</span>' : '') . '
+                        </a>
                     </div>
                     <div class="notifications">
                         <span class="material-symbols-outlined" style="color:#fff; cursor: pointer;" onclick="toggleNotifications()">notifications</span>
-                        ' . ($unread_count > 0 ? '<span class="notif-count">' . $unread_count . '</span>' : '') . '
+                        ' . ($unread_notification_count > 0 ? '<span class="notif-count">' . $unread_notification_count . '</span>' : '') . '
                         <div id="notificationsDropdown" class="notifications-dropdown">
                             <div class="notifications-header">
                                 <span class="notifications-title">Notifications</span>
                                 <a href="?mark_all_read=true" style="background: none; color: #007bff; cursor: pointer; text-decoration: none;">Mark all as read</a>
                             </div>
                             <div id="notificationsList">';
-                            if (empty($notifications)) {
-                                echo '<div class="no-notifications">No notifications available.</div>';
-                            } else {
-                                foreach ($notifications as $notification) {
-                                    $status = $notification['is_read'] ? 'Read' : 'Unread';
-                                    $link = htmlspecialchars($notification['link']);
-                                    $separator = (strpos($link, '?') !== false) ? '&' : '?';
-                                    $fullLink = $link . $separator . "notification_id=" . $notification['id'];
-                                    
-                                    echo '
-                                    <a href="' . $fullLink . '&view_notification_id=' . $notification['id'] . '">
-                                        <div class="notification-item ' . ($notification['is_read'] ? '' : 'unread') . '" data-id="' . $notification['id'] . '">
-                                            <div class="notification-content">
-                                                <strong>' . htmlspecialchars($notification['type']) . '</strong> <br>' .'<p>' . htmlspecialchars($notification['message']) . '</p>
-                                            </div>
-                                            <div class="notification-meta">
-                                                <span>' . $status . '</span>
-                                                <span>' . $notification['created_at'] . '</span>
-                                            </div>
+    if (empty($notifications)) {
+        echo '<div class="no-notifications">No notifications available.</div>';
+    } else {
+        foreach ($notifications as $notification) {
+            $status = $notification['is_read'] ? 'Read' : 'Unread';
+            $link = htmlspecialchars($notification['link']);
+            $separator = (strpos($link, '?') !== false) ? '&' : '?';
+            $fullLink = $link . $separator . "notification_id=" . $notification['id'];
 
-                                        </div>
-                                    </a>
-                                    ';
-                                }
-                            }
-                        echo '</div>
+            echo '
+                                        <a href="' . $fullLink . '&view_notification_id=' . $notification['id'] . '">
+                                            <div class="notification-item ' . ($notification['is_read'] ? '' : 'unread') . '" data-id="' . $notification['id'] . '">
+                                                <div class="notification-content">
+                                                    <strong>' . htmlspecialchars($notification['type']) . '</strong><br>
+                                                    <p>' . htmlspecialchars($notification['message']) . '</p>
+                                                </div>
+                                                <div class="notification-meta">
+                                                    <span>' . $status . '</span>
+                                                    <span>' . $notification['created_at'] . '</span>
+                                                </div>
+                                            </div>
+                                        </a>';
+        }
+    }
+    echo '</div>
                         </div>
                     </div>
                     <a href="profile.php" id="profile_pic">
@@ -78,9 +86,9 @@ function nav($active) {
                 </div>
             </nav>
         </div>
-    </header>
-    ';
+    </header>';
 }
+
 ?>
 
 <script>

@@ -289,3 +289,15 @@ function markAsRead($notification_id)
     ];
     return updateData($data, 'notifications');
 }
+
+function getUnreadChatCount($user_id) {
+    $query = "SELECT COUNT(*) as unread_count FROM messages WHERE outgoing_msg_id = ? AND is_read = 0";
+    $data = [
+        'query' => $query,
+        'bind' => 'i',
+        'value' => [$user_id]
+    ];
+    $result = select($data);
+    return $result[0]['unread_count'] ?? 0;
+}
+
