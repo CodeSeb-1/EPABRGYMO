@@ -23,9 +23,7 @@ include_once("userController/index_controller.php");
                     <h1><span class="title-page">Request Documents</span> from your Barangay <span class="title-page">Online</span></h1>
                     <p>Easily request official documents from your barangay. Our online system provides a convenient way
                         to access Barangay Clearance, Certificates of Residency, Business Permits, and more.</p>
-                    <div class="cta-buttons">
-                        <a href="request.php" class="cta-button preview">Request Now</a>
-                    </div>
+                    
                 </div>
                 <div class="hero-image">
                     <img src="assets/barangay.jpg" alt="Picture">

@@ -69,7 +69,7 @@
                         <input type="file" name="image" onchange="previewImage(this);">
                     </div>
                     <input type="hidden" name="existingImage" value="<?php echo basename($img_path); ?>">
-                    <button type="button" class="btn btn-edit" id="edit-button" onclick="toggleFileInput()">Edit Profile</button>
+                    <button type="button" class="btn btn-edit" id="edit-button" onclick="toggleFileInput()">Edit Picture</button>
                     <button type="submit" id="save-button" class="btn btn-save" style="display: none;">Save</button>
                     <button type="button" id="cancel-button" class="btn btn-cancel" style="display: none;" onclick="toggleFileInput()">Cancel</button>
                     <button type="submit" name="logout" id="logout-button" class="btn btn-primary">Logout</button>

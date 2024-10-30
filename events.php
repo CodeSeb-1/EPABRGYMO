@@ -11,6 +11,7 @@ include_once("userController/calendar_controller.php");
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_circle_right" />
     <link rel="stylesheet" href="assets/style1.css?????????">
+    
     <link rel="stylesheet" href="assets/news.css???">
     <link rel="stylesheet" href="assets/modal.css">
     <style>
@@ -158,12 +159,40 @@ include_once("userController/calendar_controller.php");
             border-radius: 4px; /* Optional: rounds the corners */
             border: none;
         }
+
+        .coloring-about {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    position: static;
+    right: 3%;
+    top: 3%;
+}
+
+.color-item {
+    display: flex; 
+    align-items: center; 
+}
+
+.color-swatch {
+    width: 20px;
+    height: 10px; 
+    border-radius: 4px; 
+    margin-right: 10px; 
+}
+
+.color-label {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500; 
+}
     </style>
 </head>
 <body>
 <?php include_once("header.php");
     nav("home") ?>
     <section class="news">
+        
         <div class="news-feed__container">
             <div class="news_title">
                 <a href="index.php">← back to home page</a>
@@ -194,6 +223,24 @@ include_once("userController/calendar_controller.php");
                         ?>
                     </select>
                 </form>
+                <div class="coloring-about">
+                        <div class="color-item">
+                            <div class="color-swatch" style="background-color: #ce5151;"></div>
+                            <span class="color-label">Tanod</span>
+                        </div>
+                        <div class="color-item">
+                            <div class="color-swatch" style="background-color: #51ce57;"></div>
+                            <span class="color-label">Health Workers</span>
+                        </div>
+                        <div class="color-item">
+                            <div class="color-swatch" style="background-color: #518fce;"></div>
+                            <span class="color-label">Kagawad</span>
+                        </div>
+                        <div class="color-item">
+                            <div class="color-swatch" style="background-color: #a45eb4;"></div>
+                            <span class="color-label">Brgy Captain</span>
+                        </div>
+                    </div>
                 <?=$calendar?>
                 <br><br>
             <div class="news-feed__grid">
