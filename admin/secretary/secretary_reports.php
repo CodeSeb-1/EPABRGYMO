@@ -84,7 +84,8 @@ include_once("../adminController/secretaryController/secretary_reports_controlle
             <span class="close" id="closeOnHoldModal">&times;</span>
         </div>
         <form action="../adminController/secretaryController/secretary_reports_controller.php" method="POST">
-            <input type="hidden" name="report_id" id="hold_report_id" value="<?= $requestDetails['doc_req_id'] ?? '' ?>">
+            <input type="hidden" name="report_id" id="hold_report_id" value="<?= $requestDetails['report_id'] ?? '' ?>">
+            <input type="hidden" name="user_id" id="user_id" value="<?= $requestDetails['user_id'] ?? '' ?>">
             <div class="form-group">
                 <label for="hold_reason">Reason for Hold:</label>
                 <textarea name="hold_reason" id="hold_reason" rows="4" required></textarea>
@@ -104,7 +105,8 @@ include_once("../adminController/secretaryController/secretary_reports_controlle
             <span class="close" id="closeResolvedModal">&times;</span>
         </div>
         <form action="../adminController/secretaryController/secretary_reports_controller.php" method="POST">
-            <input type="hidden" name="report_id" id="resolved_report_id" value="<?= $requestDetails['doc_req_id'] ?? '' ?>">
+            <input type="hidden" name="report_id" id="resolved_report_id" value="<?= $requestDetails['report_id'] ?? '' ?>">
+            <input type="hidden" name="user_id" id="user_id" value="<?= $requestDetails['user_id'] ?? '' ?>">
             <div class="form-group">
                 <label for="resolution_notes">Resolution Notes:</label>
                 <textarea name="resolution_notes" id="resolution_notes" rows="4" ></textarea>
@@ -124,7 +126,8 @@ include_once("../adminController/secretaryController/secretary_reports_controlle
             <span class="close" id="closeClosedModal">&times;</span>
         </div>
         <form action="../adminController/secretaryController/secretary_reports_controller.php" method="POST">
-            <input type="hidden" name="report_id" id="closed_report_id" value="<?= $requestDetails['doc_req_id'] ?? '' ?>">
+            <input type="hidden" name="report_id" id="closed_report_id" value="<?= $requestDetails['report_id'] ?? '' ?>">
+            <input type="hidden" name="user_id" id="user_id" value="<?= $requestDetails['user_id'] ?? '' ?>">
             <div class="form-group">
                 <label for="closure_reason">Closure Reason:</label>
                 <textarea name="closure_reason" id="closure_reason" rows="4" ></textarea>
@@ -143,7 +146,8 @@ include_once("../adminController/secretaryController/secretary_reports_controlle
             <span class="close" id="closeReportDeclineModal">&times;</span>
         </div>
         <form action="../adminController/secretaryController/secretary_reports_controller.php" method="POST">
-            <input type="hidden" name="report_id" id="decline_report_id" value="<?= $requestDetails['doc_req_id'] ?? '' ?>">
+            <input type="hidden" name="report_id" id="decline_report_id" value="<?= $requestDetails['report_id'] ?? '' ?>">
+            <input type="hidden" name="user_id" id="user_id" value="<?= $requestDetails['user_id'] ?? '' ?>">
             <div class="form-group">
                 <label for="decline_reason">Reason for Declining:</label>
                 <select id="decline_reason" name="decline_reason" onchange="toggleOtherPurpose(this.value)">
@@ -174,6 +178,7 @@ include_once("../adminController/secretaryController/secretary_reports_controlle
 
         <form action="../adminController/secretaryController/secretary_reports_controller.php" method="POST">
             <input type="hidden" name="report_id" value="<?= $requestDetails['report_id'] ?? '' ?>">
+            <input type="hidden" name="user_id" id="user_id" value="<?= $requestDetails['user_id'] ?? '' ?>">
     
                 <div id="modal-body" class="form-content">
                     <div class="form-column">

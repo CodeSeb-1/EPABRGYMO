@@ -34,7 +34,7 @@ include_once("userController/report_controller.php");
                 <div class="table" id="request">
                     <div class="head">
                         <div class="btn">
-                            <a href="request.php">back</a>
+                            <a href="report.php">back</a>
                         </div>
                     </div>
                     <h1>Your Reports</h1>

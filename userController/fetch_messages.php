@@ -41,19 +41,24 @@ echo json_encode($messages);
  */
 function getDateSeparator($timestamp)
 {
+    $today = strtotime('today');
+    $yesterday = strtotime('yesterday');
+    $messageDate = strtotime(date('Y-m-d', $timestamp)); // Midnight of the message's date
     $currentYear = date('Y');
     $messageYear = date('Y', $timestamp);
 
-    if ($currentYear !== $messageYear) {
-        return date('M d, Y', $timestamp); // Different year: Full date with year
-    } elseif (time() - $timestamp < 86400) {
-        return 'Today'; // Same day
-    } elseif (time() - $timestamp < 2 * 86400) {
-        return 'Yesterday'; // Previous day
-    } elseif (time() - $timestamp < 7 * 86400) {
-        return date('l', $timestamp); // Same week: Day of the week
+    if ($messageDate === $today) {
+        return 'Today';
+    } elseif ($messageDate === $yesterday) {
+        return 'Yesterday';
+    } elseif ($messageDate >= strtotime('last Sunday')) {
+        return strtoupper(date('D', $timestamp)); // Same week: abbreviated day in uppercase (e.g., SUN, TUE)
+    } elseif ($currentYear === $messageYear) {
+        return strtoupper(date('M d', $timestamp)); // Same year but not same week: Month and day in uppercase
     } else {
-        return date('M d', $timestamp); // Same year but not same week: Month and day
+        return strtoupper(date('M d, Y', $timestamp)); // Different year: Month, day, and year in uppercase
     }
 }
+
+
 ?>

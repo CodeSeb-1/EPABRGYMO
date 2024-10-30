@@ -22,7 +22,9 @@
                             if (userFullName.toLowerCase().includes(searchTerm)) {
                                 userList += `<a href="#" class="user-link" data-id="${user.user_id}" data-name="${userFullName}">
                                                 <li class="conversation-item ${isUnread ? 'bold' : ''}">
-                                                    <img src="/EPABRGYMO/dataImages/Events.${user.user_id}.jpg" alt="${user.user_firstname}"/>
+                                                    <img src="/EPABRGYMO/dataImages/Resident.${user.user_id}.jpg" 
+                                                 alt="${user.user_firstname}"
+                                                 onerror="this.onerror=null;this.src='/EPABRGYMO/dataImages/Temp_Profile.jpg';"/>
                                                     <div class='info'>
                                                         <span class="${isUnread ? 'bold' : ''}">${userFullName}</span>
                                                         <span>${user.user_type}</span>
