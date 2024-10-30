@@ -136,28 +136,18 @@ include_once("userController/report_controller.php");
                         <span id="request_status"><?= $requestDetails['report_status'] ?? '' ?></span>
                     </div>
                     <?php
-                        if($requestDetails['report_status'] === "Approved") {
+                        if($requestDetails['report_status'] === "On Hold" || $requestDetails['report_status'] === "Closed" || $requestDetails['report_status'] === "Declined") {
                             ?>
                             <div class="form-group">
-                                <label for="expire_date">Expiration Date:</label>
-                                <span><input type="date" name="expire_date" id="expire_date" required></span>
+                                <label for="expire_date">Reason:</label>
+                                <span><?= $requestDetails['reason'] ?? '' ?></span>
                             </div>
                         
                         <?php
-                           } else if($requestDetails['report_status'] === "Pending") { ?>
+                           } else if($requestDetails['report_status'] === "Resolved") { ?>
                             <div class="form-group">
-                                <label for="reason">Reason for cancelling:</label>
-                                <span>
-                                    <select name="reason" id="reason" required>
-                                        <option value="">Select a reason</option>
-                                        <option value="Issue Resolved">Issue Resolved</option>
-                                        <option value="No Longer Needed">No Longer Needed</option>
-                                        <option value="Submitted in Error">Submitted in Error</option>
-                                        <option value="Personal Reasons">Personal Reasons</option>
-                                    </select>
-                                </span>
-
-                                <!-- <span><input type="text" id="reason" name="reason" placeholder="Reason" required></span> -->
+                                <label for="expire_date">Notes:</label>
+                                <span><?= $requestDetails['reason'] ?? '' ?></span>
                             </div>
                         <?php        
                             } else if($requestDetails['report_status'] === "Ready To Claim" || $requestDetails['report_status'] === "Claimed") {
