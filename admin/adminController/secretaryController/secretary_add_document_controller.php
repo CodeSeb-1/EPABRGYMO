@@ -5,13 +5,12 @@ if (isset($_POST['add_document'])) {//add document
 
     $document = $_POST['document_type'];
     $purpose = $_POST['document_purpose'];
-    $payment = $_POST['has_payment'];
 
     $data = [
-        "query" => "INSERT INTO document_type (doc_name, doc_purpose, has_payment)
+        "query" => "INSERT INTO document_type (doc_name, doc_purpose)
                     VALUES (?,?,?)",
-        "bind" => "sss",
-        "value" => [$document, $purpose, $payment]
+        "bind" => "ss",
+        "value" => [$document, $purpose]
     ];
 
     $results = insertData($data);
@@ -29,9 +28,9 @@ if (isset($_POST['add_document'])) {//add document
     $has_payment = $_POST['has_payment'];
 
     $data = [
-        "query" => "UPDATE document_type SET doc_name = ?, doc_purpose = ?, has_payment = ? WHERE doc_type_id = ?",
-        "bind" => "sssi",
-        "value" => [$document_type, $document_purpose, $has_payment, $doc_id]
+        "query" => "UPDATE document_type SET doc_name = ?, doc_purpose = ? WHERE doc_type_id = ?",
+        "bind" => "ssi",
+        "value" => [$document_type, $document_purpose, $doc_id]
     ];
 
     $results = updateData($data);
@@ -93,7 +92,6 @@ function display_documents()
             <tr>
                <td>{$row['doc_name']}</td>
                <td>{$row['doc_purpose']}</td>
-               <td>{$row['has_payment']}</td>
                <td>{$row['created_at']}</td>
                 <td><a href='secretary_add_document.php?doc_type_id={$row['doc_type_id']}' id='view'>View</a></td>
             </tr>";

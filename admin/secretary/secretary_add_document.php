@@ -87,15 +87,13 @@ include_once("../adminController/secretaryController/secretary_add_document_cont
                             <div class="field">
                                 <label>Purpose:</label>
                                 <input type="text" name="document_purpose" placeholder="Purpose" required value="<?= htmlspecialchars($document['doc_purpose'] ?? '') ?>">
+                                
                             </div>
                             <div class="field">
-                                <label>Has Payment:</label>
-                                <select name="has_payment" required>
-                                    <option value="">Choose</option>
-                                    <option value="Yes" <?= isset($document['has_payment']) && $document['has_payment'] === 'Yes' ? 'selected' : '' ?>>Yes</option>
-                                    <option value="No" <?= isset($document['has_payment']) && $document['has_payment'] === 'No' ? 'selected' : '' ?>>No</option>
-                                </select>
+                                <label for=""></label>
+                                <p style="font-size: 11px;">Separate the purposes using a comma. (e.g. Scholarchip, Financial Assistance)</p>  
                             </div>
+                            
                             <div class="field"> 
                                 <label></label>
                                 <?php
@@ -115,7 +113,6 @@ include_once("../adminController/secretaryController/secretary_add_document_cont
                             <tr>
                                 <th>Document</th>
                                 <th>Purpose</th>
-                                <th>Has Payment</th>
                                 <th>Date</th>
                                 <th>Action</th>
                             </tr>
