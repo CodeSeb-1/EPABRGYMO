@@ -18,13 +18,7 @@ if (isset($_GET['user_id'])) {
 if (isset($_POST['add']) || isset($_POST['edit'])) {
     $user_type = $_POST['user_type'];
     $id = $_POST['user_id'] ?? null;
-    $firstname = $_POST['firstname'];
-    $middlename = $_POST['middlename'];
-    $lastname = $_POST['lastname'];
-    $contact = $_POST['contact'];
-    $birthdate = $_POST['birthdate'];
-    $email = $_POST['email'];
-    $address = trim($_POST['address']);
+    
 
     // Check if email already exists
     if (!isset($_POST['edit'])) { // Only check if not editing
@@ -45,13 +39,10 @@ if (isset($_POST['add']) || isset($_POST['edit'])) {
         // Update existing user
         $update = [
             'query' => "UPDATE users 
-                        SET user_firstname = ?, user_middlename = ?, 
-                            user_lastname = ?, user_phoneNo = ?, 
-                            user_email = ?, user_birthdate = ?, 
-                            user_address = ?, user_type = ?
+                        SET user_type = ?
                         WHERE user_id = ?",
-            'bind' => 'ssssssssi',
-            'value' => [$firstname, $middlename, $lastname, $contact, $email, $birthdate, $address, $user_type, $id]
+            'bind' => 'si',
+            'value' => [$user_type, $id]
         ];
         $result = updateData($update);
         if ($result) {
@@ -98,7 +89,8 @@ $search = $_GET['search'] ?? '';
 $search = $con->real_escape_string($search); // Sanitize the input
 
 // Update the record SQL query to exclude users with user_type 'Resident'
-$record_sql = "SELECT * FROM users WHERE user_type != 'Resident' AND CONCAT(user_firstname, ' ', user_middlename, ' ', user_lastname) LIKE ?";
+$record_sql = "SELECT * FROM users WHERE CONCAT(user_firstname, ' ', user_middlename, ' ', user_lastname) LIKE ?";
+
 
 $stmt = $con->prepare($record_sql);
 $searchTerm = "%$search%"; // Prepare search term for wildcard search
@@ -117,31 +109,37 @@ $start = ($page - 1) * $rows_per_page;
 
 // Prepare user query with pagination, excluding 'Resident'
 $user = [
-    'query' => "SELECT * FROM users WHERE user_type != 'Resident' AND CONCAT(user_firstname, ' ', user_middlename, ' ', user_lastname) LIKE ? ORDER BY user_id DESC LIMIT ?, ?",
+    'query' => "SELECT * FROM users WHERE CONCAT(user_firstname, ' ', user_middlename, ' ', user_lastname) LIKE ? ORDER BY user_id DESC LIMIT ?, ?",
     'bind' => 'sii',
     'value' => [$searchTerm, $start, $rows_per_page],
 ];
 
+
 function display_user() {
     global $user;
-    
+
     // Prepare the statement
     $stmt = $GLOBALS['con']->prepare($user['query']);
     $stmt->bind_param($user['bind'], ...$user['value']);
     $stmt->execute();
-    
+
     // Get the results
     $result = $stmt->get_result();
-    
+
     while ($row = $result->fetch_assoc()) {
         global $page;
-        $birthdate = new DateTime($row['user_birthdate']);
-        $formattedBirthdate = $birthdate->format('F j, Y');
+
+        // Validate the date
+        $birthdate = $row['user_birthdate'];
+        $formattedBirthdate = validate_date($birthdate) 
+            ? (new DateTime($birthdate))->format('F j, Y') 
+            : 'Invalid Date';
+
         echo "
             <tr>
                 <td>{$row['user_type']}</td>
                 <td>{$row['user_firstname']} {$row['user_middlename']} {$row['user_lastname']}</td>
-                <td>" . calculate_age($row['user_birthdate']) . "</td>
+                <td>" . (validate_date($birthdate) ? calculate_age($birthdate) : 'N/A') . "</td>
                 <td>{$formattedBirthdate}</td>
                 <td>{$row['user_phoneNo']}</td>
                 <td>{$row['user_email']}</td>
@@ -151,3 +149,10 @@ function display_user() {
         ";
     }
 }
+
+// Helper function to validate a date string
+function validate_date($date, $format = 'Y-m-d') {
+    $d = DateTime::createFromFormat($format, $date);
+    return $d && $d->format($format) === $date;
+}
+

@@ -33,6 +33,7 @@ include_once("../adminController/secretaryController/secretary_add_barangay_cont
                         <div class="field">
                         <label>User Type:</label>
                             <select name="user_type" id="">
+                                <option value="Resident">Resident</option>
                                 <option value="Tanod">Tanod</option>
                                 <option value="Kagawad">Kagawad</option>
                                 <option value="Health Workers">Health Workers</option>
@@ -41,44 +42,39 @@ include_once("../adminController/secretaryController/secretary_add_barangay_cont
                             </select>
                         </div>
                         <div class="field">
-                            <label>First name:</label>
-                            <input type="text" name="firstname" placeholder="First name" required
-                                value="<?php echo $result['user_firstname'] ?? ''; ?>">
+                            <label>Name:</label>
+                            <input type="text" name="firstname" placeholder="Name" required
+                                value="<?php 
+                                    echo isset($result) 
+                                        ? trim(($result['user_firstname'] ?? '') . ' ' . 
+                                            ($result['user_middlename'] . ' ' ?? '')  . 
+                                            ($result['user_lastname'] ?? '')) 
+                                        : ''; 
+                                ?>" disabled>
                         </div>
-                        <div class="field">
-                            <label>Middle name:</label>
-                            <input type="text" name="middlename" placeholder="Middle name" required
-                                value="<?php echo $result['user_middlename'] ?? ''; ?>">
-                        </div>
-                        <div class="field">
-                            <label>Last name:</label>
-                            <input type="text" name="lastname" placeholder="Last name" required
-                                value="<?php echo $result['user_lastname'] ?? ''; ?>">
-                        </div>
+
+                        
                         <div class="field">
                             <label>Contact No.:</label>
                             <input type="text" name="contact" placeholder="Contact No." required
-                                value="<?php echo $result['user_phoneNo'] ?? ''; ?>">
+                                value="<?php echo $result['user_phoneNo'] ?? ''; ?>" disabled>
                         </div>
                         <div class="field">
                             <label>Birthdate:</label>
                             <input type="date" name="birthdate" required
-                                value="<?php echo $result['user_birthdate'] ?? ''; ?>">
+                                value="<?php echo $result['user_birthdate'] ?? ''; ?>" disabled>
                         </div>
                         <div class="field">
                             <label>Email:</label>
                             <input type="email" name="email" placeholder="Email" required
-                                value="<?php echo $result['user_email'] ?? ''; ?>">
+                                value="<?php echo $result['user_email'] ?? ''; ?>" disabled>
                         </div>
                         <div class="field">
                             <label>Address:</label>
                             <input type="text" name="address" placeholder="House no., Street" required
-                                value="<?php echo $result['user_address'] ?? ''; ?>">
+                                value="<?php echo $result['user_address'] ?? ''; ?>" disabled>
                         </div>
-                        <div class="field">
-                            <label>Profile Picture</label>
-                            <input type="file" name="image" onchange="previewImage(this);">
-                        </div>
+                        
             
                         <div class="field">
                             <label></label>
