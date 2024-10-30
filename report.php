@@ -8,7 +8,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_circle_right" />
     <link rel="stylesheet" href="assets/style1.css???????">
-    <link rel="stylesheet" href="assets/success-modal.css">
+    <link rel="stylesheet" href="assets/success-modal.css???">
     <link rel="stylesheet" href="assets/modal.css">
 </head>
 <body>
@@ -88,7 +88,7 @@
         <div id="successModal" class="modal">
                 <div class="modal-content success">
                     <div class="modal-header">
-                        <h2>Success</h2>
+                        <h2 style="color:green">Success</h2>
                         <span class="close" onclick="closeSuccessModal()">&times;</span>
                     </div>
                     <div class="modal-body">

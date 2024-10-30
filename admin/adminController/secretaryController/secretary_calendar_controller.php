@@ -177,45 +177,49 @@ if (isset($_POST["add_event"])) {
     $event_start = $_POST["event_start"];
     $event_end = $_POST["event_end"];
 
-
-    // Check for overlapping events
-    $checkQuery = [
-        'query' => "SELECT COUNT(*) FROM events
-                    WHERE event_address = ?
-                    AND (
-                        (event_start <= ? AND event_end >= ?) OR
-                        (event_start <= ? AND event_end >= ?)
-                    )
-                    AND (DATE_FORMAT(event_start, '%Y-%m-%d') = DATE_FORMAT(?, '%Y-%m-%d'))
-                    AND event_id != ?", // Exclude the current event
-        'bind' => 'ssssssi',
-        'value' => [
-            $event_address,
-            $event_end,
-            $event_start,
-            $event_start,
-            $event_start,
-            $event_start,
-            $event_id
-        ]
-    ];
-
-    $check_results = select($checkQuery);
-
-    if ($check_results && $check_results[0]['COUNT(*)'] > 0) {
+    if ($event_end < $event_start) {
+        $_SESSION['modal_title'] = "Error";
         $_SESSION['modal_btn'] = true;
-        $_SESSION['message_modal'] = "There is an overlapping event at the same location on the same date.";
-        echo "<script>window.history.back(); window.location.href='../secretary_calendar.php'</?";
+        $_SESSION['message_modal'] = "End date cannot be earlier than start date.";
+        echo "<script>window.history.back(); window.location.href='../secretary_calendar.php'</script>";
     } else {
-        // Update the event in the database
-        $updateQuery = [
-            "query" => "UPDATE events SET event_user_position = ?, event_name = ?, event_description = ?, 
-                        event_address = ?, event_start = ?, event_end = ? WHERE event_id = ?",
-            "bind" => "ssssssi",
-            "value" => [$user, $event_name, $event_description, $event_address, $event_start, $event_end, $event_id]
+        $checkQuery = [
+            'query' => "SELECT COUNT(*) FROM events
+                        WHERE event_address = ?
+                        AND (
+                            (event_start <= ? AND event_end >= ?) OR
+                            (event_start <= ? AND event_end >= ?)
+                        )
+                        AND (DATE_FORMAT(event_start, '%Y-%m-%d') = DATE_FORMAT(?, '%Y-%m-%d'))
+                        AND event_id != ?", // Exclude the current event
+            'bind' => 'ssssssi',
+            'value' => [
+                $event_address,
+                $event_end,
+                $event_start,
+                $event_start,
+                $event_start,
+                $event_start,
+                $event_id
+            ]
         ];
 
-        $result = updateData($updateQuery, "Events");
+        $check_results = select($checkQuery);
+
+        if ($check_results && $check_results[0]['COUNT(*)'] > 0) {
+            $_SESSION['modal_btn'] = true;
+            $_SESSION['message_modal'] = "There is an overlapping event at the same location on the same date.";
+            echo "<script>window.history.back(); window.location.href='../secretary_calendar.php'</script>";
+        } else {
+            // Update the event in the database
+            $updateQuery = [
+                "query" => "UPDATE events SET event_user_position = ?, event_name = ?, event_description = ?, 
+                            event_address = ?, event_start = ?, event_end = ? WHERE event_id = ?",
+                "bind" => "ssssssi",
+                "value" => [$user, $event_name, $event_description, $event_address, $event_start, $event_end, $event_id]
+            ];
+
+            $result = updateData($updateQuery, "Events");
 
         $insertNotification = [
             "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
@@ -224,18 +228,19 @@ if (isset($_POST["add_event"])) {
         ];
         insertData($insertNotification);
 
-        if ($result) {
-            $_SESSION['modal_btn'] = true;
-            $_SESSION['message_modal'] = "Event updated successfully.";
-            echo "<script>window.location.href='../../secretary/secretary_calendar.php'</script>";
-        } else {
-            $_SESSION['modal_btn'] = true;
-            $_SESSION['message_modal'] = "Failed to update event.";
-            echo "<script>window.history.back(); window.location.href='../secretary_calendar.php'</script>";
+            if ($result) {
+                $_SESSION['modal_btn'] = true;
+                $_SESSION['message_modal'] = "Event updated successfully.";
+                echo "<script>window.location.href='../../secretary/secretary_calendar.php'</script>";
+            } else {
+                $_SESSION['modal_btn'] = true;
+                $_SESSION['message_modal'] = "Failed to update event.";
+                echo "<script>window.history.back(); window.location.href='../secretary_calendar.php'</script>";
+            }
         }
     }
     unset($event_id);
-    
+
 } else if (isset($_POST['delete_event'])) {
 
     $event_id = $_SESSION['event_id'];

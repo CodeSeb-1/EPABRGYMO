@@ -16,7 +16,7 @@ $selectedStatus = isset($_GET['status']) ? $_GET['status'] : 'Card';
     <link rel="stylesheet" href="../../assets/event-calendar.css??">
     <link rel="stylesheet" href="../../assets/modal.css???">
     <link rel="stylesheet" href="../../assets/pagination.css">
-    <link rel="stylesheet" href="../../assets/success-modal.css?">
+    <link rel="stylesheet" href="../../assets/success-modal.css????">
     <style>
         select {
             margin-bottom: 20px;
@@ -182,10 +182,6 @@ $selectedStatus = isset($_GET['status']) ? $_GET['status'] : 'Card';
                                     <span>
                                         <input type="text" id="news_date" name="news_date" value="<?= $requestDetails['news_date'] ?? '' ?>" disabled required>
                                     </span>
-                                    <label for="event_address">Description:</label>
-                                    <span>
-                                        <input type="text" id="news_description" name="news_description" value="<?= $requestDetails['news_description'] ?? '' ?>" disabled required>
-                                    </span>
                                 </div>
                             </div>
                             <div class="form-column">
@@ -210,7 +206,7 @@ $selectedStatus = isset($_GET['status']) ? $_GET['status'] : 'Card';
     <div id="successModal" class="modal">
         <div class="modal-content success">
             <div class="modal-header">
-                <h2>Success</h2>
+                <h2 style="color:green">Success</h2>
                 <span class="close" onclick="closeSuccessModal()">&times;</span>
             </div>
             <div class="modal-body">
