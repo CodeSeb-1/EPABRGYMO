@@ -12,7 +12,7 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
     <link rel="stylesheet" href="../../assets/event-calendar.css??????????">
     <link rel="stylesheet" href="../../assets/modal.css??">
-    <link rel="stylesheet" href="../../assets/success-modal.css">
+    <link rel="stylesheet" href="../../assets/success-modal.css??????">
     <link rel="stylesheet" href="../../assets/pagination.css">
     <style>
         #modalEventImage {
@@ -62,6 +62,8 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
             border-radius: 4px; /* Optional: rounds the corners */
             border: none;
         }
+
+     
 
     </style>
 </head>
@@ -292,9 +294,18 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
                     </div>
                 </div>
                 <div class="form-actions" id="form-actions">
-                    <button type="submit" name="delete_event" class="btn btn-sec">Remove</button>
-                    <button type="button" class="btn btn-primary" onclick="toggleEdit()" id="editBtn">Edit</button> 
-                    <button type="submit" name="save_event" class="btn btn-primary" style="display: none;" id="saveBtn">Save</button>
+                    <?php
+                    $current_date = date("Y-m-d");
+                    $endDate = $requestDetails['event_end'];
+
+                    if($endDate >= $current_date) {?>
+                        <button type="submit" name="delete_event" class="btn btn-sec">Remove</button>
+                        <button type="button" class="btn btn-primary" onclick="toggleEdit()" id="editBtn">Edit</button> 
+                        <button type="submit" name="save_event" class="btn btn-primary" style="display: none;" id="saveBtn">Save</button>
+                    <?php
+                    }
+                    ?>
+                    
                 </div>
             </form>
         </div>
@@ -303,7 +314,14 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
     <div id="successModal" class="modal">
         <div class="modal-content success">
             <div class="modal-header">
-                <h2>Success</h2>
+                <?php
+                    if($_SESSION['modal_title'] ?? '' === "Error") {
+                        echo "<h2 style='color:#C90508';>Error</h2>";
+                        unset($_SESSION['modal_title']);
+                    } else {
+                        echo "<h2 style='color:green';>Success</h2>";
+                    }
+                ?>
                 <span class="close" onclick="closeSuccessModal()">&times;</span>
             </div>
             <div class="modal-body">
