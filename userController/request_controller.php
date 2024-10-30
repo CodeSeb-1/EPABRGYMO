@@ -4,7 +4,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/includes/model.php');
 if (isset($_POST['request'])) {
 
     $select_document = $_POST['documentId'];
-    $select_purpose = ($_POST['purpose'] === 'others') ? $_POST['other_Purpose'] : $_POST['purpose'];
+    $select_purpose = ($_POST['purpose'] === 'Others') ? $_POST['other_Purpose'] : $_POST['purpose'];
 
 
     //PAG ME LANG
@@ -80,19 +80,21 @@ if (isset($_POST['documentId'])) {
     $docId = $_POST['documentId'];
 
     $data = [
-        'query' => 'SELECT doc_purpose FROM document_type WHERE doc_name = ?',
-        'bind' => 's',
+        'query' => 'SELECT doc_purpose FROM document_type WHERE doc_type_id = ?',
+        'bind' => 'i',
         'value' => [$docId]
     ];
 
     $result = select($data, true);
 
     if ($result) {
-        $purposes = explode(',', $result['doc_purpose']); // Convert string to array
-        echo json_encode($purposes); // Return purposes as JSON
+        $purposes = explode(',', $result['doc_purpose']);
+        $purposes[] = 'Others'; // Ensure "others" is included
+        echo json_encode($purposes);
     } else {
-        echo json_encode([]);
+        echo json_encode([]); // Send empty array if nothing is found
     }
+    exit; // Ensure script stops after handling the AJAX request
 }
 
 $start = 0;
