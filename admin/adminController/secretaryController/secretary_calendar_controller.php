@@ -124,28 +124,37 @@ if (isset($_POST["add_event"])) {
 
         // echo "<script>alert('There is an event at the same location on the same date.'); window.location.href='../tanod_calendar.php';</script>";
     } else {
-
-        if($event_start > $event_end) {
+        if ($event_start > $event_end) {
             $_SESSION['modal_btn'] = true;
-            $_SESSION['message_modal'] = "inang yan mas malaki a ung event start e";
+            $_SESSION['message_modal'] = "Inang yan mas malaki a ung event start e";
             echo "<script>window.history.back(); window.location.href='../secretary_calendar.php'</script>";
         } else {
+            // Prepare to insert the event
             $data = [
                 "query" => "INSERT INTO events (event_user_position, event_name, event_description, event_address, event_start, event_end)
-                            VALUES (?,?,?,?,?,?)",
+                        VALUES (?,?,?,?,?,?)",
                 "bind" => "ssssss",
                 "value" => [$_SESSION['event_user_position'], $event_name, $event_description, $event_address, $event_start, $event_end]
             ];
 
+            // Insert the event and get the result
             $result = insertData($data, "Events");
-            $eventStart = isset($event_start) ? (new DateTime($event_start))->format('F j, Y') : 'N/A';
-            $insertNotification = [
-                "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
-                "bind" => "isss",
-                "value" => ["0", $event_name, "Event starts at: ".$eventStart, "index.php"]
-            ];
-            insertData($insertNotification);
+
+            // Check if the insertion was successful
             if ($result) {
+                // Get the most recent event ID
+                $event_id = mysqli_insert_id($con); // Make sure $con is your database connection variable
+
+                $eventStart = isset($event_start) ? (new DateTime($event_start))->format('F j, Y') : 'N/A';
+                $insertNotification = [
+                    "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+                    "bind" => "isss",
+                    "value" => ["0", $event_name, "Event starts at: " . $eventStart, "view_full_events.php?id={$event_id}"] // Add the event_id to the link if needed
+                ];
+
+                // Insert the notification
+                insertData($insertNotification);
+
                 $_SESSION['modal_btn'] = true;
                 $_SESSION['message_modal'] = "Event added successfully.";
                 echo "<script>window.location.href='../../secretary/secretary_calendar.php'</script>";
@@ -155,11 +164,9 @@ if (isset($_POST["add_event"])) {
                 echo "<script>window.history.back(); window.location.href='../secretary_calendar.php'</script>";
             }
         }
-        // $_SESSION['modal_btn'] = true;
-        // $_SESSION['message_modal'] = "ewn ko ba.";
-        // echo "<script>alert('3'); window.history.back(); window.location.href='../secretary_calendar.php'</script>";
     }
-    
+
+
 } else if (isset($_POST['save_event'])) {
     $event_id = $_SESSION['event_id'];
 
@@ -213,7 +220,7 @@ if (isset($_POST["add_event"])) {
         $insertNotification = [
             "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
             "bind" => "isss",
-            "value" => ["0", $event_name, "Event updated", "index.php"]
+            "value" => ["0", $event_name, "Event updated", "view_full_events.php?id={$event_id}"]
         ];
         insertData($insertNotification);
 

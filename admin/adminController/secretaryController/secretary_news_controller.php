@@ -24,22 +24,31 @@ $events = [
     'value' => '',
 ];
 
-if(isset($_POST['add_news'])) {
+if (isset($_POST['add_news'])) {
     $insert_news = [
         'query' => "INSERT INTO news (news_name, news_description)
-                    VALUES (?,?)",
-        "bind"=> "ss",
-        "value"=> [$_POST['news_name'], $_POST['news_description']],
+                    VALUES (?, ?)",
+        "bind" => "ss",
+        "value" => [$_POST['news_name'], $_POST['news_description']],
     ];
-    
+
+    // Insert the news and get the result
     $results = insertData($insert_news, "News");
-    $insertNotification = [
-        "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
-        "bind" => "isss",
-        "value" => ["0", "News", $_POST['news_name'], "index.php"]
-    ];
-    insertData($insertNotification);
-    if($results) {
+
+    // Check if the insertion was successful
+    if ($results) {
+        // Get the most recent news_id
+        $news_id = mysqli_insert_id($con); // Make sure $con is your database connection variable
+
+        $insertNotification = [
+            "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?, ?, ?, ?)",
+            "bind" => "isss",
+            "value" => ["0", "News", $_POST['news_name'], "view_full_news.php?id={$news_id}"]
+        ];
+
+        // Insert the notification
+        insertData($insertNotification);
+
         $_SESSION['modal_btn'] = true;
         $_SESSION['message_modal'] = "News Added";
         echo "<script>window.location.href='../../secretary/secretary_news.php?status=" . urlencode($selectedStatus) . "' </script>";
