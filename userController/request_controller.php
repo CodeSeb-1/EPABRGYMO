@@ -76,6 +76,25 @@ function display_document()
     }
 }
 
+if (isset($_POST['documentId'])) {
+    $docId = $_POST['documentId'];
+
+    $data = [
+        'query' => 'SELECT doc_purpose FROM document_type WHERE doc_name = ?',
+        'bind' => 's',
+        'value' => [$docId]
+    ];
+
+    $result = select($data, true);
+
+    if ($result) {
+        $purposes = explode(',', $result['doc_purpose']); // Convert string to array
+        echo json_encode($purposes); // Return purposes as JSON
+    } else {
+        echo json_encode([]);
+    }
+}
+
 $start = 0;
 $rows_per_page = 15;
 

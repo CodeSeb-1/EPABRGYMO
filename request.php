@@ -141,18 +141,16 @@ include_once("userController/request_controller.php");
 
                         <div class="form-groups">
                             <label for="purpose">Purpose:</label>
-                            <select name="purpose" id="purpose" required onchange="toggleOtherpurpose(this.value)">
+                            <select name="purpose" id="purpose" required>
                                 <option value="">Select purpose</option>
-                                <option value="Scholarship">Scholarship</option>
-                                <option value="Financial Assistance">Financial Assistance</option>
-                                <option value="Work Related">Work Related</option>
-                                <option value="others">Others</option>
+                                <!-- Options will be populated dynamically via JavaScript -->
                             </select>
                         </div>
                         <div class="form-groups" id="otherPurpose" style="display: none;">
                             <label for="otherPurpose">Other Purpose:</label><br>
                             <input type="text" id="other_Purpose" name="other_Purpose" placeholder="Enter purpose">
                         </div>
+
 
                         <input type="submit" name="request" value="Submit Request">
                     </form>
@@ -182,6 +180,45 @@ include_once("userController/request_controller.php");
     <script src="javascript/request.js"></script>
     <script src="javascript/other.js"></script>
     <script src="javascript/request-location.js"></script>
+    <script>
+        document.getElementById('documentId').addEventListener('change', function () {
+    const docId = this.value;
+
+    if (docId) {
+        fetch('fetch_purposes.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({ documentId: docId }),
+        })
+            .then((response) => response.json())
+            .then((purposes) => updatePurposeOptions(purposes))
+            .catch((error) => console.error('Error fetching purposes:', error));
+    } else {
+        updatePurposeOptions([]); // Clear options if no document selected
+    }
+});
+
+function updatePurposeOptions(purposes) {
+    const purposeSelect = document.getElementById('purpose');
+    purposeSelect.innerHTML = '<option value="">Select purpose</option>';
+
+    purposes.forEach((purpose) => {
+        const option = document.createElement('option');
+        option.value = purpose.trim();
+        option.textContent = purpose.trim();
+        purposeSelect.appendChild(option);
+    });
+
+    // Display the "Other Purpose" input if needed
+    purposeSelect.addEventListener('change', function () {
+        const otherPurposeDiv = document.getElementById('otherPurpose');
+        otherPurposeDiv.style.display = this.value === 'others' ? 'block' : 'none';
+    });
+}
+
+    </script>
 </body>
 
 </html>
