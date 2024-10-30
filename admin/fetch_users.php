@@ -22,6 +22,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $unread_data = mysqli_fetch_assoc($unread_count_result);
     $unread_count = $unread_data['unread_count'] ?? 0;
 
+    // Set default last message
     $last_message = 'No message available';
     if ($row2) {
         $last_message = $row2['msg'];
@@ -31,6 +32,12 @@ while ($row = mysqli_fetch_assoc($result)) {
     }
     $msg = (strlen($last_message) > 28) ? substr($last_message, 0, 28) . '...' : $last_message;
 
+    // Set profile image path based on user's ID
+    $imagePath = "/EPABRGYMO/dataImages/Resident." . $row['user_id'] . ".jpg";
+    if (!file_exists($_SERVER['DOCUMENT_ROOT'] . $imagePath)) {
+        $imagePath = "/EPABRGYMO/dataImages/Temp_Profile.jpg";
+    }
+
     $users[] = array(
         'user_id' => $row['user_id'],
         'user_firstname' => $row['user_firstname'],
@@ -38,6 +45,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         'last_message' => $msg,
         'user_type' => $row['user_type'],
         'unread_count' => $unread_count, // Include unread count
+        'user_profile' => $imagePath
     );
 }
 
