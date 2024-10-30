@@ -2,7 +2,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/includes/model.php');
 
 $news = [
-    'query' => 'SELECT * FROM news ORDER BY news_id',
+    'query' => 'SELECT * FROM news ORDER BY news_id DESC',
     'bind' => '',
     'value' => '',
 ];
