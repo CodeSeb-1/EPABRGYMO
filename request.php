@@ -13,7 +13,7 @@ include_once("userController/request_controller.php");
     <link rel="stylesheet" href="assets/style1.css???????">
     <link rel="stylesheet" href="assets/pagination.css?">
     <link rel="stylesheet" href="assets/modal.css">
-    <link rel="stylesheet" href="assets/success-modal.css">
+    <link rel="stylesheet" href="assets/success-modal.css????">
 </head>
 
 <body>
@@ -150,9 +150,6 @@ include_once("userController/request_controller.php");
                             <label for="otherPurpose">Other Purpose:</label>
                             <input type="text" id="other_Purpose" name="other_Purpose" placeholder="Enter purpose">
                         </div>
-
-
-
                         <input type="submit" name="request" value="Submit Request">
                     </form>
                 </div>
@@ -160,7 +157,7 @@ include_once("userController/request_controller.php");
             <div id="successModal" class="modal">
                 <div class="modal-content success">
                     <div class="modal-header">
-                        <h2>Success</h2>
+                        <h2 style="color:green">Success</h2>
                         <span class="close" onclick="closeSuccessModal('view_request.php')">&times;</span>
                     </div>
                     <div class="modal-body">

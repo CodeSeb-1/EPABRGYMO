@@ -99,7 +99,7 @@
             <?php
                 if ($requestDetails) {
                     if ($requestDetails['request_status'] === 'Pending') {
-                        echo '<button type="submit" name="cancel" class="btn btn-sec">Cancel</button> ';
+                        echo '<button type="submit" name="cancel" class="btn btn-primary">Confirm</button> ';
                     }
                 }
                 ?>

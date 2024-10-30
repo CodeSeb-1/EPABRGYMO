@@ -13,9 +13,22 @@ include_once("userController/request_controller.php");
     <link rel="stylesheet" href="assets/style1.css??????">
     <link rel="stylesheet" href="assets/pagination.css?">
     <link rel="stylesheet" href="assets/modal.css???">
-    <link rel="stylesheet" href="assets/success-modal.css">
+    <link rel="stylesheet" href="assets/success-modal.css???">
+    <style>
+        .status-pending {
+            color: rgb(255, 165, 0);
+            /* font-style: italic; */
+        }
+        .status-approved {
+            color: rgb(34, 139, 34);
+            /* font-style: italic; */
+        }
+        .status-declined {
+            color: rgb(220, 20, 60); 
+            /* font-style: italic; */
+        }
+    </style>
 </head>
-
 <body>
     <?php include_once("header.php");
     nav("request") ?>
@@ -80,7 +93,7 @@ include_once("userController/request_controller.php");
             <div id="successModal" class="modal">
                 <div class="modal-content success">
                     <div class="modal-header">
-                        <h2>Success</h2>
+                    <h2 style="color:green">Success</h2>
                         <span class="close" onclick="closeSuccessModal()">&times;</span>
                     </div>
                     <div class="modal-body">

@@ -136,6 +136,13 @@ function display_request() {
     // Display the results using your existing displayAll logic
     displayAll($display_request, null, function ($row, $id) {
         global $page, $filterStatus;
+
+        $statusClass = match ($row['request_status']) {
+            'Pending' => 'status-pending',
+            'Approved' => 'status-approved',
+            'Declined' => 'status-declined',
+            default => ''
+        };
         echo "
             <tr>
                 <td>{$row['request_name']}</td>
@@ -143,7 +150,7 @@ function display_request() {
                 <td>{$row['request_address']}</td>
                 <td>{$row['doc_name']}</td>
                 <td>{$row['request_purpose']}</td>
-                <td>{$row['request_status']}</td>";
+                <td><span class='$statusClass'>{$row['request_status']}</span></td>";
         
         // Show the cancel link only if the status is 'Pending'
         if ($row['request_status'] === 'Pending') {
