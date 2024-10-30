@@ -83,7 +83,7 @@ function display_news_table() {
         echo "
         <tr>
             <td>{$row['news_name']}</td>
-            <td>{$row['news_description']}</td>
+            <td class='description'>{$row['news_description']}</td>
             <td>{$row['news_date']}</td>
             <td>
                 <a href='secretary_news.php?page=$page&status=$filterStatus&news_id={$row['news_id']}' id='view'>View</a>

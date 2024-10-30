@@ -45,10 +45,16 @@ function sidebar($current_page) {
                     <span>Ordinance Shifting</span>
                 </div> 
             </a>
-             <a href="secretary_reports.php">
+            <a href="secretary_reports.php">
                 <div class="menu-item' . ($current_page === 'reports' ? ' active' : '') . '">
                     <span class="material-symbols-outlined">report</span>                    
                     <span>Reports</span>
+                </div> 
+            </a>
+            <a href="secretary_add_barangay.php">
+                <div class="menu-item' . ($current_page === 'barangay' ? ' active' : '') . '">
+                    <span class="material-symbols-outlined">add</span>                    
+                    <span>Add Barangay Official</span>
                 </div> 
             </a>
         </nav>';

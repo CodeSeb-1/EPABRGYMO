@@ -1,5 +1,5 @@
 function toggleEdit() {
-    const inputs = document.querySelectorAll('#myModal input, #myModal select');
+    const inputs = document.querySelectorAll('#myModal input, #myModal select, textarea');
     const editBtn = document.getElementById("editBtn");
     const saveBtn = document.getElementById("saveBtn");
 

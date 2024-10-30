@@ -61,7 +61,26 @@ $selectedStatus = isset($_GET['status']) ? $_GET['status'] : 'Card';
             z-index: 1000;
         }
 
+        textarea {
+            height: 150px; /* Set a fixed height */
+            overflow-y: auto; /* Make it scrollable on the y-axis */
+            width: 100%; /* Optional: makes the textarea responsive */
+            resize: none; /* Optional: prevents resizing of the textarea */
+            border-radius: 4px; /* Optional: rounds the corners */
+            border: none;
+        }
 
+        .description {
+            display: -webkit-box;                /* Enables the box layout */
+            -webkit-box-orient: vertical;       /* Defines the orientation of the box */
+            -webkit-line-clamp: 1;               /* Limits to one line */
+            overflow: hidden;                    /* Hides any overflowing text */
+            text-overflow: ellipsis;             /* Displays ellipsis for clipped text */
+            max-height: 5em;                   /* Optional: Ensures max height corresponds to one line */
+            line-height: 1.2em;                  /* Set a line height that corresponds to max height */
+            width: 500px;                 
+            white-space: nowrap;                
+        }
     </style>
 </head>
 <body>
@@ -101,7 +120,6 @@ $selectedStatus = isset($_GET['status']) ? $_GET['status'] : 'Card';
                     </div>
                 </div>
             </section><hr>
-
                 <section class="view-news-table" id="view">
                     <table>
                         <thead>
@@ -160,6 +178,10 @@ $selectedStatus = isset($_GET['status']) ? $_GET['status'] : 'Card';
                                     </span>
                                 </div>
                                 <div class="form-group">
+                                    <label for="event_start">Date:</label>
+                                    <span>
+                                        <input type="text" id="news_date" name="news_date" value="<?= $requestDetails['news_date'] ?? '' ?>" disabled required>
+                                    </span>
                                     <label for="event_address">Description:</label>
                                     <span>
                                         <input type="text" id="news_description" name="news_description" value="<?= $requestDetails['news_description'] ?? '' ?>" disabled required>
@@ -168,9 +190,9 @@ $selectedStatus = isset($_GET['status']) ? $_GET['status'] : 'Card';
                             </div>
                             <div class="form-column">
                                 <div class="form-group">
-                                    <label for="event_start">Date:</label>
+                                    <label for="event_address">Description:</label>
                                     <span>
-                                        <input type="text" id="news_date" name="news_date" value="<?= $requestDetails['news_date'] ?? '' ?>" disabled required>
+                                        <textarea id="news_description" name="news_description" disabled required><?= $requestDetails['news_description'] ?? '' ?></textarea>
                                     </span>
                                 </div>
                             </div>

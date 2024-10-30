@@ -54,6 +54,15 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
             cursor: pointer;
             z-index: 1000;
         }
+        textarea {
+            height: 130px; /* Set a fixed height */
+            overflow-y: auto; /* Make it scrollable on the y-axis */
+            width: 100%; /* Optional: makes the textarea responsive */
+            resize: none; /* Optional: prevents resizing of the textarea */
+            border-radius: 4px; /* Optional: rounds the corners */
+            border: none;
+        }
+
     </style>
 </head>
 <body>
@@ -265,7 +274,7 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
                         <div class="form-group">
                             <label for="event_start">Description:</label>
                             <span>
-                                <input type="text" id="event_description" name="event_description" value="<?= $requestDetails['event_description'] ?? '' ?>" disabled required>
+                                <textarea id="event_description" name="event_description" disabled required><?= $requestDetails['event_description'] ?? '' ?></textarea>
                             </span>
                         </div>
                         <div class="form-group">
@@ -308,7 +317,7 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
     <?php include_once("../../show-success-error-modal.php") ?>
     <script src="../../javascript/image.js"></script>
     <?php include_once("../../modal-open-close.php") ?>
-    <script src="../../javascript/toggle-edit.js"></script>
+    <script src="../../javascript/toggle-edit.js?"></script>
     <script src="../../javascript/open-image-modal.js"></script>
 </body>
 </html>

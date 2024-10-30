@@ -21,7 +21,7 @@
             <section class="form">
                 <div class="form-contents">
                     <div class="head">
-<h1>Report Form</h1>
+                    <h1>Report Form</h1>
                 <div class="btn">
                         <a href="view_report.php">View reports</a>
                     </div>
@@ -33,16 +33,16 @@
                             <label for="report">Type of report <span id="asterisk">*</span> </label>
                             <select name="report_type" id="report_type" required>
                                 <option value="">Select report</option>
-                                <option value="personal_dispute">Personal Dispute</option>
-                                <option value="slander_defamation">Slander/Defamation</option>
-                                <option value="theft">Theft</option>
-                                <option value="physical_assault">Physical Assault</option>
-                                <option value="vandalism">Vandalism</option>
-                                <option value="trespassing">Trespassing</option>
-                                <option value="disturbance">Disturbance of Peace</option>
-                                <option value="harassment">Harassment</option>
+                                <option value="Personal Dispute">Personal Dispute</option>
+                                <option value="Slander/Defamation">Slander/Defamation</option>
+                                <option value="Theft">Theft</option>
+                                <option value="Physical Assault">Physical Assault</option>
+                                <option value="Vandalism">Vandalism</option>
+                                <option value="Trespassing">Trespassing</option>
+                                <option value="Disturbance of Peace">Disturbance of Peace</option>
+                                <option value="Harassment">Harassment</option>
                                 <option value="PublicSafety/Hazard">Public Safety/Hazard</option>
-                                <option value="others">Others</option>
+                                <option value="Others">Others</option>
                             </select>
                         </div>
 
