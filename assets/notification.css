@@ -1,0 +1,102 @@
+.notifications-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #fff;
+    min-width: 400px;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1000;
+    max-height: 500px;
+    overflow-y: auto;
+}
+.notifications-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+.notifications-title {
+    font-weight: bold;
+    font-size: 16px;
+}
+.notification-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e9ecef;
+    transition: background-color 0.2s;
+}
+.notification-item:last-child {
+    border-bottom: none;
+}
+.notification-item:hover {
+    background-color: #f8f9fa;
+}
+.notification-item.unread {
+    background-color: #e7f3ff;
+}
+.notification-content {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+.notification-content p {
+    margin-top: 3px;
+    font-size: 13px;
+    color: #6c757d;
+}
+.notification-content strong {
+    font-weight: 500;
+}
+.notification-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #6c757d;
+}
+.notification-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 8px;
+    font-size: 13px;
+}
+.notification-actions button {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: 8px;
+}
+.notification-actions button:hover {
+    text-decoration: underline;
+}
+.notif-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    padding: 2px 5px;
+    border-radius: 50%;
+    background-color: #dc3545;
+    color: white;
+    font-size: 12px;
+}
+.notifications {
+    position: relative;
+    display: inline-block;
+}
+.no-notifications {
+    padding: 16px;
+    text-align: center;
+    color: #6c757d;
+}
+
+.material-symbols-outlined {
+    font-weight: 100;
+}

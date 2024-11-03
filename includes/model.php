@@ -111,23 +111,53 @@ function findImageFile($table, $id) {
     return file_exists($filePath) ? basename($filePath) : null;
 }
 
+
 function deleteData($data, $deleteImage = false) {
     global $con;
 
-    if($stmt = $con->prepare($data['query'])) {
+    if ($stmt = $con->prepare($data['query'])) {
         if (!empty($data['bind']) && !empty($data['value'])) {
             $stmt->bind_param($data['bind'], ...$data['value']);
         }
 
-        $filePath = $_SERVER['DOCUMENT_ROOT'] . "/EPABGRYMO/dataImages/{$deleteImage['table']}.{$deleteImage['primaryKey']}.jpg";
-        if (file_exists($filePath)) {
-            unlink($filePath); 
+        // Check if $deleteImage is an array before attempting file deletion
+        if (is_array($deleteImage)) {
+            $filePath = $_SERVER['DOCUMENT_ROOT'] . "/EPABGRYMO/dataImages/{$deleteImage['table']}.{$deleteImage['primaryKey']}.jpg";
+            if (file_exists($filePath)) {
+                unlink($filePath); 
+            }
         }
 
         $stmt->execute();
         $stmt->close();
     }
 }
+
+
+// function deleteData($data, $deleteImage = false) {
+//     global $con;
+//     $success = false; 
+//     if ($stmt = $con->prepare($data['query'])) {
+//         if (!empty($data['bind']) && !empty($data['value'])) {
+//             $stmt->bind_param($data['bind'], ...$data['value']);
+//         }
+
+//         $stmt->execute();
+//         if ($stmt->affected_rows > 0) {
+//             $success = true; 
+//         }
+
+//         // Check if we need to delete an image
+//             $filePath = $_SERVER['DOCUMENT_ROOT'] . "/EPABGRYMO/dataImages/{$deleteImage['table']}.{$deleteImage['primaryKey']}.jpg";
+//             if (file_exists($filePath)) {
+//                 unlink($filePath); 
+//             }
+        
+
+//         $stmt->close();
+//     }
+//     return $success;
+// }
 
 function generateVerificationCode() {
     return str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
@@ -200,6 +230,38 @@ function sendVerificationEmail($email, $verification_code) {
         return false; // Email not sent
     }
 }
+function getAllNotifications($user_id)
+{
+    $query = "SELECT * FROM notifications WHERE user_id = ? OR user_id = 0 ORDER BY created_at DESC";
+    $data = [
+        'query' => $query,
+        'bind' => 'i',
+        'value' => [$user_id]
+    ];
+    return select($data);
+}
+
+
+function markNotificationAsRead($notification_id) {
+    $query = "UPDATE notifications SET is_read = 1 WHERE id = ?";
+    $data = [
+        'query' => $query,
+        'bind' => 'i',
+        'value' => [$notification_id]
+    ];
+    return updateData($data);
+}
+
+function deleteNotification($notification_id) {
+    $query = "DELETE FROM notifications WHERE id = ?";
+    $data = [
+        'query' => $query,
+        'bind' => 'i',
+        'value' => [$notification_id]
+    ];
+    return deleteData($data);
+}
+
 
 function location($location) {
     header("location: $location");
@@ -233,3 +295,15 @@ function markAsRead($notification_id)
     ];
     return updateData($data, 'notifications');
 }
+
+function getUnreadChatCount($user_id) {
+    $query = "SELECT COUNT(*) as unread_count FROM messages WHERE outgoing_msg_id = ? AND is_read = 0";
+    $data = [
+        'query' => $query,
+        'bind' => 'i',
+        'value' => [$user_id]
+    ];
+    $result = select($data);
+    return $result[0]['unread_count'] ?? 0;
+}
+

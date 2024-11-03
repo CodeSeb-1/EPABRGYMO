@@ -42,7 +42,7 @@
                     </div>
                     <div class="input-group">
                         <input type="password" id="password" name="password" placeholder="" required>
-                        <label for="password">Passowrd</label>
+                        <label for="password">Password</label>
                     </div>
                     <div class="input-group">
                         <input type="number" id="purok" name="purok" min="1" max="7" placeholder="" required>

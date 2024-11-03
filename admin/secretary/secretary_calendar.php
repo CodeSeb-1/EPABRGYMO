@@ -1,6 +1,6 @@
 <?php
-include '../calendar.php';
-include_once("../adminController/tanod_calendar_controller.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/admin/calendar.php');
+// include_once("../adminController/tanod_calendar_controller.php");
 include_once("../adminController/secretaryController/secretary_calendar_controller.php");
 ?>
 <!DOCTYPE html>
@@ -10,18 +10,61 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-PaBrgyMo Calendar</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
-    <link rel="stylesheet" href="../../assets/event-calendar.css?">
-    <link rel="stylesheet" href="../../assets/modal.css?">
-    <link rel="stylesheet" href="../../assets/success-modal.css">
+    <link rel="stylesheet" href="../../assets/event-calendar.css??????????">
+    <link rel="stylesheet" href="../../assets/modal.css??">
+    <link rel="stylesheet" href="../../assets/success-modal.css??????">
     <link rel="stylesheet" href="../../assets/pagination.css">
     <style>
         #modalEventImage {
-            height: 400px;
+            height: 330px;
             width: 100%;
             margin-left: 50%;
             object-fit: cover;
             transform: translateX(-50%);
         }
+
+        #fullImageModal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1999; /* Ensure it's on top of other elements */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark background */
+        }
+
+        #fullImageModal .modal-content {
+            position: relative;
+            margin: 10% auto;
+            padding: 0;
+            width: 80%;
+            max-width: 800px; /* Adjust max width as needed */
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        #fullImageModal .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: black;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        textarea {
+            height: 130px; /* Set a fixed height */
+            overflow-y: auto; /* Make it scrollable on the y-axis */
+            width: 100%; /* Optional: makes the textarea responsive */
+            resize: none; /* Optional: prevents resizing of the textarea */
+            border-radius: 4px; /* Optional: rounds the corners */
+            border: none;
+        }
+
+     
+
     </style>
 </head>
 <body>
@@ -37,7 +80,7 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
             <div class="content home">
             <h1>Add Event</h1><br>
             <section class="add-event">
-                <div class="event-form">
+                <div class="event-form" id="calendarss">
                     <form action="../adminController/secretaryController/secretary_calendar_controller.php" method="POST" enctype="multipart/form-data">
                         <div class="field">
                             <label>User:</label>
@@ -69,7 +112,7 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
                             <input type="datetime-local" name="event_start" placeholder="Event Start" required>
                         </div>
                         <div class="field">
-                            <label>Duration</label>
+                            <label>Duration Days:</label>
                             <input type="number" name="event_duration" placeholder="Event Duration Days" required>
                         </div>
                         <div class="field">
@@ -84,7 +127,7 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
             </section><hr>
 
             <h1>Calendar</h1><br>
-                <form method="GET" action="">
+                <form method="GET" action="" id="calendar-id">
                     <label for="month">Select Month:</label>
                     <select name="month" id="month" onchange="this.form.submit()">
                         <?php
@@ -191,50 +234,94 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
                 <h2 class="modal-title">Event Details</h2>
                 <span class="close" id="closeModal">&times;</span>
             </div>
-            <form action="../adminController/secretaryController/secretary_document_request_controller.php" method="POST">
-                <input type="hidden" name="event_id" id="event_id" value="<?= $requestDetails['event_id'] ?? '' ?>">
-                <img id="modalEventImage" src="<?php echo "/EPABRGYMO/dataImages/Events.{$requestDetails['event_id']}.jpg"; ?>" alt=""><br><br><br>
+            <form action="../adminController/secretaryController/secretary_calendar_controller.php" method="POST">
+                <?php $_SESSION['event_id'] = $requestDetails['event_id']; ?>
+                <input type="hidden" name="event_id_edit" id="event_id_edit" value="<?= $requestDetails['event_id'] ?? '' ?>">
+                <img 
+                    id="modalEventImage" 
+                    src="<?php echo "/EPABRGYMO/dataImages/Events.{$requestDetails['event_id']}.jpg"; ?>" 
+                    alt="image" 
+                    onclick="openImageModal(this.src)"
+                    style="cursor: pointer;"
+                ><br><br>
+                <!-- <img id="modalEventImage" src="<?php echo "/EPABRGYMO/dataImages/Events.{$requestDetails['event_id']}.jpg"; ?>" alt=""><br><br><br> -->
                 <div id="modal-body" class="form-content">
                     <div class="form-column">
                         <div class="form-group">
-                            <label for="request_name">User Position:</label>
-                            <span id="request_name"><?= $requestDetails['event_user_position'] ?? '' ?></span>
+                            <label for="event_user_position">User Position:</label>
+                            <span>
+                                <select name="users" disabled required>
+                                    <option value="<?= $requestDetails['event_user_position'] ?? '' ?>"><?php echo $requestDetails['event_user_position'] ?? ''; ?></option>
+                                    <option value="Tanod">Tanod</option>
+                                    <option value="Health Workers">Health Workers</option>
+                                    <option value="Kagawad">Kagawad</option>
+                                    <option value="BrgyCaptain">Brgy Captain</option>
+                                </select>       
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="request_name">Event:</label>
-                            <span id="request_name"><?= $requestDetails['event_name'] ?? '' ?></span>
+                            <label for="event_name">Event:</label>
+                            <span>
+                                <input type="text" id="event_name" name="event_name" value="<?= $requestDetails['event_name'] ?? '' ?>" disabled required>
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="request_name">Address:</label>
-                            <span id="request_name"><?= $requestDetails['event_address'] ?? '' ?></span>
+                            <label for="event_address">Address:</label>
+                            <span>
+                                <input type="text" id="event_address" name="event_address" value="<?= $requestDetails['event_address'] ?? '' ?>" disabled required>
+                            </span>
                         </div>
                     </div>
                     <div class="form-column">
                         <div class="form-group">
-                            <label for="request_purpose" class="<?=$statusClass?>">Event Address:</label>
-                            <span id="request_purpose"><?= $requestDetails['event_address'] ?? '' ?></span>
+                            <label for="event_start">Description:</label>
+                            <span>
+                                <textarea id="event_description" name="event_description" disabled required><?= $requestDetails['event_description'] ?? '' ?></textarea>
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="request_date">Start Date:</label>
-                            <span id="request_date"><?= $eventStart ?? '' ?></span>
+                            <label for="event_start">Start Date:</label>
+                            <span>
+                                <input type="datetime-local" id="event_start" name="event_start" value="<?= $requestDetails['event_start'] ?? '' ?>" disabled required>
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="request_status">End Date:</label>
-                            <span id="request_status"><?= $eventEnd ?? '' ?></span>
+                            <label for="event_end">End Date:</label>
+                            <span>
+                                <input type="date" id="event_end" name="event_end" value="<?= $requestDetails['event_end'] ?? '' ?>" disabled required>
+                            </span>
                         </div>
                     </div>
                 </div>
                 <div class="form-actions" id="form-actions">
-                    <button type="submit" name="delete_event" class="btn btn-sec">Remove</button> 
-                    <button type="submit" name="edit_event" class="btn btn-primary">Edit</button>
+                    <?php
+                    $current_date = date("Y-m-d");
+                    $endDate = $requestDetails['event_end'];
+
+                    if($endDate >= $current_date) {?>
+                        <button type="submit" name="delete_event" class="btn btn-sec">Remove</button>
+                        <button type="button" class="btn btn-primary" onclick="toggleEdit()" id="editBtn">Edit</button> 
+                        <button type="submit" name="save_event" class="btn btn-primary" style="display: none;" id="saveBtn">Save</button>
+                    <?php
+                    }
+                    ?>
+                    
                 </div>
             </form>
         </div>
     </div>
+    <?php include_once("../../full_image_modal.php"); ?>
     <div id="successModal" class="modal">
         <div class="modal-content success">
             <div class="modal-header">
-                <h2>Success</h2>
+                <?php
+                    if($_SESSION['modal_title'] ?? '' === "Error") {
+                        echo "<h2 style='color:#C90508';>Error</h2>";
+                        unset($_SESSION['modal_title']);
+                    } else {
+                        echo "<h2 style='color:green';>Success</h2>";
+                    }
+                ?>
                 <span class="close" onclick="closeSuccessModal()">&times;</span>
             </div>
             <div class="modal-body">
@@ -246,26 +333,9 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
         </div>
     </div>
     <?php include_once("../../show-success-error-modal.php") ?>
-    <!-- <script src="../../javascript/modal-event.js"></script> -->
     <script src="../../javascript/image.js"></script>
-    <script>
-        var modal = document.getElementById("myModal");
-        var span = document.getElementById("closeModal");
-
-        <?php if ($requestDetails): ?>
-            modal.style.display = "block";
-            window.location.href = "#table"; 
-        <?php endif; ?>
-
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
+    <?php include_once("../../modal-open-close.php") ?>
+    <script src="../../javascript/toggle-edit.js?"></script>
+    <script src="../../javascript/open-image-modal.js"></script>
 </body>
 </html>

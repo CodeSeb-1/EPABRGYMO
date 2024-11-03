@@ -1,5 +1,5 @@
 <script>
-    var modal = document.getElementById("myModal");
+        var modal = document.getElementById("myModal");
         var span = document.getElementById("closeModal");
 
         <?php if ($requestDetails): ?>

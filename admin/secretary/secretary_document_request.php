@@ -13,30 +13,45 @@ include_once("../adminController/secretaryController/secretary_document_request_
     <link rel="stylesheet" href="../../assets/event-calendar.css??">
     <link rel="stylesheet" href="../../assets/modal.css?">
     <link rel="stylesheet" href="../../assets/pagination.css?">
+    <link rel="stylesheet" href="../../assets/success-modal.css">
     <style>
+        :root {
+            --main-red:#D04848;
+            --main-hover-red: #b73c3c;
+            --second-main-red: #C90508;
+            --white: #fff;
+            --background-middle-white: #f0f2f5;
+            --sidebar-text-color: #7a7a7a;
+            --input-color-gray: #636e73;
+
+            --light-black: #1A1A19;
+
+
+            --regular-size: 13px;
+        }
         #declineModal {
-    z-index: 1001; /* Make it higher than myModal */
-}
+            z-index: 1001; /* Make it higher than myModal */
+        }
 
-.modal-content {
-    background-color: white;
-    margin: 15% auto;
-    padding: 20px;
-    border-radius: 5px;
-    width: 50%;
-}
+        .close {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+        }
 
-.close {
-    float: right;
-    font-size: 28px;
-    cursor: pointer;
-}
+        textarea {
+            width: 100%;
+            padding: 10px;
+            resize: vertical;
+        }
 
-textarea {
-    width: 100%;
-    padding: 10px;
-    resize: vertical;
-}
+        tr > td > a > span.edit {
+            color: #51ce57;
+        }
+
+        tr > td > a > span.delete {
+            color: var(--main-hover-red);
+        }
 
     </style>
 </head>
@@ -97,57 +112,81 @@ textarea {
                     </div>
                 </section>
             </div>
+
+            <!-- ADD DOCUMENT -->
+            
         </main>
     </div>
-
-    <!-- Reason for Decline Modal -->
-<div id="declineModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Reason for Declining</h2>
-            <span class="close" id="closeDeclineModal">&times;</span>
+    <div id="successModal" class="modal">
+        <div class="modal-content success">
+            <div class="modal-header">
+                <?php
+                    if(isset($_SESSION['modal_title']) ?? '') {
+                        echo "<h2 style='color:#C90508';>Declined</h2>";
+                        unset($_SESSION['modal_title']);
+                    } else {
+                        echo "<h2 style='color:green;'>Success</h2>";
+                    }
+                ?>
+                <span class="close" onclick="closeSuccessModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><?php echo$_SESSION['message_modal'] ?? ''; ?></p><br>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeSuccessModal()" class="btn btn-primary">OK</button>
+            </div>
         </div>
-        <form action="../adminController/secretaryController/secretary_document_request_controller.php" method="POST">
-            <input type="hidden" name="doc_req_id" id="decline_doc_req_id">
-            <div class="form-group">
-                <label for="decline-reason" >Reason for Declining Request:</label>
-                    <select id="decline-reason" name="decline_reason" onchange="toggleOtherpurpose(this.value)">
-                        <option value="Incomplete Application">Incomplete Application</option>
-                        <option value="Eligibility Issues">Eligibility Issues</option>
-                        <option value="Pending Obligations">Pending Obligations</option>
-                        <option value="Invalid Request">Invalid Request</option>
-                        <option value="Documentation Mismatch">Documentation Mismatch</option>
-                        <option value="Regulatory Compliance">Regulatory Compliance</option>
-                        <option value="Expired Documents">Expired Documents</option>
-                        <option value="Fraud Prevention">Fraud Prevention</option>
-                        <option value="Time Constraints">Time Constraints</option>
-                        <option value="others">Others</option>
-
-                    </select>
-                    <br><br>
-                    <div id="other_decline_reason_div" style="display:none;">
-                        <textarea name="other_decline_reason" id="other_decline_reason" rows="4"  ></textarea>
-                    </div>
-
-                
-            </div>
-            <div class="form-actions">
-                <button type="submit" name="decline" class="btn btn-primary">Confirm</button>
-            </div>
-        </form>
     </div>
-</div>
+    <!-- Reason for Decline Modal -->
+    <div id="declineModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reason for Declining</h2>
+                <span class="close" id="closeDeclineModal">&times;</span>
+            </div>
+            <form action="../adminController/secretaryController/secretary_document_request_controller.php" method="POST">
+                <input type="hidden" name="doc_req_id" id="decline_doc_req_id">
+                <input type="hidden" name="user_id" id="user_id">
+                <div class="form-group">
+                    <label for="decline-reason" >Reason for Declining Request:</label>
+                        <select id="decline-reason" name="decline_reason" onchange="toggleOtherpurpose(this.value)">
+                            <option value="Incomplete Application">Incomplete Application</option>
+                            <option value="Eligibility Issues">Eligibility Issues</option>
+                            <option value="Pending Obligations">Pending Obligations</option>
+                            <option value="Invalid Request">Invalid Request</option>
+                            <option value="Documentation Mismatch">Documentation Mismatch</option>
+                            <option value="Regulatory Compliance">Regulatory Compliance</option>
+                            <option value="Expired Documents">Expired Documents</option>
+                            <option value="Fraud Prevention">Fraud Prevention</option>
+                            <option value="Time Constraints">Time Constraints</option>
+                            <option value="others">Others</option>
 
+                        </select>
+                        <br><br>
+                        <div id="other_decline_reason_div" style="display:none;">
+                            <textarea name="other_decline_reason" id="other_decline_reason" rows="4"  ></textarea>
+                        </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" name="decline" class="btn btn-primary">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--MODAL ADD DOCUMENT-->
 
     <!-- Modal -->
     <div id="myModal" class="modal">
-    <div class="modal-content">
+        <div class="modal-content">
         <div class="modal-header">
             <h2 class="modal-title">Document Request Details</h2>
             <span class="close" id="closeModal">&times;</span>
         </div>
         <form action="../adminController/secretaryController/secretary_document_request_controller.php" method="POST">
             <input type="hidden" name="doc_req_id" id="doc_req_id" value="<?= $requestDetails['doc_req_id'] ?? '' ?>">
+            <input type="hidden" name="user_id" id="user_id" value="<?= $requestDetails['user_id'] ?? '' ?>">
             <div id="modal-body" class="form-content">
                 <div class="form-column">
                     <div class="form-group">
@@ -198,6 +237,13 @@ textarea {
                                 <span id="issued_date"><?= $duration?></span>
                             </div>
                         <?php
+                        } else if ($requestDetails['request_status'] === "Canceled" || $requestDetails['request_status'] === "Declined") {?>
+                            <div class="form-group">
+                                <label for="doc_type">Reason:</label>
+                                <span id="doc_type"><?= $requestDetails['reason'] ?? '' ?></span>
+                            </div>
+                            
+                        <?php
                         }
                     ?>
                 </div>
@@ -208,7 +254,7 @@ textarea {
                     if ($requestDetails['request_status'] === 'Approved') {
                         echo '<button type="submit" name="claim" class="btn btn-primary">Ready To Claim</button>';
                     } else if ($requestDetails['request_status'] === 'Pending') {
-                        echo '<button type="submit" name="decline" class="btn btn-sec">Decline</button> ';
+                        echo '<button type="button" onclick="openDeclineModal(' . $requestDetails['doc_req_id'] . ',' . $requestDetails['user_id'] . ')" class="btn btn-sec">Decline</button> ';
                         echo '<button type="submit" name="accept" class="btn btn-primary">Accept</button>';
                     }else if ($requestDetails['request_status'] === 'Ready To Claim') {
                         echo '<button type="submit" name="claimed" class="btn btn-primary">Claimed</button>';
@@ -219,15 +265,16 @@ textarea {
         </form>
     </div>
 </div>
+<?php include_once("../../show-success-error-modal.php") ?>
 <script>
     var modal = document.getElementById("myModal");
     var span = document.getElementById("closeModal");
 
-    <?php if ($requestDetails): ?>
+    <?php if ($requestDetails): ?>                 
         modal.style.display = "block";
     <?php endif; ?>
 
-    span.onclick = function() {
+    span.onclick = function() {                                                                             
         modal.style.display = "none";
     }
 
@@ -238,33 +285,36 @@ textarea {
     }
 
     var declineModal = document.getElementById("declineModal");
-var closeDeclineModal = document.getElementById("closeDeclineModal");
+    var closeDeclineModal = document.getElementById("closeDeclineModal");
 
-function openDeclineModal(docReqId) {
-    document.getElementById("decline_doc_req_id").value = docReqId;
-    declineModal.style.display = "block";
-}
+    function openDeclineModal(docReqId,user_id) { 
+        document.getElementById("decline_doc_req_id").value = docReqId;
+        document.getElementById("user_id").value = user_id;
+        declineModal.style.display = "block";
+        modal.style.display = "none";
+    }
 
-closeDeclineModal.onclick = function() {
-    declineModal.style.display = "none";
-};
-
-window.onclick = function(event) {
-    if (event.target == declineModal) {
+    closeDeclineModal.onclick = function() {
         declineModal.style.display = "none";
+    };
+
+    window.onclick = function(event) {
+        if (event.target == declineModal) {
+            declineModal.style.display = "none";
+        }
+    };
+
+    function toggleOtherpurpose(value) {
+        const otherInput = document.getElementById("other_decline_reason");
+        const otherDiv = document.getElementById("other_decline_reason_div");
+        if (value === "others") {
+            otherDiv.style.display = "block";
+            otherInput.required = true;
+        } else {
+            otherDiv.style.display = "none";
+            otherInput.required = false;
+        }
     }
-};
-function toggleOtherpurpose(value) {
-    const otherInput = document.getElementById("other_decline_reason");
-    const otherDiv = document.getElementById("other_decline_reason_div");
-    if (value === "others") {
-      otherDiv.style.display = "block";
-      otherInput.required = true;
-    } else {
-      otherDiv.style.display = "none";
-      otherInput.required = false;
-    }
-  }
 
 </script>
 </body>

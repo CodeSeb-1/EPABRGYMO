@@ -11,6 +11,8 @@ include_once("../adminController/secretaryController/secretary_resident_controll
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
     <link rel="stylesheet" href="../../assets/event-calendar.css????">
     <link rel="stylesheet" href="../../assets/pagination.css">
+    <link rel="stylesheet" href="../../assets/success-modal.css???">
+    <link rel="stylesheet" href="../../assets/modal.css???">
 </head>
 <body>
     <?php
@@ -122,6 +124,21 @@ include_once("../adminController/secretaryController/secretary_resident_controll
             </section>
         </main>
     </div>
+    <div id="successModal" class="modal">
+        <div class="modal-content success">
+            <div class="modal-header">
+                <h2 style="color:green;">Success</h2>
+                <span class="close" onclick="closeSuccessModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><?php echo $_SESSION['message_modal'] ?? ''; ?></p><br>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeSuccessModal()" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+    <?php include_once("../../show-success-error-modal.php") ?>
     <script src="../../javascript/image.js"></script>
     <script>
         function submitSearchForm() {
@@ -162,10 +179,10 @@ include_once("../adminController/secretaryController/secretary_resident_controll
         });
 
         function addRequestAnchor() {
-    if (!window.location.href.includes('#request')) {
-        window.location.href += '#request';
-    }
-}  
+            if (!window.location.href.includes('#request')) {
+                window.location.href += '#request';
+            }
+        }  
     </script>
 
 </body>

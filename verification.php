@@ -1,5 +1,5 @@
 <?php 
-session_start();
+include_once("userController/verification_controller.php");
 ?>
 
 <!DOCTYPE html>
@@ -89,45 +89,81 @@ session_start();
                         <span class="close" onclick="closeSuccessModal()">&times;</span>
                     </div>
                     <div class="modal-body">
-                        <p><?php echo$_SESSION['message_modal'] ?? ''; ?></p>
+                        <p><?php echo$_SESSION['message_modal'] ?? ''; ?></p><br><br>
                     </div>
                     <div class="modal-footer">
-                        <button onclick="closeSuccessModal()" class="btn btn-primary">OK</button>
+                        <?php if($_SESSION['message_modal'] === "Account verified successfully!") {?>
+                            <button onclick="closeSuccessModal('login.php')" class="btn btn-primary">OK</button>
+                            <?php session_destroy(); ?>
+                        <?php } else {?>
+                            <button onclick="closeSuccessModal()" class="btn btn-primary">OK</button>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
     <?php include_once("show-success-error-modal.php") ?>
     <script>
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     const countdownTime = 60; 
+        //     const otpGenerationTime = <?php echo isset($_SESSION['otp_generation_time']) ? $_SESSION['otp_generation_time'] : 0; ?>;
+        //     const currentTime = Math.floor(Date.now() / 1000); 
+            
+        //     const otpExpired = currentTime - otpGenerationTime > countdownTime;
+        //     const timerElement = document.getElementById("countdown-timer");
+        //     const resendLink = document.getElementById("resend-otp");
+
+        //     if (!otpExpired) {
+        //         const elapsedTime = currentTime - otpGenerationTime;
+        //         let timeRemaining = countdownTime - elapsedTime;
+
+        //         timerElement.textContent = `Time remaining: ${timeRemaining} seconds`;
+
+        //         const countdown = setInterval(function() {
+        //             timeRemaining--;
+        //             timerElement.textContent = `Time remaining: ${timeRemaining} seconds`;
+
+        //             if (timeRemaining <= 0) {
+        //                 clearInterval(countdown);
+        //                 timerElement.textContent = "Time's up!";
+        //                 resendLink.style.display = "inline"; 
+        //             }
+        //         }, 1000);
+        //     } else {
+        //         timerElement.textContent = "OTP expired. Please resend.";
+        //         resendLink.style.display = "inline";
+        //     }
+        // });
         document.addEventListener("DOMContentLoaded", function() {
-            const countdownTime = 60; 
+            const countdownTime = 60; // Set countdown duration in seconds
             const otpGenerationTime = <?php echo isset($_SESSION['otp_generation_time']) ? $_SESSION['otp_generation_time'] : 0; ?>;
             const currentTime = Math.floor(Date.now() / 1000); 
             
-            const otpExpired = currentTime - otpGenerationTime > countdownTime;
             const timerElement = document.getElementById("countdown-timer");
             const resendLink = document.getElementById("resend-otp");
 
-            if (!otpExpired) {
-                const elapsedTime = currentTime - otpGenerationTime;
-                let timeRemaining = countdownTime - elapsedTime;
+            // Calculate the remaining time, ignoring expiration
+            const elapsedTime = currentTime - otpGenerationTime;
+            let timeRemaining = countdownTime - elapsedTime;
 
-                timerElement.textContent = `Time remaining: ${timeRemaining} seconds`;
-
-                const countdown = setInterval(function() {
-                    timeRemaining--;
-                    timerElement.textContent = `Time remaining: ${timeRemaining} seconds`;
-
-                    if (timeRemaining <= 0) {
-                        clearInterval(countdown);
-                        timerElement.textContent = "Time's up!";
-                        resendLink.style.display = "inline"; 
-                    }
-                }, 1000);
-            } else {
-                timerElement.textContent = "OTP expired. Please resend.";
-                resendLink.style.display = "inline";
+            if (timeRemaining < 0) {
+                timeRemaining = 0; // Ensure the timer doesn't go negative
             }
+
+            timerElement.textContent = `Time remaining: ${timeRemaining} seconds`;
+
+            const countdown = setInterval(function() {
+                timeRemaining--;
+
+                if (timeRemaining > 0) {
+                    timerElement.textContent = `Time remaining: ${timeRemaining} seconds`;
+                } else {
+                    clearInterval(countdown);
+                    timerElement.textContent = "";
+                    resendLink.style.display = "inline"; // Show the "Resend OTP" link
+                }
+            }, 1000);
         });
+
     </script>
 </body>
 </html>

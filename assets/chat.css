@@ -165,3 +165,14 @@
     color: #636e73; /* Adjust color as needed */
     margin-top: 5px;
 }
+
+.date-separator {
+    text-align: center;
+    margin: 10px 0; /* Adjust vertical spacing as needed */
+    font-size: 14px;
+    color: #666;
+    font-weight: lighter;
+    clear: both; /* Ensures it doesn't overlap with floating elements */
+    padding-top: 10px; /* Adjust padding to control spacing */
+}
+

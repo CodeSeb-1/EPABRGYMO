@@ -323,17 +323,29 @@ th {
     color: #fff;
     word-wrap: break-word;
 }
+
 .calendar .days .day_num .event.green {
     background-color: #51ce57;
+    transition: ease-in-out .2s;
 }
 .calendar .days .day_num .event.blue {
     background-color: #518fce;
+    transition: ease-in-out .2s;
 }
 .calendar .days .day_num .event.red {
     background-color: #ce5151;
+    transition: ease-in-out .2s;
 }
 .calendar .days .day_num .event.purple {
     background-color: #a45eb4;
+    transition: ease-in-out .2s;
+}
+.calendar .days .day_num .event.green:hover,
+.calendar .days .day_num .event.blue:hover,
+.calendar .days .day_num .event.red:hover,
+.calendar .days .day_num .event.purple:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .calendar .days .day_num:nth-child(7n+1) {

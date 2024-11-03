@@ -78,6 +78,123 @@ function display_reports()
 }
 
 
+if (
+    $_SERVER["REQUEST_METHOD"] == "POST" && (
+        isset($_POST['in_progress']) ||
+        isset($_POST['decline']) ||
+        isset($_POST['on_hold']) ||
+        isset($_POST['resolved']) ||
+        isset($_POST['closed']) ||
+        isset($_POST['cancelled'])
+    )
+) {
+    $report_id = $_POST['report_id'];
+    $user_id = $_POST['user_id']; // Assuming you have user_id from the POST data
+    $notificationLink = "http://localhost/EPABRGYMO/view_report.php?page=1&status=&report_id=$report_id";
+
+    if (isset($_POST['in_progress'])) {
+        $update = [
+            'query' => "UPDATE reports SET report_status = ?, reason = null WHERE report_id = ?",
+            'bind' => 'si',
+            'value' => ["In Progress", $report_id]
+        ];
+
+        // Notification for In Progress
+        $insertNotification = [
+            "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+            "bind" => "isss",
+            "value" => [$user_id, "Report Update", "Your report is now In Progress", $notificationLink]
+        ];
+
+    } elseif (isset($_POST['on_hold'])) {
+        $hold_reason = $_POST['hold_reason'];
+
+        $update = [
+            'query' => "UPDATE reports SET report_status = ?, reason = ? WHERE report_id = ?",
+            'bind' => 'ssi',
+            'value' => ["On Hold", $hold_reason, $report_id]
+        ];
+
+        // Notification for On Hold
+        $insertNotification = [
+            "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+            "bind" => "isss",
+            "value" => [$user_id, "Report Update", "Your report is on hold", $notificationLink]
+        ];
+
+    } elseif (isset($_POST['resolved'])) {
+        $resolution_notes = $_POST['resolution_notes'];
+
+        $update = [
+            'query' => "UPDATE reports SET report_status = ?, reason = ? WHERE report_id = ?",
+            'bind' => 'ssi',
+            'value' => ["Resolved", $resolution_notes, $report_id]
+        ];
+
+        // Notification for Resolved
+        $insertNotification = [
+            "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+            "bind" => "isss",
+            "value" => [$user_id, "Report Update", "Your report has been resolved", $notificationLink]
+        ];
+
+    } elseif (isset($_POST['closed'])) {
+        $update = [
+            'query' => "UPDATE reports SET report_status = ? WHERE report_id = ?",
+            'bind' => 'si',
+            'value' => ["Closed", $report_id]
+        ];
+
+        // Notification for Closed
+        $insertNotification = [
+            "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+            "bind" => "isss",
+            "value" => [$user_id, "Report Update", "Your report has been closed", $notificationLink]
+        ];
+
+    } elseif (isset($_POST['cancelled'])) {
+        $cancellation_reason = ($_POST['cancellation_reason'] === "others") ? $_POST['other_cancellation_reason'] : $_POST['cancellation_reason'];
+
+        $update = [
+            'query' => "UPDATE reports SET report_status = ?, reason = ? WHERE report_id = ?",
+            'bind' => 'ssi',
+            'value' => ["Cancelled", $cancellation_reason, $report_id]
+        ];
+
+        // Notification for Cancelled
+        $insertNotification = [
+            "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+            "bind" => "isss",
+            "value" => [$user_id, "Report Update", "Your report has been cancelled", $notificationLink]
+        ];
+
+    } elseif (isset($_POST['decline'])) {
+        $decline_reason = ($_POST['decline_reason'] === "others") ? $_POST['other_decline_reason'] : $_POST['decline_reason'];
+
+        $update = [
+            'query' => "UPDATE reports SET report_status = ?, reason = ? WHERE report_id = ?",
+            'bind' => 'ssi',
+            'value' => ["Declined", $decline_reason, $report_id]
+        ];
+
+        // Notification for Declined
+        $insertNotification = [
+            "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+            "bind" => "isss",
+            "value" => [$user_id, "Report Update", "Your report was declined", $notificationLink]
+        ];
+    }
+
+    // Execute the update and insert notification
+    updateData($update);
+    insertData($insertNotification);
+    location("../../secretary/secretary_reports.php");
+}
+
+
+
+
+
 
 
 

@@ -1,5 +1,7 @@
 <?php
+include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/admin/calendar.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/includes/model.php');
+
 $start = 0;
 $rows_per_page = 10;
 $selectedStatus = $_GET['status'] ?? 'All';
@@ -59,6 +61,7 @@ function display_events() {
         $user_type = $row['event_user_position'];
         $line_color = isset($colors[$user_type]) ? $colors[$user_type] : 'gray';
 
+
         echo "
             <tr>
                 <td><p style='background: $line_color'>.</p></td>
@@ -68,8 +71,7 @@ function display_events() {
                 <td>{$start_date}</td>
                 <td>{$end_date}</td>
                 <td>
-                    <a href='secretary_calendar.php?page=$page&status=$filterStatus&event_id={$row['event_id']}' id='view'>View</a>
-                    <a href='secretary_calendar.php?page=$page&status=$filterStatus&event_id={$row['event_id']} style='margin-left:15px'' id='edit'>Edit</a>
+                    <a href='secretary_calendar.php?page=$page&status=$filterStatus&event_id_tag={$row['event_id']}' id='view'>View</a>
                 </td>
             </tr>
         ";
@@ -122,21 +124,37 @@ if (isset($_POST["add_event"])) {
 
         // echo "<script>alert('There is an event at the same location on the same date.'); window.location.href='../tanod_calendar.php';</script>";
     } else {
-
-        if($event_start > $event_end) {
+        if ($event_start > $event_end) {
             $_SESSION['modal_btn'] = true;
-            $_SESSION['message_modal'] = "inang yan mas malaki a ung event start e";
+            $_SESSION['message_modal'] = "Inang yan mas malaki a ung event start e";
             echo "<script>window.history.back(); window.location.href='../secretary_calendar.php'</script>";
         } else {
+            // Prepare to insert the event
             $data = [
                 "query" => "INSERT INTO events (event_user_position, event_name, event_description, event_address, event_start, event_end)
-                            VALUES (?,?,?,?,?,?)",
+                        VALUES (?,?,?,?,?,?)",
                 "bind" => "ssssss",
                 "value" => [$_SESSION['event_user_position'], $event_name, $event_description, $event_address, $event_start, $event_end]
             ];
 
+            // Insert the event and get the result
             $result = insertData($data, "Events");
+
+            // Check if the insertion was successful
             if ($result) {
+                // Get the most recent event ID
+                $event_id = mysqli_insert_id($con); // Make sure $con is your database connection variable
+
+                $eventStart = isset($event_start) ? (new DateTime($event_start))->format('F j, Y') : 'N/A';
+                $insertNotification = [
+                    "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+                    "bind" => "isss",
+                    "value" => ["0", $event_name, "Event starts at: " . $eventStart, "view_full_events.php?id={$event_id}"] // Add the event_id to the link if needed
+                ];
+
+                // Insert the notification
+                insertData($insertNotification);
+
                 $_SESSION['modal_btn'] = true;
                 $_SESSION['message_modal'] = "Event added successfully.";
                 echo "<script>window.location.href='../../secretary/secretary_calendar.php'</script>";
@@ -146,11 +164,101 @@ if (isset($_POST["add_event"])) {
                 echo "<script>window.history.back(); window.location.href='../secretary_calendar.php'</script>";
             }
         }
-        // $_SESSION['modal_btn'] = true;
-        // $_SESSION['message_modal'] = "ewn ko ba.";
-        // echo "<script>alert('3'); window.history.back(); window.location.href='../secretary_calendar.php'</script>";
     }
+
+
+} else if (isset($_POST['save_event'])) {
+    $event_id = $_SESSION['event_id'];
+
+    $user = $_POST["users"];
+    $event_name = $_POST["event_name"];
+    $event_description = $_POST["event_description"];
+    $event_address = $_POST["event_address"];
+    $event_start = $_POST["event_start"];
+    $event_end = $_POST["event_end"];
+
+    if ($event_end < $event_start) {
+        $_SESSION['modal_title'] = "Error";
+        $_SESSION['modal_btn'] = true;
+        $_SESSION['message_modal'] = "End date cannot be earlier than start date.";
+        echo "<script>window.history.back(); window.location.href='../secretary_calendar.php'</script>";
+    } else {
+        $checkQuery = [
+            'query' => "SELECT COUNT(*) FROM events
+                        WHERE event_address = ?
+                        AND (
+                            (event_start <= ? AND event_end >= ?) OR
+                            (event_start <= ? AND event_end >= ?)
+                        )
+                        AND (DATE_FORMAT(event_start, '%Y-%m-%d') = DATE_FORMAT(?, '%Y-%m-%d'))
+                        AND event_id != ?", // Exclude the current event
+            'bind' => 'ssssssi',
+            'value' => [
+                $event_address,
+                $event_end,
+                $event_start,
+                $event_start,
+                $event_start,
+                $event_start,
+                $event_id
+            ]
+        ];
+
+        $check_results = select($checkQuery);
+
+        if ($check_results && $check_results[0]['COUNT(*)'] > 0) {
+            $_SESSION['modal_btn'] = true;
+            $_SESSION['message_modal'] = "There is an overlapping event at the same location on the same date.";
+            echo "<script>window.history.back(); window.location.href='../secretary_calendar.php'</script>";
+        } else {
+            // Update the event in the database
+            $updateQuery = [
+                "query" => "UPDATE events SET event_user_position = ?, event_name = ?, event_description = ?, 
+                            event_address = ?, event_start = ?, event_end = ? WHERE event_id = ?",
+                "bind" => "ssssssi",
+                "value" => [$user, $event_name, $event_description, $event_address, $event_start, $event_end, $event_id]
+            ];
+
+            $result = updateData($updateQuery, "Events");
+
+        $insertNotification = [
+            "query" => "INSERT INTO notifications (user_id, type, message, link) VALUES (?,?,?,?)",
+            "bind" => "isss",
+            "value" => ["0", $event_name, "Event updated", "view_full_events.php?id={$event_id}"]
+        ];
+        insertData($insertNotification);
+
+            if ($result) {
+                $_SESSION['modal_btn'] = true;
+                $_SESSION['message_modal'] = "Event updated successfully.";
+                echo "<script>window.location.href='../../secretary/secretary_calendar.php'</script>";
+            } else {
+                $_SESSION['modal_btn'] = true;
+                $_SESSION['message_modal'] = "Failed to update event.";
+                echo "<script>window.history.back(); window.location.href='../secretary_calendar.php'</script>";
+            }
+        }
+    }
+    unset($event_id);
+
+} else if (isset($_POST['delete_event'])) {
+
+    $event_id = $_SESSION['event_id'];
+
+    $deleteQuery = [
+        "query" => "DELETE FROM events WHERE event_id = ?",
+        "bind" => "i",
+        "value" => [$event_id]
+    ];
+
+    deleteData($deleteQuery, ['table' => "Events", 'primaryKey' => $event_id]);
+    $_SESSION['modal_btn'] = true;
+    $_SESSION['message_modal'] = "Event deleted successfully.";
+    echo "<script>window.location.href='../../secretary/secretary_calendar.php'</script>";
+    unset($event_id);
 }
+
+
 
 $selectedMonth = isset($_GET['month']) ? $_GET['month'] : date('m');
 $selectedYear = isset($_GET['year']) ? $_GET['year'] : date('Y');
@@ -159,7 +267,7 @@ $calendar = new Calendar($selectedYear . '-' . $selectedMonth . '-01', false);
 
 $data = [
     'query' => "
-        SELECT event_name, event_user_position, event_start, event_end, event_description, event_address 
+        SELECT event_id, event_name, event_user_position, event_start, event_end, event_description, event_address 
         FROM events 
         WHERE (
             MONTH(event_start) = ? 
@@ -199,6 +307,7 @@ if ($results && is_array($results)) {
         $currentColor = $colors[$userPosition] ?? "black";
 
         $calendar->add_event(
+            $result['event_id'],
             $result['event_name'],
             $result['event_start'], 
             $duration,
@@ -215,8 +324,9 @@ if ($results && is_array($results)) {
 //DISPLAY MODAL WITH VALUES
 
 $requestDetails = null;
-if (isset($_GET['event_id'])) {
-    $event_id = $_GET['event_id'];
+
+if (isset($_GET['event_id_tag'])) {
+    $event_id = $_GET['event_id_tag'];
 
     $data = [
         'query' => "SELECT * FROM events 
@@ -225,8 +335,6 @@ if (isset($_GET['event_id'])) {
         'bind' => 'i',
         'value' => [$event_id]
     ];
-
-    // $img_path = "/EPABRGYMO/dataImages/Events.{$row['event_id']}.jpg";
 
     $requestDetails = select($data, true);
     if (!$requestDetails) {

@@ -4,7 +4,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/EPABRGYMO/includes/model.php');
 if (isset($_POST['request'])) {
 
     $select_document = $_POST['documentId'];
-    $select_purpose = ($_POST['purpose'] === 'others') ? $_POST['other_Purpose'] : $_POST['purpose'];
+    $select_purpose = ($_POST['purpose'] === 'Others') ? $_POST['other_Purpose'] : $_POST['purpose'];
 
 
     //PAG ME LANG
@@ -76,6 +76,27 @@ function display_document()
     }
 }
 
+if (isset($_POST['documentId'])) {
+    $docId = $_POST['documentId'];
+
+    $data = [
+        'query' => 'SELECT doc_purpose FROM document_type WHERE doc_type_id = ?',
+        'bind' => 'i',
+        'value' => [$docId]
+    ];
+
+    $result = select($data, true);
+
+    if ($result) {
+        $purposes = explode(',', $result['doc_purpose']);
+        $purposes[] = 'Others'; // Ensure "others" is included
+        echo json_encode($purposes);
+    } else {
+        echo json_encode([]); // Send empty array if nothing is found
+    }
+    exit; // Ensure script stops after handling the AJAX request
+}
+
 $start = 0;
 $rows_per_page = 15;
 
@@ -115,6 +136,13 @@ function display_request() {
     // Display the results using your existing displayAll logic
     displayAll($display_request, null, function ($row, $id) {
         global $page, $filterStatus;
+
+        $statusClass = match ($row['request_status']) {
+            'Pending' => 'status-pending',
+            'Approved' => 'status-approved',
+            'Declined' => 'status-declined',
+            default => ''
+        };
         echo "
             <tr>
                 <td>{$row['request_name']}</td>
@@ -122,7 +150,7 @@ function display_request() {
                 <td>{$row['request_address']}</td>
                 <td>{$row['doc_name']}</td>
                 <td>{$row['request_purpose']}</td>
-                <td>{$row['request_status']}</td>";
+                <td><span class='$statusClass'>{$row['request_status']}</span></td>";
         
         // Show the cancel link only if the status is 'Pending'
         if ($row['request_status'] === 'Pending') {

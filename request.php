@@ -10,10 +10,10 @@ include_once("userController/request_controller.php");
     <title>EPABRGYMO</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="assets/style1.css??????">
+    <link rel="stylesheet" href="assets/style1.css???????">
     <link rel="stylesheet" href="assets/pagination.css?">
     <link rel="stylesheet" href="assets/modal.css">
-    <link rel="stylesheet" href="assets/success-modal.css">
+    <link rel="stylesheet" href="assets/success-modal.css????">
 </head>
 
 <body>
@@ -27,7 +27,6 @@ include_once("userController/request_controller.php");
                     <h1>Document Request Form</h1>
                     <div class="btn">
                         <a href="view_request.php">View document requests</a>
-                        <span class="material-symbols-outlined">arrow_right_alt</span>
                     </div>
                 </div>
                     <form action="userController/request_controller.php" method="POST">
@@ -58,7 +57,7 @@ include_once("userController/request_controller.php");
                                 <input type="text" id="otherName" name="otherName" placeholder="Enter full name">
                             </div>
                             <div class="form-groups">
-                                <label for="otherBirthday">Requestor Birthday:</label>
+                                <label for="otherBirthday">Recipient Birthday:</label>
                                 <input type="date" id="otherBirthday" name="otherBirthday" placeholder="Enter birthday">
                             </div>
                             <div class="form-groups">
@@ -127,7 +126,7 @@ include_once("userController/request_controller.php");
                                 </div>
                             </div>
                             <div class="form-groups" id="manualAddressInput" style="display: none;">
-                                <label for="otherAddress">Requestor Address:</label>
+                                <label for="otherAddress">Recipient Address:</label>
                                 <input type="text" id="otherAddress" name="otherAddress" placeholder="Enter address">
                             </div>
                         </div>
@@ -142,19 +141,15 @@ include_once("userController/request_controller.php");
 
                         <div class="form-groups">
                             <label for="purpose">Purpose:</label>
-                            <select name="purpose" id="purpose" required onchange="toggleOtherpurpose(this.value)">
+                            <select name="purpose" id="purpose" required>
                                 <option value="">Select purpose</option>
-                                <option value="Scholarship">Scholarship</option>
-                                <option value="Financial Assistance">Financial Assistance</option>
-                                <option value="Work Related">Work Related</option>
-                                <option value="others">Others</option>
                             </select>
                         </div>
+
                         <div class="form-groups" id="otherPurpose" style="display: none;">
-                            <label for="otherPurpose">Other Purpose:</label><br>
+                            <label for="otherPurpose">Other Purpose:</label>
                             <input type="text" id="other_Purpose" name="other_Purpose" placeholder="Enter purpose">
                         </div>
-
                         <input type="submit" name="request" value="Submit Request">
                     </form>
                 </div>
@@ -162,11 +157,11 @@ include_once("userController/request_controller.php");
             <div id="successModal" class="modal">
                 <div class="modal-content success">
                     <div class="modal-header">
-                        <h2>Success</h2>
+                        <h2 style="color:green">Success</h2>
                         <span class="close" onclick="closeSuccessModal('view_request.php')">&times;</span>
                     </div>
                     <div class="modal-body">
-                        <p>Your request has been successfully sheesh!</p>
+                        <p>Your request has been successfully submitted!</p>
                     </div>
                     <div class="modal-footer">
                         <button onclick="closeSuccessModal('view_request.php')" class="btn btn-primary">OK</button>
@@ -179,10 +174,54 @@ include_once("userController/request_controller.php");
     <?php include_once("show-modal.php"); ?>
     </main>
     <?php include_once("footer.php"); ?>
-    <script src="javascript/navbar.js"></script>
+    <script src="javascript/navbar.js???????"></script>
     <script src="javascript/request.js"></script>
     <script src="javascript/other.js"></script>
     <script src="javascript/request-location.js"></script>
+    <script>
+       document.getElementById('documentId').addEventListener('change', function () {
+    const docId = this.value;
+    console.log('Selected Document ID:', docId); // Debug log
+
+    if (docId) {
+        fetch('userController/request_controller.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ documentId: docId })
+        })
+        .then(response => response.json())
+        .then(purposes => {
+            console.log('Purposes:', purposes); // Debug log
+            updatePurposeOptions(purposes);
+        })
+        .catch(error => console.error('Error fetching purposes:', error));
+    } else {
+        updatePurposeOptions([]); // Clear the options if no document selected
+    }
+});
+
+
+function updatePurposeOptions(purposes) {
+    const purposeSelect = document.getElementById('purpose');
+    purposeSelect.innerHTML = '<option value="">Select purpose</option>'; // Reset the dropdown
+
+    purposes.forEach(purpose => {
+        const option = document.createElement('option');
+        option.value = purpose.trim();
+        option.textContent = purpose.trim();
+        purposeSelect.appendChild(option);
+    });
+
+    // Ensure the "Other Purpose" field only shows if "others" is selected
+    purposeSelect.addEventListener('change', function () {
+        const otherPurposeDiv = document.getElementById('otherPurpose');
+        otherPurposeDiv.style.display = this.value === 'Others' ? 'block' : 'none';
+    });
+}
+
+
+
+    </script>
 </body>
 
 </html>
