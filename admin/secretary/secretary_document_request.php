@@ -120,7 +120,14 @@ include_once("../adminController/secretaryController/secretary_document_request_
     <div id="successModal" class="modal">
         <div class="modal-content success">
             <div class="modal-header">
-                <h2>Success</h2>
+                <?php
+                    if(isset($_SESSION['modal_title']) ?? '') {
+                        echo "<h2 style='color:#C90508';>Declined</h2>";
+                        unset($_SESSION['modal_title']);
+                    } else {
+                        echo "<h2 style='color:green;'>Success</h2>";
+                    }
+                ?>
                 <span class="close" onclick="closeSuccessModal()">&times;</span>
             </div>
             <div class="modal-body">

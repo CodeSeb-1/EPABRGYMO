@@ -183,15 +183,9 @@ include_once("../adminController/secretaryController/secretary_add_document_cont
                     </div>
                     <div class="form-column">
                         <div class="form-group">
-                            <label for="has_payment">Has Payment:</label>
-                            <span>
-                                <input type="text" id="has_payment" name="has_payment" value="<?= $requestDetails['has_payment'] ?? '' ?>" disabled required>
-                            </span>
-                        </div>
-                        <div class="form-group">
                             <label for="created_at">Date:</label>
                             <span>
-                                <input type="text" id="created_at" name="created_at" value="<?= $formattedIssuedDate ?? '' ?>" disabled required>
+                                <input type="datetime-local" name="created_at" id="created_at" value="<?php echo $requestDetails['created_at'] ?? '' ?>" disabled required>
                             </span>
                         </div>
                     </div>

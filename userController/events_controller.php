@@ -18,7 +18,7 @@ function display_eventss() {
         $formatted_date1 = $news_date1->format('F j, Y'); 
 
 
-        $img_path = "/EPABRGYMO/dataImages/Event.{$row['event_id']}.jpg";
+        $img_path = "/EPABRGYMO/dataImages/Events.{$row['event_id']}.jpg";
         echo "
             <a href='view_full_events.php?id={$row['event_id']}' class='news-feed__card news-feed__card--science'>
                 <img src='$img_path?height=200&width=300' alt='Event Image' class='news-feed__image news-feed__image--science'>

@@ -25,7 +25,6 @@ if (isset($_POST['add_document'])) {//add document
     $doc_id = $_SESSION['doc_type_id'];
     $document_type = $_POST['document_type'];
     $document_purpose = $_POST['document_purpose'];
-    $has_payment = $_POST['has_payment'];
 
     $data = [
         "query" => "UPDATE document_type SET doc_name = ?, doc_purpose = ? WHERE doc_type_id = ?",
@@ -53,7 +52,7 @@ if (isset($_POST['add_document'])) {//add document
     deleteData($data);
     $_SESSION['modal_btn'] = true;
     $_SESSION['message_modal'] = "Deleted Document Successpoley";
-     echo "<script>window.location.href='../../secretary/secretary_add_document.php#documents'</script>";
+    echo "<script>window.location.href='../../secretary/secretary_add_document.php#documents'</script>";
 
 }
 

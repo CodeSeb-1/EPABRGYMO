@@ -39,6 +39,15 @@ if (isset($_POST['add_resident']) || isset($_POST['edit_resident'])) {
             'value' => [$firstname, $middlename, $lastname, $contact, $email, $birthdate, $address, $id]
         ];
         $result = updateData($update);
+
+        if ($result) {
+            $_SESSION['modal_btn'] = true;
+            $_SESSION['message_modal'] = "Updated Resident";
+            echo "<script>window.location.href='../../secretary/secretary_resident_database.php'</script>";
+            // echo "<script>alert('Success'); window.location.href='../../secretary/secretary_resident_database.php';</script>";
+        } else {
+            echo "<script>alert('Error: Request could not be processed.'); window.location.href='../../secretary/secretary_resident_database.php';</script>";
+        }
     } else {
         // Add new resident
         $insert = [
@@ -50,15 +59,15 @@ if (isset($_POST['add_resident']) || isset($_POST['edit_resident'])) {
             'value' => [$firstname, $middlename, $lastname, $contact, $email, $birthdate, $address]
         ];
         $result = insertData($insert);
-    }
 
-    if ($result) {
-        $_SESSION['modal_btn'] = true;
-        $_SESSION['message_modal'] = "Added New Resident";
-        echo "<script>window.location.href='../../secretary/secretary_resident_database.php'</script>";
-        // echo "<script>alert('Success'); window.location.href='../../secretary/secretary_resident_database.php';</script>";
-    } else {
-        echo "<script>alert('Error: Request could not be processed.'); window.location.href='../../secretary/secretary_resident_database.php';</script>";
+        if ($result) {
+            $_SESSION['modal_btn'] = true;
+            $_SESSION['message_modal'] = "Added New Resident";
+            echo "<script>window.location.href='../../secretary/secretary_resident_database.php'</script>";
+            // echo "<script>alert('Success'); window.location.href='../../secretary/secretary_resident_database.php';</script>";
+        } else {
+            echo "<script>alert('Error: Request could not be processed.'); window.location.href='../../secretary/secretary_resident_database.php';</script>";
+        }
     }
 }
 

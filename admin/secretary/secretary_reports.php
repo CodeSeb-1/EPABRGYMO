@@ -223,9 +223,9 @@ include_once("../adminController/secretaryController/secretary_reports_controlle
                     <?php if ($requestDetails): ?>
                         <?php switch ($requestDetails['report_status']):
                             case 'Pending': ?>
-                                <button type="submit" name="in_progress" class="btn btn-primary">Start Progress</button>
                                 <button type="button" onclick="openReportDeclineModal('<?= $requestDetails['report_id'] ?>')"
                                     class="btn btn-sec">Decline</button>
+                                <button type="submit" name="in_progress" class="btn btn-primary">Start Progress</button>
                                 <?php break; ?>
     
                             <?php case 'In Progress': ?>

@@ -145,6 +145,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_
             "bind" => "isss",
             "value" => [$user_id, "Request Update Status", "Your Request has been approved", $notificationLink]
         ];
+        $_SESSION['modal_btn'] = true;
+        $_SESSION['message_modal'] = "Document Accepted";
+        echo "<script>window.location.href='../../secretary/secretary_document_request.php'</script>";
+
 
     } else if (isset($_POST['decline'])) {
         $decline_reason = ($_POST['decline_reason'] === "others") ? $_POST['other_decline_reason'] : $_POST['decline_reason'];
@@ -163,6 +167,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_
             "value" => [$user_id, "Request Update Status", "Request was Declined", $notificationLink]
         ];
 
+        $_SESSION['modal_title'] = "red";
+        $_SESSION['modal_btn'] = true;
+        $_SESSION['message_modal'] = "Document Declined";
+        echo "<script>window.location.href='../../secretary/secretary_document_request.php'</script>";
+
     } else if (isset($_POST["claim"])) {
         $expiration_date = $_POST['expire_date'];
 
@@ -180,6 +189,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_
             "value" => [$user_id, "Request Update Status", "Your document is ready to claim", $notificationLink]
         ];
 
+        $_SESSION['modal_btn'] = true;
+        $_SESSION['message_modal'] = "Document Ready To Claim";
+        echo "<script>window.location.href='../../secretary/secretary_document_request.php'</script>";
+
     } else if (isset($_POST['claimed'])) {
         $update = [
             'query' => "UPDATE document_request SET request_status = ?
@@ -195,6 +208,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_
             "value" => [$user_id, "Request Update Status", "Your document has been claimed", $notificationLink]
         ];
 
+        $_SESSION['modal_btn'] = true;
+        $_SESSION['message_modal'] = "Document Claimed";
+        echo "<script>window.location.href='../../secretary/secretary_document_request.php'</script>";
+
     } 
     // Execute update and notification insertion
     updateData($update);
@@ -202,130 +219,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['accept']) || isset($_
     location("../../secretary/secretary_document_request.php");
 }
 
-// if (isset($_POST['add_document'])) {//add document
-//     $document = $_POST['document_type'];
-//     $purpose = $_POST['document_purpose'];
-//     $payment = $_POST['has_payment'];
-
-//     $data = [
-//         "query" => "INSERT INTO document_type (doc_name, doc_purpose, has_payment)
-//                     VALUES (?,?,?)",
-//         "bind" => "sss",
-//         "value" => [$document, $purpose, $payment]
-//     ];
-
-//     $results = insertData($data);
-//     if($results) {
-//         $_SESSION['modal_btn'] = true;
-//         $_SESSION['message_modal'] = "New Document Added";
-//         echo "<script>window.location.href='../../secretary/secretary_document_request.php#documents'</script>";
-//     }
-// } else if (isset($_POST['update_document'])) {
-//     $doc_id = $_POST['doc_type_id'];
-//     $document_type = $_POST['document_type'];
-//     $document_purpose = $_POST['document_purpose'];
-//     $has_payment = $_POST['has_payment'];
-
-//     $data = [
-//         "query" => "UPDATE document_type SET doc_name = ?, doc_purpose = ?, has_payment = ? WHERE doc_type_id = ?",
-//         "bind" => "sssi",
-//         "value" => [$document_type, $document_purpose, $has_payment, $doc_id]
-//     ];
-
-//     $results = updateData($data);
-//     if($results) {
-//         $_SESSION['modal_btn'] = true;
-//         $_SESSION['message_modal'] = "Document Updated";
-//         echo "<script>window.location.href='../../secretary/secretary_document_request.php#documents'</script>";
-//     }
-// }
-
-// $start_1 = 0;
-// $rows_per_page_1 = 10;
-// $selectedStatus = $_GET['status'] ?? 'All';
-// $filterStatus = $selectedStatus !== 'All' ? $selectedStatus : null;
-
-// // Get total number of records
-// $record_sql = "SELECT * FROM document_type ORDER BY doc_type_id DESC";
-// $records = $con->query($record_sql);
-// $nr_of_rows_1 = $records->num_rows;
-
-// // Calculate total pages
-// $pages_1 = ceil($nr_of_rows_1 / $rows_per_page_1);
-
-// // Determine current page number
-// $page_1 = isset($_GET['page_1']) ? (int)$_GET['page_1'] : 1; 
-// $page_1 = max(1, min($page_1, $pages_1)); 
-
-// // Calculate the starting row for the query
-// $start_1 = ($page_1 - 1) * $rows_per_page_1;
-
-// $display_documents = [
-//     "query" => "SELECT * FROM document_type ORDER BY doc_type_id DESC LIMIT $start_1, $rows_per_page_1",
-//     "bind" => "",
-//     "value" => []
-// ];
-
-// function display_documents()
-// {
-//     global $display_documents;
-
-//     displayAll($display_documents, null, function ($row, $id) {
-//         echo "
-//             <tr>
-//                <td>{$row['doc_name']}</td>
-//                <td>{$row['doc_purpose']}</td>
-//                <td>{$row['has_payment']}</td>
-//                <td>{$row['created_at']}</td>
-//                 <td><a href='secretary_document_request.php?id={$row['doc_type_id']}' id='view'>View</a></td>
-//             </tr>";
-//     });
-
-// //     <td>
-// //     <a href='../secretary/secretary_document_request.php?id={$row['doc_type_id']}#documents'><span class='material-symbols-outlined edit'>edit_square</span></a>
-// //     <a href='?delete_id={$row['doc_type_id']}#documents'><span class='material-symbols-outlined delete'>delete</span></a>
-// // </td>
-// }
-
-// if (isset($_GET['delete_id'])) {
-//     $delete_id = $_GET['delete_id'];
-//     echo "
-//     <div class='modal'>
-//         <p>Are you sure you want to delete this document?</p>
-//         <a href='?confirm_delete={$delete_id}#documents'>Yes</a>
-//         <a href='secretary_document_request.php#documents'>No</a>
-//     </div>";
-// }
-
-// // Execute deletion if confirmed
-// if (isset($_GET['confirm_delete'])) {
-//     $doc_id = $_GET['confirm_delete'];
-    
-//     // Define the delete query
-//     $data = [
-//         "query" => "DELETE FROM document_type WHERE doc_type_id = ?",
-//         "bind" => "i",
-//         "value" => [$doc_id]
-//     ];
-
-//      deleteData($data);
-    
-//         $_SESSION['modal_btn'] = true;
-//         $_SESSION['message_modal'] = "Document Deleted Successfully";
-//         echo "<script>window.location.href='secretary_document_request.php#documents'</script>";
-    
-// }
-
-// $document = null;
-// if (isset($_GET['id'])) {
-//     $data = [
-//         "query" => "SELECT * FROM document_type WHERE doc_type_id = ?",
-//         "bind" => "i",
-//         "value" => [$_GET['id']]
-//     ];
-
-//     $results = select($data, true);
-//     if ($results) {
-//         $document = $results;
-//     }
-// }

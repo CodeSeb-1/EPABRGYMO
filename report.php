@@ -95,7 +95,7 @@
                         <p>Your report has been successfully submitted!</p><br>
                     </div>
                     <div class="modal-footer">
-                        <button onclick="closeSuccessModal()" class="btn btn-primary">OK</button>
+                        <button onclick="closeSuccessModal('view_report.php')" class="btn btn-primary">OK</button>
                     </div>
                 </div>
             </div>

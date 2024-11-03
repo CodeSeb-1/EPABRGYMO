@@ -25,7 +25,7 @@ include_once("../adminController/secretaryController/secretary_add_barangay_cont
         ?>
         <main class="content">
             <div class="content home">
-            <h1><?php echo isset($result) ? 'Edit Barangay Official' : 'Add Barangay Official'; ?></h1><br>
+            <h1>Change Barangay Officia</h1><br>
             <section class="add-event">
         <div class="event-form">
             <form action="../adminController/secretaryController/secretary_add_barangay_controller.php" method="POST" enctype="multipart/form-data">
@@ -79,7 +79,7 @@ include_once("../adminController/secretaryController/secretary_add_barangay_cont
                         <div class="field">
                             <label></label>
                             <input type="submit" name="<?php echo isset($result) ? 'edit' : 'add'; ?>"
-                                value="<?php echo isset($result) ? 'Edit Barangay Official' : 'Add Barangay Official'; ?>">
+                                value="Change">
                         </div>
                     </form>
                     <div class="image-container">

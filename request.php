@@ -57,7 +57,7 @@ include_once("userController/request_controller.php");
                                 <input type="text" id="otherName" name="otherName" placeholder="Enter full name">
                             </div>
                             <div class="form-groups">
-                                <label for="otherBirthday">Requestor Birthday:</label>
+                                <label for="otherBirthday">Recipient Birthday:</label>
                                 <input type="date" id="otherBirthday" name="otherBirthday" placeholder="Enter birthday">
                             </div>
                             <div class="form-groups">
@@ -126,7 +126,7 @@ include_once("userController/request_controller.php");
                                 </div>
                             </div>
                             <div class="form-groups" id="manualAddressInput" style="display: none;">
-                                <label for="otherAddress">Requestor Address:</label>
+                                <label for="otherAddress">Recipient Address:</label>
                                 <input type="text" id="otherAddress" name="otherAddress" placeholder="Enter address">
                             </div>
                         </div>
@@ -161,7 +161,7 @@ include_once("userController/request_controller.php");
                         <span class="close" onclick="closeSuccessModal('view_request.php')">&times;</span>
                     </div>
                     <div class="modal-body">
-                        <p>Your request has been successfully sheesh!</p>
+                        <p>Your request has been successfully submitted!</p>
                     </div>
                     <div class="modal-footer">
                         <button onclick="closeSuccessModal('view_request.php')" class="btn btn-primary">OK</button>

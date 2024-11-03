@@ -27,7 +27,7 @@
 }
 
 body {
-    background-image: url('FRONT\ PAGE\ \(6\).png');
+    background-image: url('BACKGROUND\ \(12\).png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -69,13 +69,22 @@ nav {
     text-decoration: none;
     color: #333;
 }
+
+.menu li a {
+    transition: ease-in-out 0.2s;
+}
+
+/* .menu li a:hover {
+    border-bottom: 3px solid var(--second-main-red);
+    padding: 8px 10px;
+} */
 .menu .active,
 .active {
     /* background-color: #e53935; */
     border-bottom: 3px solid var(--second-main-red);
     /* background: var(--second-main-red); */
     color: #222B31;
-    padding: 8px 16px;
+    padding: 8px 10px;
     /* border-radius: 20px; */
 }
 .hero {
@@ -90,7 +99,7 @@ nav {
     padding-right: 50px;
 }
 .hero-image {
-    flex: 1;
+    margin-left: 20px;
 }
 
 header .user-info {

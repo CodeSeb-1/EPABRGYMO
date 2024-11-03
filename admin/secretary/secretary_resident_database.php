@@ -11,7 +11,7 @@ include_once("../adminController/secretaryController/secretary_resident_controll
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
     <link rel="stylesheet" href="../../assets/event-calendar.css????">
     <link rel="stylesheet" href="../../assets/pagination.css">
-    <link rel="stylesheet" href="../../assets/success-modal.css?">
+    <link rel="stylesheet" href="../../assets/success-modal.css???">
     <link rel="stylesheet" href="../../assets/modal.css???">
 </head>
 <body>
@@ -127,7 +127,7 @@ include_once("../adminController/secretaryController/secretary_resident_controll
     <div id="successModal" class="modal">
         <div class="modal-content success">
             <div class="modal-header">
-                <h2>Success</h2>
+                <h2 style="color:green;">Success</h2>
                 <span class="close" onclick="closeSuccessModal()">&times;</span>
             </div>
             <div class="modal-body">

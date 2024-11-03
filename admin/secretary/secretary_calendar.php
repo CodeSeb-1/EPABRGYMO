@@ -112,7 +112,7 @@ include_once("../adminController/secretaryController/secretary_calendar_controll
                             <input type="datetime-local" name="event_start" placeholder="Event Start" required>
                         </div>
                         <div class="field">
-                            <label>Duration</label>
+                            <label>Duration Days:</label>
                             <input type="number" name="event_duration" placeholder="Event Duration Days" required>
                         </div>
                         <div class="field">
